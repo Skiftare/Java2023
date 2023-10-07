@@ -71,8 +71,7 @@ public class Task5 {
             for (int i = 0; i < len; i += 2) {
                 if (delLast(getLast(secN) + getLast(delLast(secN))) > 0) {
                     buf = movDischarge(movDischarge(buf)) + getLast(secN) + getLast(delLast(secN));
-                }
-                else {
+                } else {
                     buf = movDischarge(buf) + (getLast(secN) + getLast(delLast(secN)));
                 }
                 secN = delLast(delLast(secN));
