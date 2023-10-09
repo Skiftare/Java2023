@@ -18,10 +18,9 @@ public class Task7 {
             buf /= 2;
         }
         Collections.reverse(binaryView);
-        int cycleMove = shift % len;
         buf = 0;
         int degreeTwo = len - 1;
-        for (int i = len - cycleMove; i < len; i++) {
+        for (int i = len - shift; i < len; i++) {
             buf = buf + binaryView.get(i) * ((int) Math.pow(2, degreeTwo));
             degreeTwo -= 1;
         }
@@ -42,10 +41,9 @@ public class Task7 {
             buf /= 2;
         }
         binaryView.reversed();
-        int cycleMove = shift % len;
         buf = 0;
         for (int i = 0; i < binaryView.size(); i++) {
-            buf = buf + binaryView.get((2 * len - cycleMove + i) % len) * ((int) Math.pow(2, i));
+            buf = buf + binaryView.get((2 * len - shift + i) % len) * ((int) Math.pow(2, i));
         }
         return buf;
     }
