@@ -13,7 +13,7 @@ public class Task3Test {
     }
 
     @Test
-    void same_mas() {
+    void sameMas() {
         assertEquals(false, Task3.isNestable(new int[] {3, 1}, new int[] {1, 3}));
         assertEquals(false, Task3.isNestable(new int[] {1, 3}, new int[] {3, 1}));
     }
