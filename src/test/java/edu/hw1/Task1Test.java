@@ -10,7 +10,7 @@ public class Task1Test {
     @DisplayName("Minutes_test")
 
     @Test
-    void zero_zero() {
+    void zeroZero() {
         assertEquals(0, Task1.minutesToSeconds("00:00"));
     }
 
@@ -20,12 +20,12 @@ public class Task1Test {
     }
 
     @Test
-    void a_lot_secs() {
+    void ManySecs() {
         assertEquals(-1, Task1.minutesToSeconds("00:61"));
     }
 
     @Test
-    void not_a_lot_secs() {
+    void notManySecs() {
         assertEquals(10, Task1.minutesToSeconds("00:00000000000010"));
     }
 
