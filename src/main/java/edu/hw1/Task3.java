@@ -8,9 +8,11 @@ public class Task3 {
         if (fstMas.length == 0 && secMas.length != 0) {
             return true;
         }
+
         if (secMas.length == 0) {
             return false;
         }
+
         int minFst = fstMas[0];
         int maxFst = fstMas[0];
         int minSec = secMas[0];
