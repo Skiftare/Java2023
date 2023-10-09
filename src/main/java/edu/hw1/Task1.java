@@ -4,32 +4,28 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 class Task1 {
-    private static final Integer TEN_MULTI = 10;
     private static final Integer SIXTY_NUM = 60;
 
     static int minutesToSeconds(@NotNull String s) {
         int secs = 0;
-        boolean flag = false;
         int mins = 0;
+        String[] nums = s.split(":");
+        if (nums.length != 2) {
+            return -1;
+        }
 
-
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == ':') {
-                flag = true;
-                continue;
-            }
-            if (s.charAt(i) == '-') {
-                return -1;
-            }
-            if (!flag) {
-                mins = mins * TEN_MULTI + (s.charAt(i) - '0');
-            } else {
-                secs = secs * TEN_MULTI + (s.charAt(i) - '0');
-            }
-
+        try {
+            mins = Integer.parseInt(nums[0]);
+        } catch (NumberFormatException e) {
+            mins = -1;
+        }
+        try {
+            secs = Integer.parseInt(nums[1]);
+        } catch (NumberFormatException e) {
+            secs = -1;
         }
         int ans = mins * SIXTY_NUM + secs;
-        if (secs > SIXTY_NUM || !flag) {
+        if (secs > SIXTY_NUM || secs < 0 || mins < 0) {
             return -1;
         }
 
