@@ -1,7 +1,6 @@
 package edu.hw1;
 
 @SuppressWarnings("HideUtilityClassConstructor")
-
 public class Task2 {
 
     @SuppressWarnings("MagicNumber")
