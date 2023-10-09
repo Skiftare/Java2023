@@ -8,22 +8,21 @@ import static edu.hw1.Task5.movDischarge;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task6 {
+    private static final Integer THOUSAND_NUM = 1000;
+    private static final Integer NEED_L = 4;
+    private static final Integer FINAL_NUM = 6174;
+
     public static int funK(int n) {
-        @SuppressWarnings("MagicNumber")
-        int thousandNum = 1000;
-        if (n > thousandNum && n % thousandNum > 0) {
+        if (n > THOUSAND_NUM && n % THOUSAND_NUM > 0) {
             return funK(n, 0);
         }
         return -1;
     }
 
-    @SuppressWarnings("MagicNumber")
     public static int funK(int n, int cnt) {
         int secN = n;
-        int finalNum = 6174;
-        int needLength = 4;
 
-        if (n == finalNum) {
+        if (n == FINAL_NUM) {
             return cnt;
         }
 
@@ -32,8 +31,8 @@ public class Task6 {
             charsForN.add(getLast(secN));
             secN = delLast(secN);
         }
-        if (charsForN.size() < needLength) {
-            while (charsForN.size() < needLength) {
+        if (charsForN.size() < NEED_L) {
+            while (charsForN.size() < NEED_L) {
                 charsForN.add(0);
             }
         }
