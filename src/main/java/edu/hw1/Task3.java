@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task3 {
     public static boolean isNestable(int @NotNull [] fstMas, int[] secMas) {
-        boolean ans = true;
 
         int minFst = 0;
         int maxFst = 0;
