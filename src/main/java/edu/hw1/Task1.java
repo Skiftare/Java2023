@@ -8,10 +8,8 @@ class Task1 {
         int secs = 0;
         boolean flag = false;
         int mins = 0;
-        @SuppressWarnings("MagicNumber")
-        int tenMulti = 10;
-        @SuppressWarnings("MagicNumber")
-        int sixtyNum = 60;
+        private static final Integer tenMulti = 10;
+        private static final Integer sixtyNum = 60;
 
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == ':') {
