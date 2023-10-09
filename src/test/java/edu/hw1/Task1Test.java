@@ -2,7 +2,6 @@ package edu.hw1;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task1Test {
@@ -10,7 +9,7 @@ public class Task1Test {
     @DisplayName("Minutes_test")
 
     @Test
-    void zeroZero() {
+    void zero_zero() {
         assertEquals(0, Task1.minutesToSeconds("00:00"));
     }
 
@@ -20,12 +19,12 @@ public class Task1Test {
     }
 
     @Test
-    void ManySecs() {
+    void a_lot_secs() {
         assertEquals(-1, Task1.minutesToSeconds("00:61"));
     }
 
     @Test
-    void notManySecs() {
+    void not_a_lot_secs() {
         assertEquals(10, Task1.minutesToSeconds("00:00000000000010"));
     }
 
@@ -38,6 +37,8 @@ public class Task1Test {
     @Test
     void wrongFormat() {
         assertEquals(-1, Task1.minutesToSeconds("10.10"));
+        assertEquals(-1, Task1.minutesToSeconds("1у:10"));
+        assertEquals(-1, Task1.minutesToSeconds("14:1t"));
     }
 
 }
