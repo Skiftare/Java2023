@@ -14,16 +14,15 @@ public class Task4Test {
     @Test
     void solo() {
         assertEquals("1", Task4.fixString("1"));
-
     }
 
     @Test
-    void odd_len() {
+    void oddLength() {
         assertEquals("1234567", Task4.fixString("2143657"));
     }
 
     @Test
-    void even_len() {
+    void evenLength() {
         assertEquals("1234", Task4.fixString("2143"));
     }
 }
