@@ -12,7 +12,7 @@ public class Task6Test {
     }
     @Test
     void notFourDigit(){
-        assertEquals(-1, Task6.funK(0000));
+        assertEquals(-1, Task6.funK(0));
         assertEquals(-1, Task6.funK(1000));
     }
 
