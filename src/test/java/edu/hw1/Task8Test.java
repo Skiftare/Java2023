@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task8Test {
     @Test
-    void test_1(){
+    void testFirst(){
         int [][] board = {{0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 0, 0, 0, 1, 0, 0},
@@ -13,10 +13,10 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 1, 0, 0, 0}};
-        assertEquals(true,Task8.knightBoardCapture(board));
+        assertTrue(Task8.knightBoardCapture(board));
     }
     @Test
-    void test_2(){
+    void testSecond(){
         int[][] board = {
             {1, 0, 1, 0, 1, 0, 1, 0},
             {0, 1, 0, 1, 0, 1, 0, 1},
@@ -27,10 +27,10 @@ public class Task8Test {
             {1, 0, 0, 0, 1, 0, 1, 0},
             {0, 0, 0, 1, 0, 1, 0, 1}
         };
-        assertEquals(false,Task8.knightBoardCapture(board));
+        assertFalse(Task8.knightBoardCapture(board));
     }
     @Test
-    void test_3() {
+    void testThird() {
         int[][] board = {
             {0, 0, 0, 0, 1, 0, 0, 0},
             {0, 0, 0, 0, 0, 1, 0, 0},
@@ -41,7 +41,7 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 1, 0, 0},
             {1, 0, 0, 0, 0, 0, 0, 0}};
 
-        assertEquals(false, Task8.knightBoardCapture(board));
+        assertFalse(Task8.knightBoardCapture(board));
     }
 
 }
