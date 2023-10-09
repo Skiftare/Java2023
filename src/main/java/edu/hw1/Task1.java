@@ -7,20 +7,20 @@ class Task1 {
     private static final Integer SIXTY_NUM = 60;
 
     static int minutesToSeconds(@NotNull String s) {
-        int secs = 0;
-        int mins = 0;
-        String[] nums = s.split(":");
-        if (nums.length != 2) {
+        int secs;
+        int mins;
+        String[] minsAndSecs = s.split(":");
+        if (minsAndSecs.length != 2) {
             return -1;
         }
 
         try {
-            mins = Integer.parseInt(nums[0]);
+            mins = Integer.parseInt(minsAndSecs[0]);
         } catch (NumberFormatException e) {
             mins = -1;
         }
         try {
-            secs = Integer.parseInt(nums[1]);
+            secs = Integer.parseInt(minsAndSecs[1]);
         } catch (NumberFormatException e) {
             secs = -1;
         }
