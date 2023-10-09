@@ -10,12 +10,12 @@ public class Task2Test {
     void standart() {
         assertEquals(3, Task2.countDigits(123));
     }
-
+    @Test
     void zero() {
         assertEquals(0, Task2.countDigits(0));
         assertEquals(0, Task2.countDigits(-0));
     }
-
+    @Test
     void minus() {
         assertEquals(2, Task2.countDigits(-24));
     }
