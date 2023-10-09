@@ -9,8 +9,8 @@ class Task1 {
     static int minutesToSeconds(@NotNull String s) {
         int secs;
         int mins;
-        s =s.replace(" ","");
-        String[] minsAndSecs = s.split(":");
+        String timeInput = s.replace(" ", "");
+        String[] minsAndSecs = timeInput.split(":");
         if (minsAndSecs.length != 2) {
             return -1;
         }
