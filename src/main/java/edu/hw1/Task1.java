@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("HideUtilityClassConstructor")
 class Task1 {
     static int minutesToSeconds(@NotNull String s) {
-        int ans = -1;
         int secs = 0;
         boolean flag = false;
         int mins = 0;
@@ -29,7 +28,7 @@ class Task1 {
             }
 
         }
-        ans = mins * sixtyNum + secs;
+        int ans = mins * sixtyNum + secs;
         if (secs > sixtyNum || !flag) {
             return -1;
         }
