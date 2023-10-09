@@ -4,23 +4,19 @@ package edu.hw1;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task5 {
-    @SuppressWarnings("MagicNumber")
+    private static final Integer TEN_N = 10;
+
     public static int getLast(int n) {
-        int tenN = 10;
-        return n % tenN;
+        return n % TEN_N;
     }
 
-    @SuppressWarnings("MagicNumber")
     public static int delLast(int n) {
-        int tenN = 10;
-        return n / tenN;
+        return n / TEN_N;
     }
 
-    @SuppressWarnings("MagicNumber")
     public static int movDischarge(int n) {
 
-        int tenN = 10;
-        return n * tenN;
+        return n * TEN_N;
     }
 
     private static int getLength(int n) {
