@@ -4,12 +4,14 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 class Task1 {
+    private static final Integer TEN_MULTI = 10;
+    private static final Integer SIXTY_NUM = 60;
+
     static int minutesToSeconds(@NotNull String s) {
         int secs = 0;
         boolean flag = false;
         int mins = 0;
-        private static final Integer tenMulti = 10;
-        private static final Integer sixtyNum = 60;
+
 
         for (int i = 0; i < s.length(); i++) {
             if (s.charAt(i) == ':') {
@@ -20,14 +22,14 @@ class Task1 {
                 return -1;
             }
             if (!flag) {
-                mins = mins * tenMulti + (s.charAt(i) - '0');
+                mins = mins * TEN_MULTI + (s.charAt(i) - '0');
             } else {
-                secs = secs * tenMulti + (s.charAt(i) - '0');
+                secs = secs * TEN_MULTI + (s.charAt(i) - '0');
             }
 
         }
-        int ans = mins * sixtyNum + secs;
-        if (secs > sixtyNum || !flag) {
+        int ans = mins * SIXTY_NUM + secs;
+        if (secs > SIXTY_NUM || !flag) {
             return -1;
         }
 
