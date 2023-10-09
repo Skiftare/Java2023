@@ -3,7 +3,6 @@ package edu.hw1;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("HideUtilityClassConstructor")
-
 class Task1 {
     static int minutesToSeconds(@NotNull String s) {
         int ans = -1;
