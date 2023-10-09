@@ -1,7 +1,5 @@
 package edu.hw1;
 
-
-
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task5 {
     private static final Integer TEN_N = 10;
@@ -15,7 +13,6 @@ public class Task5 {
     }
 
     public static int movDischarge(int n) {
-
         return n * TEN_N;
     }
 
@@ -54,7 +51,6 @@ public class Task5 {
         int len = getLength(n);
         int buf = -1;
         int secN = n;
-
 
         //Случай 111 всё же подходит под условия.
         //Да, в моей реализации У 111 нет потомков.
