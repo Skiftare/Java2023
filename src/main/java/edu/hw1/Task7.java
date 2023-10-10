@@ -1,8 +1,9 @@
 package edu.hw1;
 
-import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 
@@ -12,7 +13,7 @@ public class Task7 {
         return ((int) Math.pow(2, n));
     }
 
-    static public @NotNull ArrayList<Integer> createBinaryView(int n){
+    static public @NotNull ArrayList<Integer> createBinaryView(int n) {
         ArrayList<Integer> binaryView = new ArrayList<>();
         int secN = n;
         while (secN > 0) {
@@ -21,6 +22,7 @@ public class Task7 {
         }
         return  binaryView;
     }
+
     static public int rotateRight(int n, int shift) {
         if (shift < 0) {
             return -1;

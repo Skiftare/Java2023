@@ -9,8 +9,8 @@ public class Task3 {
     public static boolean isNestable(int @NotNull [] fstMas, int[] secMas) {
         Arrays.sort(fstMas);
         Arrays.sort(secMas);
-        boolean NestedOnTheLeft = fstMas[0] > secMas[0];
-        boolean NestedOnTheRight = fstMas[fstMas.length - 1] < secMas[secMas.length - 1];
-        return (NestedOnTheLeft && NestedOnTheRight);
+        boolean nestedOnTheLeft = fstMas[0] > secMas[0];
+        boolean nestedOnTheRight = fstMas[fstMas.length - 1] < secMas[secMas.length - 1];
+        return (nestedOnTheLeft && nestedOnTheRight);
     }
 }

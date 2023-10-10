@@ -52,9 +52,7 @@ public class Task5 {
         int partOfResult = -1;
         int secN = n;
 
-        //Случай 111 всё же подходит под условия.
-        //Да, в моей реализации У 111 нет потомков.
-        // Но само оно палиндромом является
+
         while (len % 2 == 0 || partOfResult == -1) {
             if (isPalindrome(secN, len)) {
                 return true;

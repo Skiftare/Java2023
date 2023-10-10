@@ -25,6 +25,7 @@ class Task1 {
         } catch (NumberFormatException e) {
             seconds = -1;
         }
+
         int ans = minites * FROM_MINUTES_TO_SECONDS + seconds;
         if (seconds > FROM_MINUTES_TO_SECONDS || seconds < 0 || minites < 0) {
             return -1;
