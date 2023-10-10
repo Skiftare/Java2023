@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Task3Test {
+
+    @DisplayName("Массивы между собой не равны. Стандратная серия тестов")
     @Test
     void standart() {
         assertTrue(Task3.isNestable(new int[]{1, 2, 3, 4}, new int[]{0, 6}));
@@ -13,8 +15,9 @@ public class Task3Test {
         assertFalse(Task3.isNestable(new int[]{1, 2, 3, 4}, new int[]{2, 3}));
     }
 
+    @DisplayName("Случай равенства массивов")
     @Test
-    void same_mas() {
+    void sameMas() {
         assertFalse(Task3.isNestable(new int[]{3, 1}, new int[]{1, 3}));
         assertFalse(Task3.isNestable(new int[]{1, 3}, new int[]{3, 1}));
     }
