@@ -39,6 +39,9 @@ public class Task7 {
     }
 
     static public int rotateLeft(int n, int shift) {
+        if (shift < 0) {
+            return -1;
+        }
         int len = 0;
         int secN = n;
         ArrayList<Integer> binaryView = new ArrayList<>();
