@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 class Task1 {
-    private static final Integer SIXTY_NUM = 60;
+    private static final Integer FROM_MINS_TO_SECONDS = 60;
 
     static int minutesToSeconds(@NotNull String s) {
         int secs;
@@ -25,8 +25,8 @@ class Task1 {
         } catch (NumberFormatException e) {
             secs = -1;
         }
-        int ans = mins * SIXTY_NUM + secs;
-        if (secs > SIXTY_NUM || secs < 0 || mins < 0) {
+        int ans = mins * FROM_MINS_TO_SECONDS + secs;
+        if (secs > FROM_MINS_TO_SECONDS || secs < 0 || mins < 0) {
             return -1;
         }
 
