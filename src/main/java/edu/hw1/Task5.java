@@ -2,18 +2,18 @@ package edu.hw1;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task5 {
-    private static final Integer TEN_N = 10;
+    private static final Integer LAST_ELEMENT = 10;
 
     public static int getLast(int n) {
-        return n % TEN_N;
+        return n % LAST_ELEMENT;
     }
 
     public static int delLast(int n) {
-        return n / TEN_N;
+        return n / LAST_ELEMENT;
     }
 
     public static int movDischarge(int n) {
-        return n * TEN_N;
+        return n * LAST_ELEMENT;
     }
 
     private static int getLength(int n) {
@@ -49,27 +49,27 @@ public class Task5 {
 
     public static boolean isPalindromeDescendant(int n) {
         int len = getLength(n);
-        int buf = -1;
+        int partOfResult = -1;
         int secN = n;
 
         //Случай 111 всё же подходит под условия.
         //Да, в моей реализации У 111 нет потомков.
         // Но само оно палиндромом является
-        while (len % 2 == 0 || buf == -1) {
+        while (len % 2 == 0 || partOfResult == -1) {
             if (isPalindrome(secN, len)) {
                 return true;
             }
-            buf = 0;
+            partOfResult = 0;
             for (int i = 0; i < len; i += 2) {
                 if (delLast(getLast(secN) + getLast(delLast(secN))) > 0) {
-                    buf = movDischarge(movDischarge(buf)) + getLast(secN) + getLast(delLast(secN));
+                    partOfResult = movDischarge(movDischarge(partOfResult)) + getLast(secN) + getLast(delLast(secN));
                 } else {
-                    buf = movDischarge(buf) + (getLast(secN) + getLast(delLast(secN)));
+                    partOfResult = movDischarge(partOfResult) + (getLast(secN) + getLast(delLast(secN)));
                 }
                 secN = delLast(delLast(secN));
 
             }
-            secN = buf;
+            secN = partOfResult;
             len = getLength(secN);
         }
         return false;
