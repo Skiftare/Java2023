@@ -4,47 +4,54 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 @SuppressWarnings("HideUtilityClassConstructor")
+
 public class Task7 {
+
+    static public int degreeOfTwo(int n) {
+        return ((int) Math.pow(2, n));
+    }
+
+
     static public int rotateRight(int n, int shift) {
         if (shift < 0) {
             return -1;
         }
         int len = 0;
-        int buf = n;
+        int secN = n;
         ArrayList<Integer> binaryView = new ArrayList<>();
-        while (buf > 0) {
+        while (secN > 0) {
             len += 1;
-            binaryView.add(buf % 2);
-            buf /= 2;
+            binaryView.add(secN % 2);
+            secN /= 2;
         }
         Collections.reverse(binaryView);
-        buf = 0;
-        int degreeTwo = len - 1;
+        int rotatedNumber = 0;
+        int power = len - 1;
         for (int i = len - shift; i < len; i++) {
-            buf = buf + binaryView.get(i) * ((int) Math.pow(2, degreeTwo));
-            degreeTwo -= 1;
+            rotatedNumber = rotatedNumber + binaryView.get(i) * degreeOfTwo(power);
+            power -= 1;
         }
         for (int i = 0; i < len; i++) {
-            buf = buf + binaryView.get(i) * ((int) Math.pow(2, degreeTwo));
-            degreeTwo -= 1;
+            rotatedNumber = rotatedNumber + binaryView.get(i) * degreeOfTwo(power);
+            power -= 1;
         }
-        return buf;
+        return rotatedNumber;
     }
 
     static public int rotateLeft(int n, int shift) {
         int len = 0;
-        int buf = n;
+        int secN = n;
         ArrayList<Integer> binaryView = new ArrayList<>();
-        while (buf > 0) {
+        while (secN > 0) {
             len += 1;
-            binaryView.add(buf % 2);
-            buf /= 2;
+            binaryView.add(secN % 2);
+            secN /= 2;
         }
         binaryView.reversed();
-        buf = 0;
-        for (int i = 0; i < binaryView.size(); i++) {
-            buf = buf + binaryView.get((2 * len - shift + i) % len) * ((int) Math.pow(2, i));
+        int rotatedNumber = 0;
+        for (int power = 0; power < binaryView.size(); power++) {
+            rotatedNumber = rotatedNumber + binaryView.get((2 * len - shift + power) % len) * degreeOfTwo(power);
         }
-        return buf;
+        return rotatedNumber;
     }
 }
