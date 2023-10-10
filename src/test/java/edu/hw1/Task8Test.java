@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task8Test {
-    @DisplayName("1-ый тест из условия. Мир")
+    @DisplayName("Мир")
     @Test
-    void testFirst(){
+    void testThatGetBoardAndReturnedPeace(){
         int [][] board = {{0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 0, 0, 0, 1, 0, 0},
@@ -18,9 +18,9 @@ public class Task8Test {
             {0, 0, 0, 0, 1, 0, 0, 0}};
         assertTrue(Task8.knightBoardCapture(board));
     }
-    @DisplayName("2-ой тест из условия. Конфликт")
+    @DisplayName("Конфликт")
     @Test
-    void testSecond(){
+    void testThatGetBoardAndReturnedConflict(){
         int[][] board = {
             {1, 0, 1, 0, 1, 0, 1, 0},
             {0, 1, 0, 1, 0, 1, 0, 1},
@@ -32,21 +32,20 @@ public class Task8Test {
             {0, 0, 0, 1, 0, 1, 0, 1}
         };
         assertFalse(Task8.knightBoardCapture(board));
-    }
-    @DisplayName("3-ий тест из условия. Конфликт")
-    @Test
-    void testThird() {
-        int[][] board = {
-            {0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 1, 0, 0, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 0},
-            {1, 0, 0, 0, 0, 0, 0, 0}};
+
+        board = new int[][]{
+                {0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 1, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0}
+        };
 
         assertFalse(Task8.knightBoardCapture(board));
     }
+
 
 }

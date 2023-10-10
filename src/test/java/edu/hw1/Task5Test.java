@@ -6,28 +6,29 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Task5Test {
-    @DisplayName("Серия тестов из условия")
+
+    @DisplayName("Случай с четной длинной строки")
     @Test
-    void standart() {
-        assertTrue(Task5.isPalindromeDescendant(11211230));
-        assertTrue(Task5.isPalindromeDescendant(13001120));
+    void TestThatGetEvenLengthOfNumberAndReturnedPalindromeCheck() {
         assertTrue(Task5.isPalindromeDescendant(23336014));
-        assertTrue(Task5.isPalindromeDescendant(11));
+        assertTrue(Task5.isPalindromeDescendant(13001120));
+        assertTrue(Task5.isPalindromeDescendant(11211230));
     }
-    
+
     @DisplayName("Случай с нечетной длинной строки")
     @Test
-    void oddLengthOfNum() {
+    void TestThatGetOddLengthOfNumberAndReturnedPalindromeCheck() {
         assertTrue(Task5.isPalindromeDescendant(121));
         assertFalse(Task5.isPalindromeDescendant(123));
     }
-    
+
     @DisplayName("Сумма двух соседних цифр больше 10")
     @Test
-    void sumNumbersMore10() {
+    void testThatGetNumberWhereSumOfDigitsMore10AndReturnedPalindromeCheck() {
 
         assertTrue(Task5.isPalindromeDescendant(5683));
         assertTrue(Task5.isPalindromeDescendant(5582));//1010 -> 11
+        assertTrue(Task5.isPalindromeDescendant(11));
     }
 
 }
