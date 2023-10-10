@@ -7,8 +7,8 @@ class Task1 {
     private static final Integer FROM_MINS_TO_SECONDS = 60;
 
     static int minutesToSeconds(@NotNull String s) {
-        int secs;
-        int mins;
+        int seconds;
+        int minites;
         String timeInput = s.replace(" ", "");
         String[] minsAndSecs = timeInput.split(":");
         if (minsAndSecs.length != 2) {
@@ -16,17 +16,17 @@ class Task1 {
         }
 
         try {
-            mins = Integer.parseInt(minsAndSecs[0]);
+            minites = Integer.parseInt(minsAndSecs[0]);
         } catch (NumberFormatException e) {
-            mins = -1;
+            minites = -1;
         }
         try {
-            secs = Integer.parseInt(minsAndSecs[1]);
+            seconds = Integer.parseInt(minsAndSecs[1]);
         } catch (NumberFormatException e) {
-            secs = -1;
+            seconds = -1;
         }
-        int ans = mins * FROM_MINS_TO_SECONDS + secs;
-        if (secs > FROM_MINS_TO_SECONDS || secs < 0 || mins < 0) {
+        int ans = minites * FROM_MINS_TO_SECONDS + seconds;
+        if (seconds > FROM_MINS_TO_SECONDS || seconds < 0 || minites < 0) {
             return -1;
         }
 
