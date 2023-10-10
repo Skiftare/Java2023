@@ -19,11 +19,11 @@ public class Task6 {
         return -1;
     }
 
-    public static int funK(int n, int cnt) {
+    public static int funK(int n, int depthOfRecursion) {
         int secN = n;
 
         if (n == FINAL_NUM) {
-            return cnt;
+            return depthOfRecursion;
         }
 
         ArrayList<Integer> charsForN = new ArrayList<>();
@@ -37,13 +37,13 @@ public class Task6 {
             }
         }
         Collections.sort(charsForN);
-        int minNum = 0;
-        int maxNum = 0;
+        int minNumber = 0;
+        int maxNumber = 0;
         for (int i = 0; i < charsForN.size(); i++) {
-            minNum = movDischarge(minNum) + charsForN.get(i);
-            maxNum = movDischarge(maxNum) + charsForN.get(charsForN.size() - i - 1);
+            minNumber = movDischarge(minNumber) + charsForN.get(i);
+            maxNumber = movDischarge(maxNumber) + charsForN.get(charsForN.size() - i - 1);
         }
-        return funK(maxNum - minNum, cnt + 1);
+        return funK(maxNumber - minNumber, depthOfRecursion + 1);
 
     }
 }

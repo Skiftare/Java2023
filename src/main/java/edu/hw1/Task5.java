@@ -16,14 +16,14 @@ public class Task5 {
         return n * LAST_ELEMENT;
     }
 
-    private static int getLength(int n) {
+    public static int getLength(int n) {
         int secN = n;
-        int len = 0;
+        int countOfDigits = 0;
         while (secN > 0) {
-            len += 1;
+            countOfDigits += 1;
             secN = delLast(secN);
         }
-        return len;
+        return countOfDigits;
     }
 
     private static boolean isPalindrome(int n, int len) {

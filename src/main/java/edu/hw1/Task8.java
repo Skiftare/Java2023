@@ -6,14 +6,14 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("HideUtilityClassConstructor")
 
 public class Task8 {
-    private static final Integer NEED_D = 5;
-    private static final Integer HORSE = 1;
+    private static final Integer NEED_FIGHT_DISTANCE = 5;
+    private static final Integer THIS_CELL_IS_HORSE = 1;
 
     public static boolean knightBoardCapture(int[] @NotNull [] board) {
         ArrayList<int[]> knightCoords = new ArrayList<>();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board.length; j++) {
-                if (board[i][j] == HORSE) {
+                if (board[i][j] == THIS_CELL_IS_HORSE) {
                     knightCoords.add(new int[] {i, j});
                 }
             }
@@ -27,7 +27,7 @@ public class Task8 {
                 int deltaY = coordsTwo[1] - coordsOne[1];
                 int resDistance = (int) Math.pow(deltaX, 2) + (int) Math.pow(deltaY, 2);
 
-                if (resDistance == NEED_D) {
+                if (resDistance == NEED_FIGHT_DISTANCE) {
                     ans = false;
                     break;
                 }
