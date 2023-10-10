@@ -1,10 +1,12 @@
 package edu.hw1;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class Task5Test {
+    @DisplayName("Серия тестов из условия")
     @Test
     void standart() {
         assertTrue(Task5.isPalindromeDescendant(11211230));
@@ -12,13 +14,15 @@ public class Task5Test {
         assertTrue(Task5.isPalindromeDescendant(23336014));
         assertTrue(Task5.isPalindromeDescendant(11));
     }
-
+    
+    @DisplayName("Случай с нечетной длинной строки")
     @Test
     void oddLengthOfNum() {
         assertTrue(Task5.isPalindromeDescendant(121));
         assertFalse(Task5.isPalindromeDescendant(123));
     }
-
+    
+    @DisplayName("Сумма двух соседних цифр больше 10")
     @Test
     void sumNumbersMore10() {
 
