@@ -8,7 +8,7 @@ public class Task1Test {
 
     @DisplayName("zeroZero")
     @Test
-    void zero_zero() {
+    void zeroZero() {
         assertEquals(0, Task1.minutesToSeconds("00:00"));
 
     }
@@ -22,13 +22,13 @@ public class Task1Test {
 
     @DisplayName("Некорректное количество секунд")
     @Test
-    void a_lot_secs() {
+    void aLotSecs() {
         assertEquals(-1, Task1.minutesToSeconds("00:61"));
     }
 
     @DisplayName("Корректное количество секунд, но есть ведущие нули")
     @Test
-    void not_a_lot_secs() {
+    void notALotSecs() {
         assertEquals(10, Task1.minutesToSeconds("00:00000000000010"));
         assertEquals(10*60+10, Task1.minutesToSeconds("10:00000000000010"));
     }
