@@ -18,8 +18,8 @@ public class Task8 {
                 }
             }
         }
-        boolean ans = true;
-        for (int i = 0; i < knightCoords.size() && ans; i++) {
+        boolean statusOfConflict = true;
+        for (int i = 0; i < knightCoords.size() && statusOfConflict; i++) {
             for (int j = i + 1; j < knightCoords.size(); j++) {
                 int[] coordsOne = knightCoords.get(i);
                 int[] coordsTwo = knightCoords.get(j);
@@ -28,11 +28,11 @@ public class Task8 {
                 int resDistance = (int) Math.pow(deltaX, 2) + (int) Math.pow(deltaY, 2);
 
                 if (resDistance == NEED_FIGHT_DISTANCE) {
-                    ans = false;
+                    statusOfConflict = false;
                     break;
                 }
             }
         }
-        return ans;
+        return statusOfConflict;
     }
 }
