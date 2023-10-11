@@ -54,7 +54,8 @@ public class Task7 {
         Collections.reverse(binaryView);
         int rotatedNumber = 0;
         for (int power = 0; power < binaryView.size(); power++) {
-            rotatedNumber = rotatedNumber + binaryView.get((2 * lenOfN + shift + power) % lenOfN) * degreeOfTwo(lenOfN - power-1);
+            int binaryDigitOnPos = binaryView.get((2 * lenOfN + shift + power) % lenOfN);
+            rotatedNumber = rotatedNumber + binaryDigitOnPos * degreeOfTwo(lenOfN - power - 1);
         }
         return rotatedNumber;
     }
