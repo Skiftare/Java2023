@@ -9,7 +9,7 @@ public class Task5Test {
 
     @DisplayName("Случай с четной длинной строки")
     @Test
-    void TestThatGetEvenLengthOfNumberAndReturnedPalindromeCheck() {
+    void testThatGetEvenLengthOfNumberAndReturnedPalindromeCheck() {
         assertTrue(Task5.isPalindromeDescendant(23336014));
         assertTrue(Task5.isPalindromeDescendant(13001120));
         assertTrue(Task5.isPalindromeDescendant(11211230));
@@ -17,7 +17,7 @@ public class Task5Test {
 
     @DisplayName("Случай с нечетной длинной строки")
     @Test
-    void TestThatGetOddLengthOfNumberAndReturnedPalindromeCheck() {
+    void testThatGetOddLengthOfNumberAndReturnedPalindromeCheck() {
         assertTrue(Task5.isPalindromeDescendant(121));
         assertFalse(Task5.isPalindromeDescendant(123));
     }
