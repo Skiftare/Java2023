@@ -5,8 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task8Test {
-    @DisplayName("Мир")
+
     @Test
+    @DisplayName("Мир")
     void testThatGetBoardAndReturnedPeace(){
         int [][] board = {{0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
@@ -18,8 +19,9 @@ public class Task8Test {
             {0, 0, 0, 0, 1, 0, 0, 0}};
         assertTrue(Task8.knightBoardCapture(board));
     }
-    @DisplayName("Конфликт")
+
     @Test
+    @DisplayName("Конфликт")
     void testThatGetBoardAndReturnedConflict(){
         int[][] board = {
             {1, 0, 1, 0, 1, 0, 1, 0},
