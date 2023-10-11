@@ -6,7 +6,6 @@ import java.util.Collections;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("HideUtilityClassConstructor")
-
 public class Task7 {
 
     static public int degreeOfTwo(int n) {
