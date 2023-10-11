@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("HideUtilityClassConstructor")
-
 public class Task8 {
     private static final Integer NEED_FIGHT_DISTANCE = 5;
     private static final Integer THIS_CELL_IS_HORSE = 1;
