@@ -20,7 +20,7 @@ public class Task7 {
             binaryView.add(secN % 2);
             secN /= 2;
         }
-        return  binaryView;
+        return binaryView;
     }
 
     static public int rotateRight(int n, int shift) {
@@ -48,12 +48,13 @@ public class Task7 {
         if (shift < 0) {
             return -1;
         }
+
         ArrayList<Integer> binaryView = createBinaryView(n);
         int lenOfN = binaryView.size();
-        binaryView.reversed();
+        Collections.reverse(binaryView);
         int rotatedNumber = 0;
         for (int power = 0; power < binaryView.size(); power++) {
-            rotatedNumber = rotatedNumber + binaryView.get((2 * lenOfN - shift + power) % lenOfN) * degreeOfTwo(power);
+            rotatedNumber = rotatedNumber + binaryView.get((2 * lenOfN + shift + power) % lenOfN) * degreeOfTwo(lenOfN - power-1);
         }
         return rotatedNumber;
     }

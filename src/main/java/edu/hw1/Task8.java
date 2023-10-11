@@ -11,18 +11,18 @@ public class Task8 {
 
     public static boolean knightBoardCapture(int[] @NotNull [] board) {
         ArrayList<int[]> knightCoords = new ArrayList<>();
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board.length; j++) {
-                if (board[i][j] == THIS_CELL_IS_HORSE) {
-                    knightCoords.add(new int[] {i, j});
+        for (int posByI = 0; posByI < board.length; posByI++) {
+            for (int posByJ = 0; posByJ < board.length; posByJ++) {
+                if (board[posByI][posByJ] == THIS_CELL_IS_HORSE) {
+                    knightCoords.add(new int[] {posByI, posByJ});
                 }
             }
         }
         boolean statusOfConflict = true;
-        for (int i = 0; i < knightCoords.size() && statusOfConflict; i++) {
-            for (int j = i + 1; j < knightCoords.size(); j++) {
-                int[] coordsOne = knightCoords.get(i);
-                int[] coordsTwo = knightCoords.get(j);
+        for (int posByI = 0; posByI < knightCoords.size() && statusOfConflict; posByI++) {
+            for (int posByJ = posByI + 1; posByJ < knightCoords.size(); posByJ++) {
+                int[] coordsOne = knightCoords.get(posByI);
+                int[] coordsTwo = knightCoords.get(posByJ);
                 int deltaX = coordsTwo[0] - coordsOne[0];
                 int deltaY = coordsTwo[1] - coordsOne[1];
                 int resDistance = (int) Math.pow(deltaX, 2) + (int) Math.pow(deltaY, 2);
