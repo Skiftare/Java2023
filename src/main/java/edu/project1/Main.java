@@ -1,28 +1,147 @@
 package edu.project1;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import javax.xml.crypto.dsig.spec.XSLTTransformParameterSpec;
+import java.util.Random;
+import java.util.Scanner;
 
-// Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
-public final class Main {
-    private final static Logger LOGGER = LogManager.getLogger();
-
-    private Main() {
-
+class Session {
+    private final String answer;
+    private final char[] userAnswer;
+    private final int maxAttempts;
+    private int attempts;
+    private final String [] variantsOfWord = {"Squush", "Kickshaw", "Zugzwang", "Ytterbium", "Randkluft", "Yclept"};
+    Session() {
+        this.answer = randomWord();
+        this.userAnswer = " ".toCharArray();
+        this.maxAttempts = 5;
+        this.attempts = 0;
     }
 
-    public static void main(String[] args) {
-        // Press Alt+Enter with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        LOGGER.info("Hello and welcome!");
+    @NotNull GuessResult guess(char guess) {
+        return null;
+    }
 
-        // Press Shift+F10 or click the green arrow button in the gutter to run the code.
-        for (int i = 0; i <= 2; i++) {
+    @NotNull GuessResult giveUp() {
+        return null;
+    }
 
-            // Press Shift+F9 to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing Ctrl+F8.
-            LOGGER.info("i = {}", i);
+    public @NotNull String randomWord() {
+        return variantsOfWord[new Random().nextInt(variantsOfWord.length)];
+    }
+}
+
+sealed interface GuessResult {
+    char[] state();
+    int attempt();
+    int maxAttempts();
+    @NotNull String message();
+
+    record Defeat() implements GuessResult {
+        @Override
+        public char[] state() {
+            return new char[0];
         }
+
+        @Override
+        public int attempt() {
+            return 0;
+        }
+
+        @Override
+        public int maxAttempts() {
+            return 0;
+        }
+
+        @Override
+        public @NotNull String message() {
+            return "You have exceeded the maximum allowed number of attempts. Good luck next time!";
+        }
+    }
+    record Win() implements GuessResult {
+
+        @Override
+        public char[] state() {
+            return new char[0];
+        }
+
+        @Override
+        public int attempt() {
+            return 0;
+        }
+
+        @Override
+        public int maxAttempts() {
+            return 0;
+        }
+
+        @Override
+        public @NotNull String message() {
+            return null;
+        }
+    }
+    record SuccessfulGuess() implements GuessResult {
+
+        @Override
+        public char[] state() {
+            return new char[0];
+        }
+
+        @Override
+        public int attempt() {
+            return 0;
+        }
+
+        @Override
+        public int maxAttempts() {
+            return 0;
+        }
+
+        @Override
+        public @NotNull String message() {
+            return null;
+        }
+    }
+    record FailedGuess() implements GuessResult {
+
+        @Override
+        public char[] state() {
+            return new char[0];
+        }
+
+        @Override
+        public int attempt() {
+            return 0;
+        }
+
+        @Override
+        public int maxAttempts() {
+            return 0;
+        }
+
+        @Override
+        public @NotNull String message() {
+            return null;
+        }
+    }
+}
+
+
+class ConsoleHangman {
+    public void run() {
+        Session newGame = new Session();
+        Scanner input = new Scanner(System.in);
+        while (true) {
+            String userInput = input.nextLine();
+
+        }
+    }
+    private GuessResult tryGuess(Session session, String input) {
+
+        return null;
+    }
+
+    private void printState(GuessResult guess) {
+
     }
 }
