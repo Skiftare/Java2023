@@ -1,52 +1,60 @@
 package edu.hw2;
 
+import org.apache.logging.log4j.core.tools.picocli.CommandLine;
+
 public sealed interface Expr {
     double evaluate();
 
-    public record Constant(double incomeValue) implements Expr {
-        private static double constantValue;
-        public Constant{
-            constantValue = incomeValue;
-        }
+    record Constant(double incomeValue) implements Expr {
+
         @Override
         public double evaluate() {
-            return constantValue;
+            return incomeValue;
         }
     }
     public record Negate(Expr incomeValue) implements Expr {
-        private static double negateValue;
 
-        public Negate{
-            negateValue = incomeValue.evaluate();
-        }
         @Override
         public double evaluate() {
-            return negateValue;
+            return -incomeValue.evaluate();
         }
     }
     //Тут я остановился
     public record Exponent(Expr incomeBaseOfExponent, double incomeDegreeOfExponent) implements Expr {
-        static double baseOfExponent;
-        static double degreeOfExponent;
+
+
+
         public Exponent {
-            baseOfExponent = incomeBaseOfExponent.evaluate();
-            degreeOfExponent = incomeDegreeOfExponent;
+            double resultOfExponent = Math.pow(incomeBaseOfExponent.evaluate(),incomeDegreeOfExponent);
+            if(resultOfExponent != Math.pow(incomeBaseOfExponent.evaluate(),incomeDegreeOfExponent)){
+                throw new RuntimeException("NaN, wrong numbers, ExponentError");
+            }
         }
         @Override
         public double evaluate() {
-            return Math.pow(baseOfExponent,degreeOfExponent);
+            /*if(Math.pow(baseOfExponent,degreeOfExponent) != Math.pow(baseOfExponent,degreeOfExponent)){
+                throw new CommandLine.ExecutionException(,"NaN");
+            }*/
+            return Math.pow(incomeBaseOfExponent.evaluate(),incomeDegreeOfExponent);
         }
     }
-    public record Addition() implements Expr {
+    public record Addition(Expr incomeFirstAddition, Expr incomeSecondAddition) implements Expr {
+
         @Override
         public double evaluate() {
-            return 0;
+            //System.out.println(firstAddition + secondAddition);
+            //System.out.println(incomeFirstAddition.evaluate());
+            //System.out.println(incomeSecondAddition.evaluate());
+            return incomeFirstAddition.evaluate() +  incomeSecondAddition.evaluate();
         }
     }
-    public record Multiplication() implements Expr {
+    public record Multiplication(Expr incomeFirstMultiplication, Expr incomeSecondMultiplication) implements Expr {
+
         @Override
         public double evaluate() {
-            return 0;
+            double firstMultiplication = incomeFirstMultiplication.evaluate();
+            double secondMultiplication = incomeSecondMultiplication.evaluate();
+            return firstMultiplication * secondMultiplication;
         }
     }
 }
