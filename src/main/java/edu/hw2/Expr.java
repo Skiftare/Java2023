@@ -25,11 +25,16 @@ public sealed interface Expr {
         }
     }
     //Тут я остановился
-    public record Exponent(Expr baseOfExponent, double degreeOfExponent) implements Expr {
-
+    public record Exponent(Expr incomeBaseOfExponent, double incomeDegreeOfExponent) implements Expr {
+        static double baseOfExponent;
+        static double degreeOfExponent;
+        public Exponent {
+            baseOfExponent = incomeBaseOfExponent.evaluate();
+            degreeOfExponent = incomeDegreeOfExponent;
+        }
         @Override
         public double evaluate() {
-            return 0;
+            return Math.pow(baseOfExponent,degreeOfExponent);
         }
     }
     public record Addition() implements Expr {
