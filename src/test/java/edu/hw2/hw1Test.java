@@ -103,7 +103,6 @@ public class hw1Test {
         Throwable ex = assertThrows(RuntimeException.class,()-> {
                 new Expr.Exponent(new Expr.Constant(baseNan), degreeNan);
             }
-
         );
         Assertions.assertEquals("NaN, wrong numbers, ExponentError", ex.getMessage());
     }

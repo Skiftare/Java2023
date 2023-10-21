@@ -21,9 +21,10 @@ public final class PopularCommandExecutor {
                 return;
             } catch (ConnectionException e) {
                 if(currentAttempt == maxAttempts) {
-                    throw e;
+                    throw new ConnectionException("Connection Exception", e);
                 }
             }
         }
+
     }
 }
