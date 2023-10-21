@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class TestForExpr {
+public class hw1Test {
     @Test
     @DisplayName("Тест из условия")
     void testFromCondition(){
@@ -18,7 +18,7 @@ public class TestForExpr {
         var mult = new Expr.Multiplication(sumTwoFour, negOne);
         var exp = new Expr.Exponent(mult, 2);
         var res = new Expr.Addition(exp, new Expr.Constant(1));
-
+        //TODO: посчитать руками и написать тест
         System.out.println(res + " = " + res.evaluate());
     }
 
