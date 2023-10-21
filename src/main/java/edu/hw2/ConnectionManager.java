@@ -5,14 +5,14 @@ import org.jetbrains.annotations.NotNull;
 
 public interface ConnectionManager {
     Connection getConnection();
-    record DefaultConnectionManager() implements ConnectionManager{
+
+    record DefaultConnectionManager() implements ConnectionManager {
 
         @Contract(pure = true) @Override
         public @NotNull Connection getConnection() {
 
-
             Connection newConnection = new Connection.StableConnection();
-            if(RandomGenerating.RandomGen()%2 == 1){
+            if (RandomGenerating.randomGen() % 2 == 1) {
                 newConnection = new Connection.FaultyConnection();
             }
 
@@ -22,7 +22,7 @@ public interface ConnectionManager {
 
     }
 
-    record FaultyConnectionManager() implements ConnectionManager{
+    record FaultyConnectionManager() implements ConnectionManager {
 
         @Override
         public @NotNull Connection getConnection() {

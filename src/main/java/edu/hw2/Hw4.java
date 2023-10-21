@@ -2,6 +2,8 @@ package edu.hw2;
 
 import org.jetbrains.annotations.NotNull;
 
+
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Hw4 {
     static @NotNull String callingInfo() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();

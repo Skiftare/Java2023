@@ -15,12 +15,12 @@ public final class PopularCommandExecutor {
 
     void tryExecute(String command) throws Exception {
         //Пытаемся выполнить команду
-        for(int currentAttempt = 1;currentAttempt<=maxAttempts;currentAttempt++){
-            try{
+        for (int currentAttempt = 1; currentAttempt <= maxAttempts; currentAttempt++) {
+            try {
                 manager.getConnection().execute(command);
                 return;
             } catch (ConnectionException e) {
-                if(currentAttempt == maxAttempts) {
+                if (currentAttempt == maxAttempts) {
                     throw new ConnectionException("Connection Exception", e);
                 }
             }

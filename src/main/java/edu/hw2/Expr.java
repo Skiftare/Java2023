@@ -1,6 +1,5 @@
 package edu.hw2;
 
-import org.apache.logging.log4j.core.tools.picocli.CommandLine;
 
 public sealed interface Expr {
     double evaluate();
@@ -12,6 +11,7 @@ public sealed interface Expr {
             return incomeValue;
         }
     }
+
     public record Negate(Expr incomeValue) implements Expr {
 
         @Override
@@ -20,24 +20,25 @@ public sealed interface Expr {
         }
     }
     //Тут я остановился
+
     public record Exponent(Expr incomeBaseOfExponent, double incomeDegreeOfExponent) implements Expr {
 
-
-
         public Exponent {
-            double resultOfExponent = Math.pow(incomeBaseOfExponent.evaluate(),incomeDegreeOfExponent);
-            if(resultOfExponent != Math.pow(incomeBaseOfExponent.evaluate(),incomeDegreeOfExponent)){
+            double resultOfExponent = Math.pow(incomeBaseOfExponent.evaluate(), incomeDegreeOfExponent);
+            if (resultOfExponent != Math.pow(incomeBaseOfExponent.evaluate(), incomeDegreeOfExponent)) {
                 throw new RuntimeException("NaN, wrong numbers, ExponentError");
             }
         }
+
         @Override
         public double evaluate() {
             /*if(Math.pow(baseOfExponent,degreeOfExponent) != Math.pow(baseOfExponent,degreeOfExponent)){
                 throw new CommandLine.ExecutionException(,"NaN");
             }*/
-            return Math.pow(incomeBaseOfExponent.evaluate(),incomeDegreeOfExponent);
+            return Math.pow(incomeBaseOfExponent.evaluate(), incomeDegreeOfExponent);
         }
     }
+
     public record Addition(Expr incomeFirstAddition, Expr incomeSecondAddition) implements Expr {
 
         @Override
@@ -48,6 +49,7 @@ public sealed interface Expr {
             return incomeFirstAddition.evaluate() +  incomeSecondAddition.evaluate();
         }
     }
+
     public record Multiplication(Expr incomeFirstMultiplication, Expr incomeSecondMultiplication) implements Expr {
 
         @Override

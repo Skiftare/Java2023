@@ -17,7 +17,7 @@ public class hw3Test {
             RandomGenerating.init();
             Connection cnct = new Connection.StableConnection();
             String command = "SomeCommand";
-            assertEquals(cnct.execute(command), "Command + " + command + " successfully executed");
+            assertEquals(cnct.execute(command), command);
         }
 
         @Test
@@ -52,7 +52,7 @@ public class hw3Test {
                 } catch (Exception ignored) {
                     //System.out.println("Q");
                 }
-                assertEquals(cnct.execute(command), "Command + " + command + " successfully executed");
+                assertEquals(cnct.execute(command), command);
             }
         }
     }
