@@ -99,7 +99,7 @@ public class Task3Test {
     }
 
     @Nested
-    class tryExecTests{
+    class TryExecTests{
         @Test
         @DisplayName("Удачное выполнение tryExecute с DefaultManager")
         void testThatGetCommandFromDefaultManagerAndReturnedSuccess() throws Exception {
