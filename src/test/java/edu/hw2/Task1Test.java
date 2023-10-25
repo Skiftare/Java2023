@@ -17,8 +17,7 @@ public class Task1Test {
         var mult = new Expr.Multiplication(sumTwoFour, negOne);
         var exp = new Expr.Exponent(mult, 2);
         var res = new Expr.Addition(exp, new Expr.Constant(1));
-        //TODO: посчитать руками и написать тест
-        //System.out.println(res + " = " + res.evaluate());
+
         assertEquals(res.evaluate(), 37);
     }
 
