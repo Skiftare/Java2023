@@ -7,10 +7,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class hw1Test {
+public class Task1Test {
     @Test
     @DisplayName("Тест из условия")
-    void testFromCondition(){
+    void testThatGetHardExpressionAndReturnedResultOfIt(){
         var two = new Expr.Constant(2);
         var four = new Expr.Constant(4);
         var negOne = new Expr.Negate(new Expr.Constant(1));
@@ -19,12 +19,13 @@ public class hw1Test {
         var exp = new Expr.Exponent(mult, 2);
         var res = new Expr.Addition(exp, new Expr.Constant(1));
         //TODO: посчитать руками и написать тест
-        System.out.println(res + " = " + res.evaluate());
+        //System.out.println(res + " = " + res.evaluate());
+        assertEquals(res.evaluate(), 37);
     }
 
     @Test
     @DisplayName("Тест для констант")
-    void testForCoinstantFunction(){
+    void testThatGetConstantNumberAndReturnedCreatedConstant(){
         double valueOfConstant = 2.457;
         var constant = new Expr.Constant(valueOfConstant);
         assertEquals(constant.evaluate(), valueOfConstant);
@@ -32,7 +33,7 @@ public class hw1Test {
 
     @Test
     @DisplayName("Тест для обратного отностильно сложения элемента")
-    void testForCoinstantNegate(){
+    void testThatGetNumberInClassAndReturnedCreatedNegateConstant(){
         double valueOfNegate = 2.457;
         var negate = new Expr.Negate(new Expr.Constant(valueOfNegate));
         assertEquals(negate.evaluate(), -valueOfNegate);
@@ -40,14 +41,11 @@ public class hw1Test {
 
     @Test
     @DisplayName("Тест на сложение двух чисел")
-    void testForAddition(){
+    void testThatGetTwoNumbersAsClassesAndReturnedAdditionOfThem(){
         double incomeFst = 2.34;
         double incomeSec = 34589.56;
         var constFst = new Expr.Constant(incomeFst);
         var constSec = new Expr.Constant(incomeSec);
-        //System.out.println(constSec.evaluate());
-        //System.out.println(constFst.evaluate());
-        //System.out.println(constSec.evaluate()+constFst.evaluate());
 
         var sumOfIncomes = new Expr.Addition(constFst, constSec);
         assertEquals(sumOfIncomes.evaluate(),incomeFst + incomeSec);
@@ -59,14 +57,11 @@ public class hw1Test {
 
     @Test
     @DisplayName("Тест на умножение двух положительных чисел")
-    void testForMultiplicationOfTwoPositiveNumbers(){
+    void testThatGetTwoPositiveNumbersAndReturnedMultiplication(){
         double incomeFst = 2.34;
         double incomeSec = 34589.56;
         var constFst = new Expr.Constant(incomeFst);
         var constSec = new Expr.Constant(incomeSec);
-        //System.out.println(constSec.evaluate());
-        //System.out.println(constFst.evaluate());
-        //System.out.println(constSec.evaluate()+constFst.evaluate());
 
         var multOfIncomes = new Expr.Multiplication(constFst, constSec);
         assertEquals(multOfIncomes.evaluate(),incomeFst * incomeSec);
@@ -78,14 +73,11 @@ public class hw1Test {
 
     @Test
     @DisplayName("Тест на умножение двух отрицательных чисел")
-    void testForMultiplicationTwoNegativeNumbers(){
+    void testThatGetTwoNegativeNumbersAndReturnedMultiplication(){
         double incomeFst = -2.34;
         double incomeSec = -34589.56;
         var constFst = new Expr.Constant(incomeFst);
         var constSec = new Expr.Constant(incomeSec);
-        //System.out.println(constSec.evaluate());
-        //System.out.println(constFst.evaluate());
-        //System.out.println(constSec.evaluate()+constFst.evaluate());
 
         var multOfIncomes = new Expr.Multiplication(constFst, constSec);
         assertEquals(multOfIncomes.evaluate(),incomeFst * incomeSec);
@@ -97,7 +89,7 @@ public class hw1Test {
 
     @Test
     @DisplayName("Тест на возведение в степень NaN")
-    void testForNanExponent(){
+    void testThatGetTwoNumbersAndReturnedExceptionOfExponent(){
         double baseNan = -7.525;
         double degreeNan = 1.490;
         Throwable ex = assertThrows(RuntimeException.class,()-> {
@@ -109,7 +101,7 @@ public class hw1Test {
 
     @Test
     @DisplayName("Тест на возведение в степень ")
-    void testForExponent(){
+    void testThatGetTwoNumbersAndReturnedExponent(){
         double base = 7.525;
         double degree = 1.490;
         var res = new Expr.Exponent(new Expr.Constant(base), degree);

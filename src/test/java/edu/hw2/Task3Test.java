@@ -8,12 +8,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class hw3Test {
+public class Task3Test {
     @Nested
     class ConnectionTests {
         @Test
         @DisplayName("Тест стабильного соединения")
-        void testOfStableConnection() throws Exception {
+        void testThatCreateStableConnectionAndReturnedWorkingConnection() throws Exception {
             RandomGenerating.init();
             Connection cnct = new Connection.StableConnection();
             String command = "SomeCommand";
@@ -22,7 +22,7 @@ public class hw3Test {
 
         @Test
         @DisplayName("Тест нестабильного соединения на разрыв")
-        void testOfFaultyConnectionToException() throws Exception {
+        void testThatCreateFaultyConnectionAndReturnedException() throws Exception {
             RandomGenerating.init();
             try (Connection cnct = new Connection.FaultyConnection()) {
                 String command = "SomeCommand";
@@ -38,7 +38,7 @@ public class hw3Test {
 
         @Test
         @DisplayName("Тест нестабильного соединения на работу")
-        void testOfFaultyConnectionToWork() throws Exception {
+        void testThatCreateFaultyConnectionAndReturnedWorkingConnection() throws Exception {
             RandomGenerating.init();
             try (Connection cnct = new Connection.FaultyConnection()) {
                 String command = "SomeCommand";
@@ -60,7 +60,7 @@ public class hw3Test {
     class ConnectionManagersTests{
         @Test
         @DisplayName("Default Manager test for FaultyConnection")
-        void testOfDefaultConnectionManagerOfFaultyConn() {
+        void testThatCreateDefaultManagerAndReturnedFaultyConnection() {
             RandomGenerating.init();
             ConnectionManager connManager = new ConnectionManager.DefaultConnectionManager();
             Connection res = connManager.getConnection();
@@ -68,7 +68,7 @@ public class hw3Test {
         }
         @Test
         @DisplayName("Default Manager test for SuccseccConnection")
-        void testOfDefaultConnectionManagerOfSuccConn() {
+        void testThatCreateDefaultManagerAndReturnedStableConnection() {
             RandomGenerating.init();
             ConnectionManager connManager = new ConnectionManager.DefaultConnectionManager();
             Connection res = connManager.getConnection();
@@ -79,7 +79,7 @@ public class hw3Test {
 
         @Test
         @DisplayName("Faulty Manager test for FaultyConnection")
-        void testOfDefaultFaultyManagerOfFaultyConn() {
+        void testThatCreateFaultyManagerAndReturnedFaultyConnection() {
             RandomGenerating.init();
             ConnectionManager connManager = new ConnectionManager.FaultyConnectionManager();
             Connection res = connManager.getConnection();
@@ -87,7 +87,7 @@ public class hw3Test {
         }
         @Test
         @DisplayName("Faulty Manager test for NOT SuccseccConnection")
-        void testOfFaultyConnectionManagerOfSuccConn() {
+        void testThatCreateFaultyManagerAndReturnedNotStableConnection() {
             RandomGenerating.init();
             ConnectionManager connManager = new ConnectionManager.FaultyConnectionManager();
             Connection res = connManager.getConnection();
@@ -102,7 +102,7 @@ public class hw3Test {
     class tryExecTests{
         @Test
         @DisplayName("Удачное выполнение tryExecute с DefaultManager")
-        void testForSuccseccExecutionDefault() throws Exception {
+        void testThatGetCommandFromDefaultManagerAndReturnedSuccess() throws Exception {
             RandomGenerating.init();
             ConnectionManager manager = new ConnectionManager.DefaultConnectionManager();
             var executor = new PopularCommandExecutor(manager,3);
@@ -112,7 +112,7 @@ public class hw3Test {
 
         @Test
         @DisplayName("Неудачное выполнение tryExecute с  DefaultManager")
-        void testForFaultyExecutionDefault() throws Exception {
+        void testThatGetCommandFromDefaultManagerAndReturnedException() throws Exception {
             RandomGenerating.init();
             ConnectionManager manager = new ConnectionManager.DefaultConnectionManager();
             var executor = new PopularCommandExecutor(manager,1);
@@ -126,7 +126,7 @@ public class hw3Test {
 
         @Test
         @DisplayName("Неудачное выполнение tryExecute с FaultyManager")
-        void testForFaultyExecutionFaulty() throws Exception {
+        void testThatGetCommandFromFaultyManagerAndReturnedException() throws Exception {
             RandomGenerating.init();
             ConnectionManager manager = new ConnectionManager.FaultyConnectionManager();
             var executor = new PopularCommandExecutor(manager,1);
@@ -140,7 +140,7 @@ public class hw3Test {
 
         @Test
         @DisplayName("Удачное выполнение tryExecute с  FaultyManager")
-        void testForSuccExecutionFalty() throws Exception {
+        void testThatGetCommandFromFaultyManagerAndReturnedSuccess() throws Exception {
 
             RandomGenerating.init();
             ConnectionManager manager = new ConnectionManager.FaultyConnectionManager();
