@@ -12,7 +12,8 @@ public class TestForHangman {
 
     @Test
     @DisplayName("Тест для остановки игры игры")
-    void testForQuitOutOfGame() throws IOException {
+    void testThatGetStopSigndAndReturnedStop() throws IOException {
+        RandomGenerating.init();
         ConsoleHangman Game = new ConsoleHangman();
         StringBuilder sb = new StringBuilder();
         sb.append("stop").append('\n');
@@ -24,7 +25,8 @@ public class TestForHangman {
 
     @Test
     @DisplayName("Тест на корректность обработки некорректного ввода")
-    void testForCheckIncorrectInput() throws IOException {
+    void testThatGetManyIncorrectInputsAndReturnedStop() throws IOException {
+        RandomGenerating.init();
         ConsoleHangman Game = new ConsoleHangman();
         StringBuilder sb = new StringBuilder();
         //За счёт количества попыток, если некорректный ввод будет считаться - то Defeat
@@ -44,7 +46,8 @@ public class TestForHangman {
 
     @Test
     @DisplayName("Тест на хорошую игру")
-    void testForCheckWinInput() throws IOException {
+    void testThatGetWinInputsAndReturnedWin() throws IOException {
+        RandomGenerating.init();
         ConsoleHangman Game = new ConsoleHangman();
         StringBuilder sb = new StringBuilder();
         //За счёт количества попыток, если некорректный ввод будет считаться - то Defeat
@@ -62,7 +65,8 @@ public class TestForHangman {
 
     @Test
     @DisplayName("Тест на проигрыш")
-    void testForCheckDegeatInput() throws IOException {
+    void testThatGetManyWrongLettersAndReturnedDefeat() throws IOException {
+        RandomGenerating.init();
         ConsoleHangman Game = new ConsoleHangman();
         StringBuilder sb = new StringBuilder();
         //За счёт количества попыток, если некорректный ввод будет считаться - то Defeat
