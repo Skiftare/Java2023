@@ -12,7 +12,7 @@ public class TestForHangman {
 
     @Test
     @DisplayName("Тест для остановки игры игры")
-    void testThatGetStopSigndAndReturnedStop() throws IOException {
+    void testThatGetStopSignAndReturnedStop() throws IOException {
         RandomGenerating.init();
         ConsoleHangman Game = new ConsoleHangman();
         StringBuilder sb = new StringBuilder();
@@ -78,7 +78,5 @@ public class TestForHangman {
         InputStream is = new ByteArrayInputStream(data.getBytes());
         System.setIn(is);
         assertEquals(Game.run(), "Defeat");
-
-
     }
 }
