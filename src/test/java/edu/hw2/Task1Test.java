@@ -3,7 +3,6 @@ package edu.hw2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -92,10 +91,7 @@ public class Task1Test {
     void testThatGetTwoNumbersAndReturnedExceptionOfExponent(){
         double baseNan = -7.525;
         double degreeNan = 1.490;
-        Throwable ex = assertThrows(RuntimeException.class,()-> {
-                new Expr.Exponent(new Expr.Constant(baseNan), degreeNan);
-            }
-        );
+        Throwable ex = assertThrows(RuntimeException.class,()-> new Expr.Exponent(new Expr.Constant(baseNan), degreeNan));
         Assertions.assertEquals("NaN, wrong numbers, ExponentError", ex.getMessage());
     }
 
