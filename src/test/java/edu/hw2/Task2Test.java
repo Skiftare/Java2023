@@ -18,7 +18,7 @@ public class Task2Test {
 
     @ParameterizedTest
     @MethodSource("rectangles")
-    void rectangleArea(Rectangle rect) {
+    void testThatGetArgumentsAsSquareOrRectangleAndReturnedSameAreaResult(Rectangle rect) {
         rect = rect.setWidth(20);
         rect = rect.setHeight(10);
 
