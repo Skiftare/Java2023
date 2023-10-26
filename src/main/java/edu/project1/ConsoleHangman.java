@@ -66,13 +66,13 @@ class ConsoleHangman {
         }
     }
 
-    private boolean checkInput(@NotNull String s) {
+    private boolean checkInput(@NotNull String inputStr) {
 
-        if (s.length() == 1 && s.matches("[a-z]")) {
-            if (receivedChars.contains(s.charAt(0))) {
+        if (inputStr.length() == 1 && inputStr.matches("[a-z]")) {
+            if (receivedChars.contains(inputStr.charAt(0))) {
                 return false;
             }
-            receivedChars.add(s.charAt(0));
+            receivedChars.add(inputStr.charAt(0));
             return true;
         }
         return false;
