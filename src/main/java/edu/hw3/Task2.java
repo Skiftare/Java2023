@@ -1,7 +1,9 @@
 package edu.hw3;
 
-import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import org.jetbrains.annotations.NotNull;
+
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task2 {
@@ -11,7 +13,7 @@ public class Task2 {
         char currentChar = ' ';
         String addStr = "";
         int opened = 0;
-
+        RuntimeException unbalanceException = new RuntimeException("unbalanced string");
         for (int i = 0; i < message.length(); i++) {
             currentChar = message.charAt(i);
             addStr += currentChar;
@@ -19,18 +21,18 @@ public class Task2 {
                 opened++;
             } else if (currentChar == ')') {
                 opened--;
-            } else{
+            } else {
                 throw new RuntimeException("wrong symbol");
             }
             if (opened == 0) {
                 res.add(addStr);
                 addStr = "";
             } else if (opened < 0) {
-                throw new RuntimeException("unbalanced string");
+                throw unbalanceException;
             }
         }
-        if(opened!=0){
-            throw new RuntimeException("unbalanced string");
+        if (opened != 0) {
+            throw unbalanceException;
         }
         return res;
     }
