@@ -8,7 +8,10 @@ public class Task1Test {
     @Test
     @DisplayName("Проверка из примера")
     public void testThatGetHelloReturnedAtbash() {
-        assertEquals("Svool dliow!", Task1.atbash("Hello world!"));
+        String standartStrind = "Hello world!";
+        String reversedString = "Svool dliow!";
+        String result = Task1.atbash(standartStrind);
+        assertEquals(result, reversedString);
 
     }
     @Test
@@ -16,6 +19,7 @@ public class Task1Test {
     public void testThatGetLongStringReturnedAtbash() {
         String standtrtString = "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. ― Martin Fowler";
         String reversedString =  "Zmb ullo xzm dirgv xlwv gszg z xlnkfgvi xzm fmwvihgzmw. Tllw kiltiznnvih dirgv xlwv gszg sfnzmh xzm fmwvihgzmw. ― Nzigrm Uldovi";
-        assertEquals(reversedString, Task1.atbash(standtrtString));
+        String result = Task1.atbash(standtrtString);
+        assertEquals(reversedString, result);
     }
 }
