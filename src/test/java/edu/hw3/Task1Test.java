@@ -9,6 +9,11 @@ public class Task1Test {
     @DisplayName("Проверка из примера")
     public void testThatGetHelloReturnedAtbash() {
         assertEquals("Svool dliow!", Task1.atbash("Hello world!"));
+
+    }
+    @Test
+    @DisplayName("Чуть более сложный текст, суть та же")
+    public void testThatGetLongStringReturnedAtbash() {
         String standtrtString = "Any fool can write code that a computer can understand. Good programmers write code that humans can understand. ― Martin Fowler";
         String reversedString =  "Zmb ullo xzm dirgv xlwv gszg z xlnkfgvi xzm fmwvihgzmw. Tllw kiltiznnvih dirgv xlwv gszg sfnzmh xzm fmwvihgzmw. ― Nzigrm Uldovi";
         assertEquals(reversedString, Task1.atbash(standtrtString));
