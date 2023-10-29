@@ -4,10 +4,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class Stock implements Comparable<Stock> {
     Integer price;
-    Stock(int income_price){
-        this.price = -income_price;
+
+    Stock(int incomePrice) {
+        this.price = -incomePrice;
     }
-    int getPrice(){
+
+    int getPrice() {
         return -this.price;
     }
 

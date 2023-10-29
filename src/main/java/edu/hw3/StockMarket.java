@@ -1,8 +1,6 @@
 package edu.hw3;
 
-import java.util.Comparator;
 import java.util.PriorityQueue;
-import java.util.stream.Stream;
 
 interface StockMarket {
     /** Добавить акцию */
@@ -12,10 +10,12 @@ interface StockMarket {
     /** Удалить акцию */
     void remove(Stock stock);
     /** Самая дорогая акция */
-    Stock mostValuableStock();
-    class Market implements StockMarket{
-        PriorityQueue<Stock> allAviableActions = new PriorityQueue<>();
 
+    Stock mostValuableStock();
+
+    class Market implements StockMarket {
+
+        PriorityQueue<Stock> allAviableActions = new PriorityQueue<>();
 
         @Override
         public void add(Stock stock) {
@@ -32,10 +32,10 @@ interface StockMarket {
             return allAviableActions.poll();
         }
 
-        public Integer[] getMarketState(){
+        public Integer[] getMarketState() {
 
             PriorityQueue<Stock> cloned = allAviableActions;
-            Integer [] arr = new Integer[allAviableActions.toArray().length];
+            Integer[] arr = new Integer[allAviableActions.toArray().length];
             int i = 0;
             while (!cloned.isEmpty()) {
                 arr[i] = (cloned.poll().getPrice());
