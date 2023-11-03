@@ -1,10 +1,12 @@
 package edu.hw4;
 
-import org.jetbrains.annotations.NotNull;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task16 {
     public static List<Animal> sortAnimals(@NotNull List<Animal> animals) {
         return animals.stream()

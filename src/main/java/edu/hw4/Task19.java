@@ -1,14 +1,21 @@
 package edu.hw4;
 
-import org.jetbrains.annotations.NotNull;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task19 {
-    public static Map<String, Set<ValidationError>> findInvalidAnimals(List<Animal> animals) {
+
+    @SuppressWarnings("MagicNumber")
+    private static int maxAGE = 100;
+
+    public static Map<String, Set<ValidationError>> findInvalidAnimals(@NotNull List<Animal> animals) {
         return animals.stream()
             .filter(animal -> !isValidName(animal.getName()) || !isValidAge(animal.getAge()))
             .collect(Collectors.toMap(
@@ -18,15 +25,15 @@ public class Task19 {
             ));
     }
 
-    public static boolean isValidName(String name) {
-        return name.matches("[a-zA-Z]+");
+    @Contract(pure = true) public static boolean isValidName(@NotNull String name) {
+        return name.matches("^[a-zA-Zа-яА-Я\s]+$");
     }
 
     public static boolean isValidAge(int age) {
-        return age < 100;
+        return age < maxAGE;
     }
 
-    public static Set<ValidationError> getValidationErrors(Animal animal) {
+    public static @NotNull Set<ValidationError> getValidationErrors(@NotNull Animal animal) {
         HashSet<ValidationError> errors = new HashSet<>();
         if (!isValidName(animal.name())) {
             errors.add(ValidationError.INVALID_NAME);
@@ -37,9 +44,12 @@ public class Task19 {
         return errors;
     }
 
-    public static @NotNull Set<ValidationError> mergeValidationErrors(Set<ValidationError> errors1, Set<ValidationError> errors2) {
-        Set<ValidationError> mergedErrors = new HashSet<>(errors1);
-        mergedErrors.addAll(errors2);
+    //Оно не помещается
+    public static @NotNull Set<ValidationError> mergeValidationErrors(
+        Set<ValidationError> err1, Set<ValidationError> err2
+    ) {
+        Set<ValidationError> mergedErrors = new HashSet<>(err1);
+        mergedErrors.addAll(err2);
         return mergedErrors;
     }
 

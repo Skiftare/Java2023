@@ -2,9 +2,12 @@ package edu.hw4;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
+
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task17 {
-    public static boolean calculateAverageBites(List<Animal> animals) {
+    public static boolean calculateAverageBites(@NotNull List<Animal> animals) {
         List<Animal> dogs = animals.stream()
             .filter(animal -> animal.type() == Animal.Type.DOG)
             .collect(Collectors.toList());

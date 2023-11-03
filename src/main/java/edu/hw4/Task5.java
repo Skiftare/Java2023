@@ -1,28 +1,19 @@
 package edu.hw4;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task5 {
-    public static Animal.@Nullable Sex findDominantSex(@NotNull List<Animal> animals) {
-        int maleCount = 0;
-        int femaleCount = 0;
+    public static Animal.Sex findDominantSex(@NotNull List<Animal> animals) {
+        Map<Animal.Sex, Long> sexCounts = animals.stream()
+            .collect(Collectors.groupingBy(Animal::getSex, Collectors.counting()));
 
-        for (Animal animal : animals) {
-            if (animal.getSex() == Animal.Sex.M) {
-                maleCount++;
-            } else if (animal.getSex() == Animal.Sex.F) {
-                femaleCount++;
-            }
-        }
-
-        if (maleCount > femaleCount) {
-            return Animal.Sex.M;
-        } else if (femaleCount > maleCount) {
-            return Animal.Sex.F;
-        } else {
-            return null; // Если количество самцов и самок одинаково
-        }
+        return sexCounts.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
     }
 }

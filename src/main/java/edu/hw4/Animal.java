@@ -12,21 +12,27 @@ public record Animal(
     public int getHeight() {
         return this.height;
     }
+
     public int getWeight() {
         return this.weight;
     }
+
     public String getName() {
         return this.name;
     }
+
     public Sex getSex() {
         return this.sex;
     }
-    public int getAge(){
+
+    public int getAge() {
         return this.age;
     }
+
     public Type getType() {
         return this.type;
     }
+
     public boolean getBites() {
         return this.bites;
     }
@@ -39,6 +45,7 @@ public record Animal(
         M, F
     }
 
+    @SuppressWarnings("MagicNumber")
     public int paws() {
         return switch (type) {
             case CAT, DOG -> 4;

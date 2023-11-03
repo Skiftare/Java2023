@@ -1,16 +1,14 @@
 package edu.hw4;
 
-import org.jetbrains.annotations.NotNull;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task3 {
-    public static @NotNull Map<Animal.Type, Integer> countAnimalsByType(Animal @NotNull [] animals) {
-        Map<Animal.Type, Integer> animalCount = new HashMap<>();
-        for (Animal animal : animals) {
-            animalCount.put(animal.getType(), animalCount.getOrDefault(animal.getType(), 0) + 1);
-        }
-        return animalCount;
+    public static Map<Animal.Type, Integer> countAnimalsByType(@NotNull List<Animal> animals) {
+        return animals.stream()
+            .collect(Collectors.groupingBy(Animal::getType, Collectors.summingInt(animal -> 1)));
     }
 }

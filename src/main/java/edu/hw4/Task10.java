@@ -1,9 +1,11 @@
 package edu.hw4;
 
-import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
+
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task10 {
     public static List<Animal> findAnimalsWithMismatchedAgeAndPaws(@NotNull List<Animal> animals) {
         return animals.stream()

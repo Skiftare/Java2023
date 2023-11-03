@@ -1,21 +1,18 @@
 package edu.hw4;
 
-import org.jetbrains.annotations.NotNull;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task6 {
-    public static @NotNull Map<Animal.Type, Animal> findHeaviestAnimalByType(@NotNull List<Animal> animals) {
-        Map<Animal.Type, Animal> heaviestAnimals = new HashMap<>();
 
-        for (Animal animal : animals) {
-            Animal currentHeaviest = heaviestAnimals.get(animal.getType());
-            if (currentHeaviest == null || animal.getWeight() > currentHeaviest.getWeight()) {
-                heaviestAnimals.put(animal.getType(), animal);
-            }
-        }
-
-        return heaviestAnimals;
+    public static Map<Animal.Type, Animal> findHeaviestAnimalByType(@NotNull List<Animal> animals) {
+        return animals.stream()
+            .collect(Collectors.groupingBy(Animal::getType,
+                Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparingInt(Animal::getWeight)),
+                    animal -> animal.orElse(null))));
     }
 }
