@@ -12,10 +12,11 @@ public class Task3Test {
     public void testThatGetListOfAnimalsAndReturnedCountOfEachType() {
         // Создаем список животных
 
+        Task3 incomeTask = new Task3();
         List<Animal> animals = ForAllTestsPatterns.getEngArray();
 
         // Создаем карту для подсчета количества животных каждого вида
-        Map<Animal.Type, Integer> animalCount = Task3.countAnimalsByType(animals);
+        Map<Animal.Type, Integer> animalCount = incomeTask.countAnimalsByType(animals);
 
         // Проверяем, что подсчитанное количество животных каждого вида соответствует ожидаемому
         assertEquals(2, animalCount.get(Animal.Type.CAT));
