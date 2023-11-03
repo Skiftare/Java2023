@@ -35,7 +35,10 @@ public class ForAllTestsPatterns {
             new Animal("Собака номер два", Animal.Type.DOG, Animal.Sex.F, 5, 30, 10, false),
             new Animal("Большая Птица", Animal.Type.BIRD, Animal.Sex.F, 2, 10, 2, false),
             new Animal("Рыба", Animal.Type.FISH, Animal.Sex.M, 1, 5, 1, false),
-            new Animal("Паук", Animal.Type.SPIDER, Animal.Sex.M, 1, 2, 0, true)
+            new Animal("Паук", Animal.Type.SPIDER, Animal.Sex.M, 1, 2, 0, true),
+            new Animal("Tweety", Animal.Type.BIRD, Animal.Sex.F, 101, 5, 0, false)
+
+
         );
     }
 }

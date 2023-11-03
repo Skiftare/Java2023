@@ -34,14 +34,13 @@ public class Task19Test {
 
         // Act
         Map<String, Set<Task19.ValidationError>> invalidAnimals = Task19.findInvalidAnimals(animals);
-        System.out.println(invalidAnimals);
+        //System.out.println(invalidAnimals);
         // Assert
-        assertEquals(2, invalidAnimals.size());
-        assertTrue(invalidAnimals.containsKey("Tweety(X)"));
-        assertTrue(invalidAnimals.containsKey("Кот1"));
-        Set<Task19.ValidationError> errors1 = invalidAnimals.get("Tweety(X)");
-        Set<Task19.ValidationError> errors2 = invalidAnimals.get("Кот1");
-        assertTrue(errors1.contains(Task19.ValidationError.INVALID_NAME));
-        assertTrue(errors2.contains(Task19.ValidationError.INVALID_NAME));
+        assertEquals(3, invalidAnimals.size());
+
+
+        assertTrue(invalidAnimals.get("Tweety(X)").contains(Task19.ValidationError.INVALID_NAME));
+        assertTrue(invalidAnimals.get("Кот1").contains(Task19.ValidationError.INVALID_NAME));
+        assertTrue(invalidAnimals.get("Tweety").contains(Task19.ValidationError.INVALID_AGE));
     }
 }

@@ -20,6 +20,7 @@ public class Task16Test {
             new Animal("Spike", Animal.Type.DOG, Animal.Sex.M, 3, 40, 15, true),
             new Animal("Собака номер два", Animal.Type.DOG, Animal.Sex.F, 5, 30, 10, false),
             new Animal("Jerry", Animal.Type.BIRD, Animal.Sex.M, 2, 10, 1, false),
+            new Animal("Tweety", Animal.Type.BIRD, Animal.Sex.F, 101, 5, 0, false),
             new Animal("Tweety(X)", Animal.Type.BIRD, Animal.Sex.F, 1, 5, 0, false),
             new Animal("Большая Птица", Animal.Type.BIRD, Animal.Sex.F, 2, 10, 2, false),
             new Animal("Рыба", Animal.Type.FISH, Animal.Sex.M, 1, 5, 1, false),

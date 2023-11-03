@@ -34,10 +34,9 @@ public class Task20Test {
         Map<String, String> invalidAnimals = Task20.findInvalidAnimals(animals);
 
         // Assert
-        assertEquals(2, invalidAnimals.size());
-        assertTrue(invalidAnimals.containsKey("Tweety(X)"));
-        assertTrue(invalidAnimals.containsKey("Кот1"));
+        assertEquals(3, invalidAnimals.size());
         assertEquals("name", invalidAnimals.get("Tweety(X)"));
         assertEquals("name", invalidAnimals.get("Кот1"));
+        assertEquals("age", invalidAnimals.get("Tweety"));
     }
 }
