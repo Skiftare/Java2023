@@ -2,10 +2,8 @@ package edu.hw4;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotSame;
 
 public class Task14Test {
     @Test

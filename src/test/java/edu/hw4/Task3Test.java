@@ -2,7 +2,6 @@ package edu.hw4;
 
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;

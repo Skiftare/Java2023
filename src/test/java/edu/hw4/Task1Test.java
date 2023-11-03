@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import static edu.hw4.Task1.sortAnimalsByHeight;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import edu.hw4.Task1.*;
 
 public class Task1Test {
     @Test

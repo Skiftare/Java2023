@@ -2,10 +2,7 @@ package edu.hw4;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import static edu.hw4.Task1.sortAnimalsByHeight;
 import static edu.hw4.Task2.sortAnimalsByWeightAndSelectTopK;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
