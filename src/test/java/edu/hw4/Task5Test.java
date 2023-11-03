@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task5Test {
     @Test
     @DisplayName("Тест, который проверяет, каких животных больше: самцов или самок")
-    public void testThatGetDominantSex() {
+    public void testThatGetListOfAnimalsAndReturnedDominantSex() {
 
 
         // Создаем список животных

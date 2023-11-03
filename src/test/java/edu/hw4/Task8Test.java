@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task8Test {
     @Test
     @DisplayName("Тест, который проверяет поиск самого тяжелого животного среди животных ниже k см")
-    public void testFindHeaviestAnimalBelowHeight() {
+    public void testThatGetListOfAnimalsAndReturnedHeaviestAnimalBelowHeight() {
         // Получаем список животных для тестирования
         List<Animal> animals = ForAllTestsPatterns.getRusArray();
 

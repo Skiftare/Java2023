@@ -28,7 +28,7 @@ public class Task19Test {
 
     @Test
     @DisplayName("Тест нахождения невалидных животных смешанного массива")
-    public void testFindInvalidAnimalsMixedArray() {
+    public void testThatGetMixedListOfAnimalsAndReturnedMapOfInvalidAnimalsErrors() {
         // Arrange
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
 

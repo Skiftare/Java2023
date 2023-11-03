@@ -11,7 +11,7 @@ public class Task20Test {
 
     @Test
     @DisplayName("Тест нахождения невалидных животных")
-    public void testFindInvalidAnimals() {
+    public void testThatGetEngListOfAnimalsAndReturnedPrettyMapOfInvalidAnimalsErrors() {
         // Arrange
         List<Animal> animals = ForAllTestsPatterns.getEngArray();
 
@@ -26,7 +26,7 @@ public class Task20Test {
 
     @Test
     @DisplayName("Тест нахождения невалидных животных смешанного массива")
-    public void testFindInvalidAnimalsMixedArray() {
+    public void testThatGetMixedListOfAnimalsAndReturnedPrettyMapOfInvalidAnimalsErrors() {
         // Arrange
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
 

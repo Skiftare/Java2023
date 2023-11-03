@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task2Test {
     @Test
     @DisplayName("Тест, который проверяет сортировку животных по весу от самого тяжелого к самому легкому")
-    public void testThatGetAnimalsSortedByWeight() {
-        // Создаем список животных
+    public void testThatGetAnimalsListAndReturnedListSortedByWeight() {
+        // Создаем список животныхs
         List<Animal> animals = ForAllTestsPatterns.getRusArray();
         // Отсортировать животных по весу от самого тяжелого к самому легкому
         animals.sort((a1, a2) -> Integer.compare(a2.getWeight(), a1.getWeight()));

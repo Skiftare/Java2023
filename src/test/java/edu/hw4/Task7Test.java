@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task7Test {
     @Test
     @DisplayName("Тест, который проверяет поиск K-го самого старого животного")
-    public void testFindKthOldestAnimal() {
+    public void testThatGetListOfAnimalsAndReturnedKthOldestAnimal() {
         // Создаем список животных с разными возрастами
 
         // Создаем список всех животных

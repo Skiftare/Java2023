@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task3Test {
     @Test
     @DisplayName("Тест, который проверяет подсчет количества животных каждого вида")
-    public void testThatCountAnimalsByType() {
+    public void testThatGetListOfAnimalsAndReturnedCountOfEachType() {
         // Создаем список животных
 
         List<Animal> animals = ForAllTestsPatterns.getEngArray();

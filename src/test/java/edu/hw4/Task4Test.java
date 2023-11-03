@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task4Test {
     @Test
     @DisplayName("Тест, который проверяет, у какого животного самое длинное имя")
-    public void testThatGetAnimalWithLongestName() {
+    public void testThatGetListOfAnimalsAndReturnedAnimalWithTheLongestName() {
 
         // Создаем список животных
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();

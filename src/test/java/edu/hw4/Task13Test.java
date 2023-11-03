@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 public class Task13Test {
     @Test
     @DisplayName("Тестирование функции findAnimalsWithMoreThanTwoWordsInName")
-    public void testFindAnimalsWithMoreThanTwoWordsInName() {
+    public void testThatGetListOfAnimalsAndReturnedAnimalsWithMoreThanTwoWordsInName() {
         // Создаем список животных для тестирования
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
         //Меняем два значения

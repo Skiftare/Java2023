@@ -12,6 +12,7 @@ public class Task1Test {
     @Test
     @DisplayName("Тест сортировки животных по росту")
     public void testThatGetListOfAnimalsAndSortedThemByHeight() {
+
         List<Animal> animals = ForAllTestsPatterns.getEngArray();
 
         List<Animal> sortedAnimals = sortAnimalsByHeight(animals);

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class Task11Test {
     @Test
     @DisplayName("Тест, который находит животных, которые могут укусить и высота которых больше 100 см")
-    public void testFindAnimalsWithBitesAndHeightAbove() {
+    public void testThatGetListOfAnimalsAndReturnedAnimalsWithBitesAndHeightAbove() {
         // Получаем список животных из вспомогательного класса
         List<Animal> animals = ForAllTestsPatterns.getEngArray();
 

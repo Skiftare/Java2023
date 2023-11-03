@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotSame;
 public class Task14Test {
     @Test
     @DisplayName("")
-    public void testHasDogWithHeightAbove() {
+    public void testThatGetListOfAnimalsAndReturnedBooleanHasDogWithHeightAbove() {
         // Создаем список животных для тестирования
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
         //Меняем два значения

@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task12Test {
     @Test
     @DisplayName("Тест, который считает количество животных у которых вес больше роста")
-    public void testCountAnimalsWithWeightAboveHeight() {
+    public void testThatGetEngListOfAnimalsAndReturnedCountAnimalsWithWeightAboveHeight() {
         // Получаем список животных из вспомогательного класс
         List <Animal> animals = ForAllTestsPatterns.getEngArray();
         Animal buf = new Animal("q", Animal.Type.DOG, Animal.Sex.M,12,12,13,true);
@@ -23,7 +23,7 @@ public class Task12Test {
 
     @Test
     @DisplayName("Тест со смешанным списком животных")
-    public void testCountAnimalsWithWeightAboveHeight_mixedAnimals() {
+    public void testThatGetMixedListOfAnimalsAndReturnedCountAnimalsWithWeightAboveHeight() {
         // Получаем список животных из вспомогательного класса
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
 

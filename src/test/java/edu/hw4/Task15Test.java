@@ -13,7 +13,7 @@ public class Task15Test {
 
     @Test
     @DisplayName("Тестирование функции calculateTotalWeightByType")
-    public void testCalculateTotalWeightByType() {
+    public void testThatGetListOfAnimalsAndReturnedCalculatedTotalWeightByType() {
         // Создаем список животных для тестирования
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
 

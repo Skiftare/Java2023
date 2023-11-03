@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task6Test {
     @Test
     @DisplayName("Тест, который проверяет самое тяжелое животное каждого вида")
-    public void testThatGetHeaviestAnimalByType() {
+    public void testThatGetListOfAnimalsAndReturnedHeaviestAnimalForEachType() {
         // Создаем список животных разных видов с разным весом
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
         // Создаем карту для хранения самых тяжелых животных каждого вида

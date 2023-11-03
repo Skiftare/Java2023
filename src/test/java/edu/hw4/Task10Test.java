@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class Task10Test {
     @Test
     @DisplayName("Тест, который проверяет список животных с несовпадающим возрастом и количеством лап")
-    public void testFindAnimalsWithMismatchedAgeAndPaws() {
+    public void testThatGetListOfAnimalsAndReturnedAnimalsWithMismatchedAgeAndPaws() {
         // Получаем список животных из вспомогательного класса
         List<Animal> animals = ForAllTestsPatterns.getEngArray();
 

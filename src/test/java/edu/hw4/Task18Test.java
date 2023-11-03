@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task18Test {
     @Test
     @DisplayName("Тестирование функции findHeaviestFish()")
-    public void testFindHeaviestFish() {
+    public void testThatGetListOfAnimalsAndReturnedHeaviestFish() {
 
         List<List<Animal>> fishLists = new ArrayList<>();
         fishLists.add(ForAllTestsPatterns.getEngArray());

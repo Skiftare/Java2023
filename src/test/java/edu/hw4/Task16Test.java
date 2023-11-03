@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task16Test {
     @Test
     @DisplayName("Тестирование функции sortAnimals")
-    public void testSortAnimals() {
+    public void testThatGetListOfAnimalsAndReturnedSortedListOfAnimals() {
         List<Animal> animals = ForAllTestsPatterns.getMixedArray();
         List<Animal> result = Task16.sortAnimals(animals);
 

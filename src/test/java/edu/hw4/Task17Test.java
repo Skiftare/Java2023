@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task17Test {
     @Test
     @DisplayName("Тестирование функции calculateAverageBites")
-    public void testCalculateAverageBitesEngArray() {
+    public void testThatGetEngListOfAnimalsAndReturnedCalculatedAverageBites() {
         // Вызываем функцию с массивом на английском
         boolean result = Task17.calculateAverageBites(ForAllTestsPatterns.getEngArray());
 
@@ -16,7 +16,7 @@ public class Task17Test {
     }
 
     @Test
-    public void testCalculateAverageBitesRusArray() {
+    public void testThatGetRusListOfAnimalsAndReturnedCalculatedAverageBites() {
         // Вызываем функцию с массивом на русском
         boolean result = Task17.calculateAverageBites(ForAllTestsPatterns.getRusArray());
 
@@ -25,7 +25,7 @@ public class Task17Test {
     }
 
     @Test
-    public void testCalculateAverageBitesMixedArray() {
+    public void testThatGetMixedListOfAnimalsAndReturnedCalculatedAverageBites() {
         // Вызываем функцию с мешаным массивом
         boolean result = Task17.calculateAverageBites(ForAllTestsPatterns.getMixedArray());
 
