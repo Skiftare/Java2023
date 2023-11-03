@@ -27,6 +27,9 @@ public record Animal(
     public Type getType() {
         return this.type;
     }
+    public boolean getBites() {
+        return this.bites;
+    }
 
     enum Type {
         CAT, DOG, BIRD, FISH, SPIDER
