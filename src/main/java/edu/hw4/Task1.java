@@ -10,9 +10,10 @@ import org.jetbrains.annotations.NotNull;
 public class Task1 {
 
     public static List<Animal> sortAnimalsByHeight(@NotNull List<Animal> animals) {
-        return animals.stream()
+        List<Animal> result = animals.stream()
             .sorted(Comparator.comparingInt(Animal::getHeight))
             .collect(Collectors.toList());
+        return result;
     }
 
 }

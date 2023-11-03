@@ -20,8 +20,7 @@ public class Task19 {
             .filter(animal -> !isValidName(animal.getName()) || !isValidAge(animal.getAge()))
             .collect(Collectors.toMap(
                 Animal::name,
-                Task19::getValidationErrors,
-                Task19::mergeValidationErrors
+                Task19::getValidationErrors
             ));
     }
 
@@ -44,14 +43,7 @@ public class Task19 {
         return errors;
     }
 
-    //Оно не помещается
-    public static @NotNull Set<ValidationError> mergeValidationErrors(
-        Set<ValidationError> err1, Set<ValidationError> err2
-    ) {
-        Set<ValidationError> mergedErrors = new HashSet<>(err1);
-        mergedErrors.addAll(err2);
-        return mergedErrors;
-    }
+
 
     public enum ValidationError {
         INVALID_NAME,

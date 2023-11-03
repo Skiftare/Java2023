@@ -8,7 +8,11 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task3 {
     public static Map<Animal.Type, Integer> countAnimalsByType(@NotNull List<Animal> animals) {
-        return animals.stream()
-            .collect(Collectors.groupingBy(Animal::getType, Collectors.summingInt(animal -> 1)));
+        Map<Animal.Type, Integer> result = animals.stream()
+            .collect(Collectors.groupingBy(
+                Animal::getType,
+                Collectors.summingInt(animal -> 1)
+            ));
+        return result;
     }
 }
