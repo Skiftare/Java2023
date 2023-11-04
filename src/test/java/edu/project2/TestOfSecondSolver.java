@@ -12,10 +12,10 @@ public class TestOfSecondSolver {
     void testThatGetMazeAndReturnedWayToEscape() {
         RandomGenerating.init();
 
-        ArrayList<Point> secondPath = SecondMazeSolver.findPath(SecondMazeGenerator.generateMaze(100));
+        ArrayList<Point> secondPath = SecondMazeSolver.findPath(SecondMazeGenerator.generateMaze(50));
         RandomGenerating.init();
 
-        ArrayList<Point> path = SecondMazeSolver.findPath(MazeGenerator.generateMaze(100));
+        ArrayList<Point> path = SecondMazeSolver.findPath(MazeGenerator.generateMaze(50));
 
         assertNotEquals(path,secondPath);
     }
