@@ -9,7 +9,7 @@ public class TestOfGenerator {
     @Test
     @DisplayName("Проверка генерации RecursiveBacktracker")
     void testThatGetSizeAndGenerateMaze(){
-
+        RandomGenerating.init();
         MazeGenerator generator = new MazeGenerator();
         Cell[][] mas = generator.generateMaze(15);
         String expected = """

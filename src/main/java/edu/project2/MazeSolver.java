@@ -9,6 +9,7 @@ import static edu.project2.Direction.NORTH;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class MazeSolver {
+
     private static int endX;
     private static int endY;
     static boolean foundPath = false;
