@@ -10,7 +10,7 @@ public class TestOfSecondGenerator {
     @Test
     @DisplayName("Проверка генерации второго алгоритма (оны выглядит по-другому)")
     void testThatGetSizeAndGenerateMaze(){
-
+        RandomGenerating.init();
         SecondMazeGenerator generator = new SecondMazeGenerator();
         Cell[][] mas = generator.generateMaze(20);
 
