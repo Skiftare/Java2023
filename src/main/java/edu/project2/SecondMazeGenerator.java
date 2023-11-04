@@ -21,7 +21,7 @@ public class SecondMazeGenerator {
     }
 
     @SuppressWarnings("MagicNumber")
-    private static Cell[][] generateMaze(Cell[][] maze, int n) {
+    private static void generateMaze(Cell[][] maze, int n) {
 
         int x = 1;
         int y = 1;
@@ -31,7 +31,7 @@ public class SecondMazeGenerator {
             maze[y][x].makeClear();
             a++;
 
-            while (true) {
+            do {
                 Direction c = makeRandomDesizion(); // Генерируем случайное число от 0 до 3
                 // Напоминаю, что крот прорывает по две клетки в одном направлении за прыжок
                 switch (c) {
@@ -55,10 +55,7 @@ public class SecondMazeGenerator {
                         break;
                 }
 
-                if (deadend(x, y, maze, n)) {
-                    break;
-                }
-            }
+            } while (!deadend(x, y, maze, n));
 
             if (deadend(x, y, maze, n)) {
                 do {
@@ -67,7 +64,6 @@ public class SecondMazeGenerator {
                 } while (!maze[y][x].isClear());
             }
         }
-        return maze;
     }
 
     public static boolean deadend(int x, int y, Cell[][] maze, int n) {
@@ -116,12 +112,11 @@ public class SecondMazeGenerator {
         if (incomeN <= 0) {
             throw new RuntimeException("N is not natural number");
         }
-        int n = incomeN;
 
-        Cell[][] map = new Cell[n][n];
+        Cell[][] map = new Cell[incomeN][incomeN];
 
-        Arrays.setAll(map, i -> Arrays.stream(new Cell[n]).map(j -> new Cell()).toArray(Cell[]::new));
-        map = generateMaze(map, incomeN);
+        Arrays.setAll(map, i -> Arrays.stream(new Cell[incomeN]).map(j -> new Cell()).toArray(Cell[]::new));
+        generateMaze(map, incomeN);
         return getCells(incomeN, map);
     }
 
