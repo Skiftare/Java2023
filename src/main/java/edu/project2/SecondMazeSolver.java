@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class SecondMazeSolver {
     private static boolean[][] vis;
     private static Cell[][] map;
