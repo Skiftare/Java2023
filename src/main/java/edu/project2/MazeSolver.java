@@ -9,8 +9,6 @@ import static edu.project2.Direction.NORTH;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class MazeSolver {
-    private static int startX;
-    private static int startY;
     private static int endX;
     private static int endY;
     static boolean foundPath = false;
@@ -43,14 +41,14 @@ public class MazeSolver {
                 case NORTH:
                 case SOUTH:
                     multi = (direction == NORTH ? 1 : -1);
-                    processDir(x, y - multi, map, visited, path, directions,
+                    processDir(x, y - multi, map, visited, path,
                         buf -> buf.get(buf.size() - 1).getX() == -1
                     );
                     break;
 
                 default:
                     multi = (direction == EAST ? 1 : -1);
-                    processDir(x - multi, y, map, visited, path, directions,
+                    processDir(x - multi, y, map, visited, path,
                         buf -> buf.get(buf.size() - 1).getX() == -1
                     );
                     break;
@@ -61,8 +59,8 @@ public class MazeSolver {
         return path;
     }
 
-    private static ArrayList<Point> processDir(int x, int y, Cell[][] map, boolean[][] visited, ArrayList<Point> path,
-        ArrayList<Direction> directions, Predicate<ArrayList<Point>> condition) {
+    private static void processDir(int x, int y, Cell[][] map, boolean[][] visited, ArrayList<Point> path,
+        Predicate<ArrayList<Point>> condition) {
         if (canMoveTo(x, y, map, visited)) {
             path.add(new Point(x, y));
             visited[x][y] = true;
@@ -72,12 +70,11 @@ public class MazeSolver {
             );
             if (condition.test(buf)) {
                 foundPath = true;
-                return buf;
+                return;
             }
             path.remove(buf.size() - 1);
         }
 
-        return path;
     }
 
     private static boolean canMoveTo(int x, int y, Cell[][] map, boolean[][] visited) {
@@ -86,8 +83,8 @@ public class MazeSolver {
 
     public static ArrayList<Point> solveTheMazeTotallyNotDFS(Cell[][] maze) {
         int n = maze.length;
-        startX = 0;
-        startY = 0;
+        int startX = 0;
+        int startY = 0;
         endX = n - 1;
         endY = n - 1;
         boolean[][] visited = new boolean[n][n];

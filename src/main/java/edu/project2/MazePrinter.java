@@ -12,15 +12,19 @@ public class MazePrinter {
 
     public static @NotNull StringBuilder prePrintMaze(Cell[] @NotNull [] maze) {
         StringBuilder sb = new StringBuilder();
+        return getStringBuilder(maze, sb);
+    }
+
+    private static @NotNull StringBuilder getStringBuilder(Cell[] @NotNull [] maze, StringBuilder sb) {
         sb.append('\n');
 
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j].isPath()) {
+        for (Cell[] cells : maze) {
+            for (Cell cell : cells) {
+                if (cell.isPath()) {
                     sb.append("▫"); // проход, по которому мы идем
-                } else if (maze[i][j].isClear()) {
+                } else if (cell.isClear()) {
                     sb.append(" "); // проход
-                } else if (maze[i][j].isWall()) {
+                } else if (cell.isWall()) {
                     sb.append("█"); // стена
                 } /*else if (maze[i][j].isWay) {
                     sb.append("▫"); // проход, по которому мы идем
@@ -34,31 +38,14 @@ public class MazePrinter {
 
     public static @NotNull StringBuilder prePrintPathMaze(Cell[] @NotNull [] maze, ArrayList<Point> path) {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < path.size(); i++) {
-            int x = path.get(i).getX();
-            int y = path.get(i).getY();
+        for (Point point : path) {
+            int x = point.getX();
+            int y = point.getY();
             if (x > -1) {
                 maze[x][y].makePath();
             }
         }
-        sb.append('\n');
-
-        for (int i = 0; i < maze.length; i++) {
-            for (int j = 0; j < maze[i].length; j++) {
-                if (maze[i][j].isPath()) {
-                    sb.append("▫"); // проход, по которому мы идем
-                } else if (maze[i][j].isClear()) {
-                    sb.append(" "); // проход
-                } else if (maze[i][j].isWall()) {
-                    sb.append("█"); // стена
-                } /*else if (maze[i][j].isWay) {
-                    sb.append("▫"); // проход, по которому мы идем
-                }*/
-            }
-            sb.append("\n");
-        }
-
-        return sb;
+        return getStringBuilder(maze, sb);
     }
 
     public static void printPrintPathMaze(Cell[] @NotNull [] maze, ArrayList<Point> path) {

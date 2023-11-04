@@ -33,11 +33,7 @@ public class Cell {
             }
         }
 
-        public void delPath() {
-            isPath = false;
-        }
-
-        public boolean isPath() {
+    public boolean isPath() {
             return isPath;
         }
 

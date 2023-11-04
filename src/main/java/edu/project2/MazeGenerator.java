@@ -10,7 +10,6 @@ public class MazeGenerator {
     private static boolean[][] vis;
     private static Cell[][] map;
     private static int n;
-    private final Integer miniN = 4;
 
     private ArrayList<Direction> makeDirectionsArray() {
         ArrayList<Direction> directions = new ArrayList<>();
@@ -25,7 +24,7 @@ public class MazeGenerator {
         return p.getX() >= 0 && p.getX() < n && p.getY() >= 0 && p.getY() < n;
     }
 
-    private ArrayList<Point> addMorePoints(ArrayList<Point> income, int x, int y) {
+    private void addMorePoints(ArrayList<Point> income, int x, int y) {
         Consumer<Point> addToCheckList = point -> {
             if (
                 isWithinBounds(point) && map[point.getX()][point.getY()].isWall()
@@ -40,7 +39,6 @@ public class MazeGenerator {
         addToCheckList.accept(new Point(x, y + 2));
         addToCheckList.accept(new Point(x - 2, y));
         addToCheckList.accept(new Point(x + 2, y));
-        return income;
     }
 
     private Cell[] @NotNull [] generatePreMaze(int incomeN) {
@@ -111,8 +109,7 @@ public class MazeGenerator {
                     directions.remove(dirIndex);
                 }
             }
-            toCheck = addMorePoints(toCheck, x, y);
-
+            addMorePoints(toCheck, x, y);
 
 
         }
@@ -122,8 +119,10 @@ public class MazeGenerator {
         return map;
     }
 
+    @SuppressWarnings("MagicNumber")
     public Cell[][] generateMaze(int incomeN) {
 
+        int miniN = 4;
         if (incomeN <= miniN && incomeN > 0) {
             throw new RuntimeException("Too small N, it's boring");
         }
