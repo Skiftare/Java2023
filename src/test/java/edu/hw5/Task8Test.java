@@ -7,6 +7,7 @@ import static edu.hw5.Task8.hasMultipleOfThreeZeros;
 import static edu.hw5.Task8.hasNoConsecutiveOnes;
 import static edu.hw5.Task8.isNotElevenOrOneHundredEleven;
 import static edu.hw5.Task8.isOddLength;
+import static edu.hw5.Task8.startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task8Test {
@@ -24,26 +25,26 @@ public class Task8Test {
         assertThat(isOddLength).isFalse();
     }
 
-    /*@Test
-    public void testStartsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength() {
-        String input1 = "0101";
-        String input2 = "10101";
-        boolean hasPattern1 = startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength(input1);
-        boolean hasPattern2 = startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength(input2);
-        assertThat(hasPattern1).isFalse();
-        assertThat(hasPattern2).isFalse();
-    }
-
     @Test
-    public void testDoesNotStartWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength() {
+    public void testThatGetStringStartsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLengthAndReturnedTrue() {
         String input1 = "001";
         String input2 = "1001";
         boolean hasPattern1 = startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength(input1);
         boolean hasPattern2 = startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength(input2);
         assertThat(hasPattern1).isTrue();
+        assertThat(hasPattern2).isTrue();
+    }
+
+    @Test
+    public void testThatGetStringDoesNotStartsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLengthAndReturnedFalse() {
+        String input1 = "0001";
+        String input2 = "10101";
+        boolean hasPattern1 = startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength(input1);
+        boolean hasPattern2 = startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength(input2);
+        assertThat(hasPattern1).isTrue();
 
         assertThat(hasPattern2).isTrue();
-    }*/
+    }
 
     @Test
     public void testThatGetStringWithMultipleOfThreeZerosAtSumAndReturnedTrue() {
