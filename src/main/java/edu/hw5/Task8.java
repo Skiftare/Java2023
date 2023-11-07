@@ -16,8 +16,7 @@ public class Task8 {
 
     public static boolean startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength(String input) {
         return input.matches("(0[01]{1,}|1[01]{2,})*");
-        /*return input.matches("^0[01]*1$") ||
-            input.matches("^1[01]*0$");*/
+
     }
 
     public static boolean hasMultipleOfThreeZeros(String input) {

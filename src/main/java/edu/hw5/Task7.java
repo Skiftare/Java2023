@@ -7,7 +7,7 @@ public class Task7 {
     }
 
     public static boolean startsAndEndsWithSameCharacter(String input) {
-        return input.matches("^(0|1).*(\\1)$");
+        return input.matches("^([01]).*(\\1)$");
     }
 
     public static boolean hasLengthBetweenOneAndThree(String input) {

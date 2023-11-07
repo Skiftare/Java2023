@@ -34,9 +34,8 @@ public class Task1 {
             throw new RuntimeException("Wrong time format");
         }
 
-        Duration intervalDuration = Duration.ofHours(endHour - startHour)
+        return Duration.ofHours(endHour - startHour)
             .plusMinutes(endMinute - startMinute);
-        return intervalDuration;
     }
 
     public static String computerClubAnalytics(@NotNull List<String> input) {
@@ -47,8 +46,7 @@ public class Task1 {
         }
 
         Long hours = totalDuration.toHours();
-        Long minutes = totalDuration.toMinutes() % MAX_MIN;
-        String res = hours + "ч " + minutes + "м";
-        return res;
+        long minutes = totalDuration.toMinutes() % MAX_MIN;
+        return hours + "ч " + minutes + "м";
     }
 }
