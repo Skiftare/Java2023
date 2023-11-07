@@ -2,6 +2,7 @@ package edu.hw5;
 
 import java.util.regex.Pattern;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task6 {
 
     public static boolean isSubsequence(String s, String t) {

@@ -5,12 +5,17 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task2 {
-    public static List<LocalDate> findFridayThe13ths(int year) {
+    private static final int MAX_MONTH = 12;
+    private static final int NEED_DAY = 13;
+
+    public static @NotNull List<LocalDate> findFridayThe13ths(int year) {
         List<LocalDate> fridayThe13ths = new ArrayList<>();
-        for (int month = 1; month <= 12; month++) {
-            LocalDate date = LocalDate.of(year, month, 13);
+        for (int month = 1; month <= MAX_MONTH; month++) {
+            LocalDate date = LocalDate.of(year, month, NEED_DAY);
             if (date.getDayOfWeek() == DayOfWeek.FRIDAY) {
                 fridayThe13ths.add(date);
             }
@@ -19,6 +24,10 @@ public class Task2 {
     }
 
     public static LocalDate findNextFridayThe13th(LocalDate date) {
-        return date.with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).withDayOfMonth(13);
+        LocalDate res = date.with(TemporalAdjusters.next(DayOfWeek.FRIDAY)).withDayOfMonth(NEED_DAY);
+        while (res.isBefore(date) || res.isEqual(date) || res.getDayOfWeek() != DayOfWeek.FRIDAY) {
+            res = findNextFridayThe13th(date.plusDays(1));
+        }
+        return res;
     }
 }

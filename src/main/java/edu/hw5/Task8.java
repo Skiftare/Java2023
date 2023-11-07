@@ -1,48 +1,48 @@
 package edu.hw5;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task8 {
-    public static boolean isOddLength(String string) {
-        Pattern pattern = Pattern.compile("^(.{2})*.$");
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+    private static final int THREE_VAL = 3;
+
+    private static boolean isAlphabet(String s) {
+        return s.matches("^[01]+$");
     }
 
-    public static boolean startsWithZeroAndHasOddLengthOrStartsWithOneAndHasEvenLength(String string) {
-        Pattern pattern = Pattern.compile("^(0.{2})*0$|^(1.{2})*1$");
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+    public static boolean isOddLength(String input) {
+
+        return input.matches("^.(..)*$")
+            && isAlphabet(input);
     }
 
-    public static boolean hasMultipleOfThreeZeros(String string) {
-        Pattern pattern = Pattern.compile("^([^1]*0[^1]*){3}[^1]*$");
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+    /*public static boolean startsWithZeroAndIsOddLengthOrStartsWithOneAndIsEvenLength
+    (String input) {
+        //return input.matches("(0[01]{1,}|1[01]{2,})*");
+        return input.matches("^0[01]*1$") ||
+            input.matches("^1[01]*0$");
+    }*/
+
+    public static boolean hasMultipleOfThreeZeros(String input) {
+        return input.replaceAll("1", "").length() % THREE_VAL == 0
+            && isAlphabet(input);
     }
 
-    public static boolean isNot111Or11(String string) {
-        Pattern pattern = Pattern.compile("^(?!11+$)^(?!111+$).*$");
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+    public static boolean isNotElevenOrOneHundredEleven(String input) {
+        return !input.matches("^(11|111)$")
+            && isAlphabet(input);
     }
 
-    public static boolean everyOddCharacterIsOne(String string) {
-        Pattern pattern = Pattern.compile("^((.{2}1)*1)?$");
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+    public static boolean everyOddCharacterIsOne(String input) {
+        return input.matches("^(1[01])*1?$")
+            && isAlphabet(input);
     }
 
-    public static boolean hasAtLeastTwoZerosAndAtMostOneOne(String string) {
-        Pattern pattern = Pattern.compile("^([^1]*0[^1]*){2,}([^1]*1[^1]*)?$");
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+    public static boolean hasAtLeastTwoZerosAndAtMostOneOne(String input) {
+        return input.matches("^(?=.*0.*0)(?!.*1.*1)[01]*$")
+            && isAlphabet(input);
     }
 
-    public static boolean hasNoConsecutiveOnes(String string) {
-        Pattern pattern = Pattern.compile("^(?!.*11).*$");
-        Matcher matcher = pattern.matcher(string);
-        return matcher.matches();
+    public static boolean hasNoConsecutiveOnes(String input) {
+        return !input.matches(".*11.*")
+            && isAlphabet(input);
     }
 }

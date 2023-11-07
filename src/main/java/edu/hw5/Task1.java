@@ -1,12 +1,23 @@
 package edu.hw5;
 
 import java.time.Duration;
-import java.time.LocalDate;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task1 {
+    private static final int MAX_MIN = 60;
 
-    Duration calculateDurationForString(String input){
+    private static boolean checkOfCorrectsValues(int[] mas) {
+        for (var it:mas) {
+            if (it < 0 || it > MAX_MIN) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static Duration calculateDurationForString(@NotNull String input) {
         String[] parts = input.split(" - ");
         String start = parts[0];
         String end = parts[1];
@@ -19,12 +30,16 @@ public class Task1 {
         int endHour = Integer.parseInt(endTime[0]);
         int endMinute = Integer.parseInt(endTime[1]);
 
+        if (!checkOfCorrectsValues(new int[]{startHour, startMinute, endHour, endMinute})) {
+            throw new RuntimeException("Wrong time format");
+        }
+
         Duration intervalDuration = Duration.ofHours(endHour - startHour)
             .plusMinutes(endMinute - startMinute);
         return intervalDuration;
     }
 
-    public String computerClubAnalytics(List<String> input){
+    public static String computerClubAnalytics(@NotNull List<String> input) {
         Duration totalDuration = Duration.ZERO;
 
         for (String interval : input) {
@@ -32,7 +47,7 @@ public class Task1 {
         }
 
         Long hours = totalDuration.toHours();
-        Long minutes = totalDuration.toMinutes() % 60;
+        Long minutes = totalDuration.toMinutes() % MAX_MIN;
         String res = hours + "ч " + minutes + "м";
         return res;
     }
