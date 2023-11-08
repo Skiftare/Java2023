@@ -15,14 +15,25 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
             public boolean accept(Path entry) throws IOException {
                 return AbstractFilter.this.accept(entry) && other.accept(entry);
             }
+
+            public void close() {
+                AbstractFilter.this.close();
+            }
         };
     }
+
+    default void close() {
+
+    };
 
     static AbstractFilter regularFile = Files::isRegularFile;
     static AbstractFilter readable = Files::isReadable;
 
     static AbstractFilter largerThan(long size) {
         return entry -> Files.size(entry) > size;
+    }
+    static AbstractFilter smallerThan(long size) {
+        return entry -> Files.size(entry) < size;
     }
 
     static AbstractFilter magicNumber(int... magicBytes) {
@@ -52,6 +63,7 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         final Pattern pattern = Pattern.compile(regex);
         return entry -> pattern.matcher(entry.getFileName().toString()).find();
     }
+
 
     boolean accept(Path entry) throws IOException;
 
