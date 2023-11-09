@@ -12,11 +12,11 @@ public class Task1Test {
     @Test
     public void testThatGetListOfSessionsAndReturnedSumOfTimes() {
         List<String> sessions = List.of(
-            "2022-03-12, 20:20:00 - 2022-03-12, 23:50:00",
-            "2022-04-01, 21:30:00 - 2022-04-02, 22:20:00"
+            "2022-03-12, 20:20 - 2022-03-12, 23:50",
+            "2022-04-01, 21:30 - 2022-04-02, 01:20"
         );
         String averageSessionTime = computerClubAnalytics(sessions);
-        assertThat(averageSessionTime).isEqualTo("4ч 20м");
+        assertThat(averageSessionTime).isEqualTo("3ч 40м");
     }
 
     @Test
@@ -29,7 +29,7 @@ public class Task1Test {
     @Test
     public void testThatGetListOfOneSessionAndReturnedSessionTime() {
         List<String> sessions = List.of(
-            "2022-03-12, 20:20:00 - 2022-03-12, 23:50:00"
+            "2022-03-12, 20:20 - 2022-03-12, 23:50"
         );
         String  averageSessionTime = computerClubAnalytics(sessions);
         assertThat(averageSessionTime).isEqualTo("3ч 30м");
@@ -38,31 +38,32 @@ public class Task1Test {
     @Test
     public void testThatGetListOfManySessionsAndReturnedSum() {
         List<String> sessions = List.of(
-            "2022-03-12, 20:20:00 - 2022-03-12, 23:50:00",
-            "2022-04-01, 21:30:00 - 2022-04-02, 23:20:00",
-            "2022-05-15, 18:00:00 - 2022-05-15, 19:30:00"
+            //"2022-03-12, 20:20 - 2022-03-12, 23:50"
+            "2022-03-12, 20:20 - 2022-03-12, 23:50",
+            "2022-04-01, 21:30 - 2022-04-02, 23:20",
+            "2022-05-15, 18:00 - 2022-05-15, 19:30"
         );
         String  averageSessionTime = computerClubAnalytics(sessions);
-        assertThat(averageSessionTime).isEqualTo("6ч 50м");
+        assertThat(averageSessionTime).isEqualTo("10ч 16м");
     }
 
     @Test
     public void testThatGetListOfManySessionsAndReturnedSumWithoutDays() {
         List<String> sessions = List.of(
-            "2022-03-12, 20:20:00 - 2022-03-12, 09:50:00",
-            "2022-04-01, 21:30:00 - 2022-04-02, 03:20:00",
-            "2022-05-15, 18:00:00 - 2022-05-15, 11:30:00"
+            "2022-03-12, 20:20 - 2022-03-12, 09:50",
+            "2022-04-01, 21:30 - 2022-04-02, 03:20",
+            "2022-05-15, 18:00 - 2022-05-15, 11:30"
         );
         String  averageSessionTime = computerClubAnalytics(sessions);
-        assertThat(averageSessionTime).isEqualTo("-35ч -10м");
+        assertThat(averageSessionTime).isEqualTo("-3ч -43м");
     }
 
     @Test
     public void testThatGetListOfManySessionsAndReturnedException() {
         List<String> sessions = List.of(
-            "2022-03-12, 20:20:00 - 2022-03-12, 09:50:004",
-            "2022-04-01, 21:30:00 - 2022-04-02, 03:230:00",
-            "2022-05-15, 18:00:00 - 2022-05-15, 411:30:00"
+            "2022-03-12, 20:20:00 - 2022-03-12, 09:50",
+            "2022-04-01, 21:30:00 - 2022-04-02, 03:230",
+            "2022-05-15, 18:00:00 - 2022-05-15, 411:30"
         );
 
         Throwable ex = assertThrows(RuntimeException.class,()-> computerClubAnalytics(sessions));

@@ -1,6 +1,8 @@
 package edu.hw5;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,33 +20,34 @@ public class Task1 {
     }
 
     private static Duration calculateDurationForString(@NotNull String input) {
-        String[] parts = input.split(" - ");
-        String start = parts[0];
-        String end = parts[1];
+        try {
+            String[] parts = input.split(" - ");
+            String startDateTimeString = parts[0];
+            String endDateTimeString = parts[1];
 
-        String[] startTime = start.split(", ")[1].split(":");
-        String[] endTime = end.split(", ")[1].split(":");
+            LocalDateTime startDateTime =
+                LocalDateTime.parse(startDateTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm"));
+            LocalDateTime endDateTime =
+                LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm"));
 
-        int startHour = Integer.parseInt(startTime[0]);
-        int startMinute = Integer.parseInt(startTime[1]);
-        int endHour = Integer.parseInt(endTime[0]);
-        int endMinute = Integer.parseInt(endTime[1]);
-
-        if (!checkOfCorrectsValues(new int[]{startHour, startMinute, endHour, endMinute})) {
+            Duration sessionDuration = Duration.between(startDateTime, endDateTime);
+            return sessionDuration;
+        }
+        catch (Exception e){
             throw new RuntimeException("Wrong time format");
         }
 
-        return Duration.ofHours(endHour - startHour)
-            .plusMinutes(endMinute - startMinute);
     }
 
     public static String computerClubAnalytics(@NotNull List<String> input) {
         Duration totalDuration = Duration.ZERO;
+        if(input.size() > 0) {
+            for (String interval : input) {
+                totalDuration = totalDuration.plus(calculateDurationForString(interval));
+            }
 
-        for (String interval : input) {
-            totalDuration = totalDuration.plus(calculateDurationForString(interval));
+            totalDuration = totalDuration.dividedBy(input.size());
         }
-
         Long hours = totalDuration.toHours();
         long minutes = totalDuration.toMinutes() % MAX_MIN;
         return hours + "ч " + minutes + "м";
