@@ -2,19 +2,20 @@ package edu.hw6;
 import java.net.ServerSocket;
 import java.net.DatagramSocket;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.HashSet;
 import java.util.Map;
 
 public class Task6 {
+    public Task6(Path soursePath){
+        CreatePortDescriptions.getPortsMap(soursePath);
+    }
 
-        public static void main(String[] args) {
-            HashSet<Integer> map = (HashSet<Integer>) CreatePortDescriptions.getPortsMap();
-            WikipediaParser wiki = new WikipediaParser();
+        public static void main(Path soursePath) {
+            DiskHashSet<Integer> map = new DiskHashSet<>(soursePath);
+            //HashSet<Integer> map = (HashSet<Integer>) CreatePortDescriptions.getPortsMap();
             for (int port = 0; port <= 49151; port++) {
-                if(!map.contains(port)){
-                    continue;
-                }
-                else {
+                if(map.contains(port)){
                     try {
                         ServerSocket serverSocket = new ServerSocket(port);
                         serverSocket.close();

@@ -1,12 +1,13 @@
 package edu.hw6;
 
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class CreatePortDescriptions {
-    public static Set<Integer> getPortsMap() {
+    public static void getPortsMap(Path soursePath) {
         Set<Integer> portSet = new HashSet<>();
 
         portSet.add(80);
@@ -58,9 +59,9 @@ public class CreatePortDescriptions {
         portSet.add(61613);
         portSet.add(61616);
         portSet.add(8883);
-
-
+        DiskHashSet<Integer> diskSet = new DiskHashSet<Integer>(soursePath);
         // Вывод информации о портах
-        return portSet;
+        //return portSet;
     }
+
 }

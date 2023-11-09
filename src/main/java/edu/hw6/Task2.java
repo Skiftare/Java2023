@@ -11,8 +11,7 @@ import java.nio.file.StandardOpenOption;
 import java.nio.Buffer.*;
 
 public class Task2 {
-
-    public static void cloneFile(Path path) {
+    public static String makeCopyName(Path path, String income){
         String fileName = path.getFileName().toString();
         String baseName = fileName.substring(0, fileName.lastIndexOf('.'));
         String extension = fileName.substring(fileName.lastIndexOf('.'));
@@ -23,6 +22,11 @@ public class Task2 {
             copyNumber++;
             newFileName = baseName + " — копия (" + copyNumber + ")" + extension;
         }
+        return newFileName;
+    }
+
+    public static void cloneFile(Path path) {
+        String newFileName = makeCopyName(path,path.getFileName().toString());
 
         try (RandomAccessFile sourceFile = new RandomAccessFile(path.toFile(), "r");
              FileChannel sourceChannel = sourceFile.getChannel();
