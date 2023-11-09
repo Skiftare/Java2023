@@ -38,7 +38,7 @@ public class Task1 {
 
     public static String computerClubAnalytics(@NotNull List<String> input) {
         Duration totalDuration = Duration.ZERO;
-        if (input.size() > 0) {
+        if (!input.isEmpty()) {
             for (String interval : input) {
                 totalDuration = totalDuration.plus(calculateDurationForString(interval));
             }
