@@ -6,8 +6,6 @@ import static edu.hw5.Task7.hasAtLeastThreeCharactersWithThirdZero;
 import static edu.hw5.Task7.hasLengthBetweenOneAndThree;
 import static edu.hw5.Task7.startsAndEndsWithSameCharacter;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task7Test {
     @Test
