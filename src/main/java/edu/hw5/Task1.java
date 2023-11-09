@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class Task1 {
     private static final int MAX_MIN = 60;
     private static final String PATTERN_STRING = "yyyy-MM-dd, HH:mm";
+    private static final String EXCEPTION_MESSAGE = "Wrong time format";
 
 
 
@@ -25,9 +26,12 @@ public class Task1 {
                 LocalDateTime.parse(endDateTimeString, DateTimeFormatter.ofPattern(PATTERN_STRING));
 
             Duration sessionDuration = Duration.between(startDateTime, endDateTime);
+            if (sessionDuration.isNegative()) {
+                throw new RuntimeException(EXCEPTION_MESSAGE);
+            }
             return sessionDuration;
         } catch (Exception e) {
-            throw new RuntimeException("Wrong time format");
+            throw new RuntimeException(EXCEPTION_MESSAGE);
         }
 
     }

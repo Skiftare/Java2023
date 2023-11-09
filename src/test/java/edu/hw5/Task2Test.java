@@ -1,5 +1,6 @@
 package edu.hw5;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class Task2Test {
     @Test
+    @DisplayName("Тест на поиск 13-ой пятницы в невисокосном году")
     public void testThatGetYearAndReturnedNearestFriday13th() {
         int year = 1925;
         List<LocalDate> fridayThe13ths = Task2.findFridayThe13ths(year);
@@ -22,6 +24,7 @@ public class Task2Test {
     }
 
     @Test
+    @DisplayName("Тест на поиск 13-ой пятницы в високосном году")
     public void testThatGetLeapYearAndReturnedNearestFriday13th() {
         int year = 2024;
         List<LocalDate> fridayThe13ths = Task2.findFridayThe13ths(year);
@@ -32,6 +35,7 @@ public class Task2Test {
     }
 
     @ParameterizedTest
+    @DisplayName("Тест на поиск 13-ой пятницы от какой-то даты")
     @CsvSource({
         "2023-10-20, 2024-09-13",
         "2022-05-13, 2023-01-13",

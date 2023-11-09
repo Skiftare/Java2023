@@ -5,9 +5,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task3 {
+
+    private final static Logger LOGGER = LogManager.getLogger();
+
     public static Optional<LocalDate> parseDate(String string) {
         DateTimeFormatter[] formatters = {
             DateTimeFormatter.ofPattern("yyyy-MM-dd"),
@@ -15,14 +20,7 @@ public class Task3 {
             DateTimeFormatter.ofPattern("M/d/yy")
         };
 
-        for (DateTimeFormatter formatter : formatters) {
-            try {
-                LocalDate date = LocalDate.parse(string, formatter);
-                return Optional.of(date);
-            } catch (Exception e) {
-                // Ignore parsing exceptions and try the next formatter
-            }
-        }
+
         Optional<LocalDate> res = Optional.empty();
         if (string.equalsIgnoreCase("tomorrow")) {
             res = Optional.of(LocalDate.now().plusDays(1));
@@ -36,6 +34,17 @@ public class Task3 {
             if (matcher.matches()) {
                 int daysAgo = Integer.parseInt(matcher.group(1));
                 res = Optional.of(LocalDate.now().minusDays(daysAgo));
+            }
+        }
+        if (res.isEmpty()) {
+            for (DateTimeFormatter formatter : formatters) {
+                try {
+                    LocalDate date = LocalDate.parse(string, formatter);
+                    res = Optional.of(date);
+
+                } catch (Exception e) {
+                    LOGGER.info("Failed to parse {} using format {}: {}", string, formatter, e.getMessage());
+                }
             }
         }
 
