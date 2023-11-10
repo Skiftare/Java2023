@@ -22,7 +22,7 @@ public class Task6Test {
         for(var it:result){
             if(it.split(" ").length < 3) {
                 if(openedCount == 0){
-                    assertEquals("TCP\t137\n", it);
+                    assertEquals("TCP\t27017\n", it);
                 }
                 openedCount++;
             } else{
