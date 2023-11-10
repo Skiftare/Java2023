@@ -23,7 +23,6 @@ public class Task6Test {
             if(it.split(" ").length < 3) {
                 if(openedCount == 0){
                     assertEquals("TCP\t137\n", it);
-
                 }
                 openedCount++;
             } else{

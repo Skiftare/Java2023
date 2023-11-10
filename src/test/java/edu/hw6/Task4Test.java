@@ -1,5 +1,6 @@
 package edu.hw6;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
@@ -16,24 +17,13 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 
 public class Task4Test {
     @Test
-    void testOutputStreamComposition() throws IOException {
-        // Создание временного файла
+    @DisplayName("Тест на запись в файл строки через outputStreamComposition")
+    void testGetPathWithStringAndRetunedFileInPathWithWrittenString() throws IOException {
         Path tempFile = Files.createTempFile("output", ".txt");
         String expected = "Programming is learned by writing programs. ― Brian Kernighan";
-        try (OutputStream fileOutputStream = Files.newOutputStream(tempFile, StandardOpenOption.CREATE);
-             OutputStream checkedOutputStream = new CheckedOutputStream(fileOutputStream, new CRC32());
-             OutputStream bufferedOutputStream = new BufferedOutputStream(checkedOutputStream);
-             Writer outputStreamWriter = new OutputStreamWriter(bufferedOutputStream, StandardCharsets.UTF_8);
-             PrintWriter printWriter = new PrintWriter(outputStreamWriter)) {
-            printWriter.print(expected);
-        }
-
-        // Проверка содержимого файла
+        Task4.outputStreamComposition(expected,tempFile);
         String fileContent = Files.readString(tempFile);
-
-        assertEquals(expected, fileContent);
-
-        // Удаление временного файла
+        assertEquals(expected+'\n', fileContent);
         Files.delete(tempFile);
     }
 }

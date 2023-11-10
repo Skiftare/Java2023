@@ -1,22 +1,16 @@
 package edu.hw6;
 
-import org.junit.jupiter.api.Test;
 import java.io.IOException;
-import java.nio.file.Files;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.nio.Buffer.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class Task2Test {
     @Test
-    void cloneFile() throws IOException {
+    @DisplayName("Тест на корректное копирование файла")
+    void testThatCloneFileAndReturnedCheckOfExistCopy() throws IOException {
         Path originalFile = Files.createFile(Path.of("test.txt"));
 
         Task2.cloneFile(originalFile);
@@ -29,7 +23,8 @@ public class Task2Test {
     }
 
     @Test
-    void cloneFileWithMultipleCopies() throws IOException {
+    @DisplayName("Тест на корректное создание множества копий файла")
+    void testThatCloneFileManyTimesAndReturnedCheckOfExistAllCopies() throws IOException {
         // Создание временного файла
         Path originalFile = Files.createFile(Path.of("test.txt"));
 
@@ -49,7 +44,8 @@ public class Task2Test {
     }
 
     @Test
-    void cloneFileWithDifferentExtensions() throws IOException {
+    @DisplayName("Тест на корректное копирование файлов с различными расширениями")
+    void testThatCloneFileWithDifferentExtentionAndReturnedCheckOfExistCopy() throws IOException {
         // Создание временного файла с расширением .txt
         Path originalFile = Files.createFile(Path.of("test.txt"));
 

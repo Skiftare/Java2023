@@ -5,15 +5,18 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.logging.log4j.LogManager;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Task5 {
+
+    private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
     private static final String TOP_STORIES_URL = "https://hacker-news.firebaseio.com/v0/topstories.json";
     private static final String ITEM_URL = "https://hacker-news.firebaseio.com/v0/item/%d.json";
 
-    public long[] hackerNewsTopStories() {
+    public static long[] hackerNewsTopStories() {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
             .uri(URI.create(TOP_STORIES_URL))
@@ -29,12 +32,12 @@ public class Task5 {
             }
             return storyIds;
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.info(e.getMessage());
             return new long[0];
         }
     }
 
-    public String news(long id) {
+    public static String news(long id) {
         String url = String.format(ITEM_URL, id);
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -50,17 +53,9 @@ public class Task5 {
                 return matcher.group(1);
             }
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.info(e.getMessage());
         }
         return "";
-    }
-
-    public static void main(String[] args) {
-        Task5 hackerNews = new Task5();
-        long[] topStories = hackerNews.hackerNewsTopStories();
-        System.out.println(Arrays.toString(topStories));
-        String newsTitle = hackerNews.news(37570037);
-        System.out.println(newsTitle);
     }
 
 }

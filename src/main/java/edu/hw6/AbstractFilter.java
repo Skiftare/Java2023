@@ -3,9 +3,11 @@ package edu.hw6;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SeekableByteChannel;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.function.Predicate;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.util.regex.Pattern;
 
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
@@ -23,15 +25,12 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
     }
 
     default void close() {
-
-    };
-
-    static AbstractFilter regularFile = Files::isRegularFile;
-    static AbstractFilter readable = Files::isReadable;
+    }
 
     static AbstractFilter largerThan(long size) {
         return entry -> Files.size(entry) > size;
     }
+
     static AbstractFilter smallerThan(long size) {
         return entry -> Files.size(entry) < size;
     }

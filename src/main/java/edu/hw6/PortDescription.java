@@ -16,15 +16,8 @@ public class PortDescription {
 
     }
 
-    public String getPort() {
-        return port;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    public String getProtocol() {
-        return protocol;
-    }
 }

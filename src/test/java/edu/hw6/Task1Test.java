@@ -1,41 +1,38 @@
 package edu.hw6;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
 public class Task1Test {
-    private static final String TEST_FILE_PATH = "test_data.dat";
+
+    private static final String TEST_FILE_PATH = "test_data.txt";
     private DiskMap diskMap;
 
     @BeforeEach
     void setUp() {
         diskMap = new DiskMap(TEST_FILE_PATH);
+        diskMap.clear();
     }
 
     @Test
-    void putAndGet() {
-        diskMap.clear();
-
+    @DisplayName("Тест на корректную отработку функции put() для самописного класса")
+    void testThatPutValsAndReturnedCheckOfTheyExist() {
         diskMap.put("key1", "value1");
         diskMap.put("key2", "value2");
-
 
         assertThat(diskMap.get("key1")).isEqualTo("value1");
         assertThat(diskMap.get("key2")).isEqualTo("value2");
     }
 
     @Test
-    void remove() {
-        diskMap.clear();
+    @DisplayName("Тест на корректную отработку функции remove() для самописного класса")
+    void testThatRemoveValsAndReturnedCheckOfTheyNotExist() {
         diskMap.put("key1", "value1");
         diskMap.put("key2", "value2");
 
@@ -44,8 +41,8 @@ public class Task1Test {
     }
 
     @Test
-    void size() {
-        diskMap.clear();
+    @DisplayName("Тест на корректную отработку функции size() для самописного класса")
+    void testThatPutValsAndReturnedCheckOfSizeOfMap() {
         diskMap.put("key1", "value1");
         diskMap.put("key2", "value2");
 
@@ -53,8 +50,8 @@ public class Task1Test {
     }
 
     @Test
-    void isEmpty() {
-        diskMap.clear();
+    @DisplayName("Тест на корректную отработку функции isEmpty() для самописного класса")
+    void testThatPutValsAndReturnedCheckOfIsEmptyMap() {
         assertThat(diskMap.isEmpty()).isTrue();
 
         diskMap.put("key1", "value1");
@@ -63,17 +60,21 @@ public class Task1Test {
     }
 
     @Test
-    void containsKey() {
-        diskMap.clear();
+    @DisplayName("Тест на то, что в DiskMap нет чего-то, что мы туда не клали")
+    void testThatPutValsAndReturnedContainsValsByKey() {
         diskMap.put("key1", "value1");
 
         assertThat(diskMap.containsKey("key1")).isTrue();
         assertThat(diskMap.containsKey("key2")).isFalse();
+        assertThat(diskMap.size()).isEqualTo(1);
+        diskMap.put("key2", "value2");
+        assertThat(diskMap.keySet()).containsExactlyInAnyOrder("key1", "key2");
+
     }
 
     @Test
-    void containsValue() {
-        diskMap.clear();
+    @DisplayName("Тест на корректную отработку функции containsValue() для самописного класса")
+    void testThatPutValsAndReturnedContainsValues() {
         diskMap.put("key1", "value1");
 
         assertThat(diskMap.containsValue("value1")).isTrue();
@@ -81,43 +82,39 @@ public class Task1Test {
     }
 
     @Test
-    void loadFromFile() throws IOException {
-        // Создание временного файла и запись данных
-        File tempFile = File.createTempFile("temp", ".txt");
-        Path tempFilePath = tempFile.toPath();
-        Files.writeString(tempFilePath, "key1:value1\nkey2:value2");
+    @DisplayName("Тест на корректную отработку функции putAll() для самописного класса")
+    void testThatPutValsAsOneMapAndReturnedCheckOfSuccessfulAdd() {
+        Map<String, String> testData = new HashMap<>();
+        testData.put("key1", "value1");
+        testData.put("key2", "value2");
 
-        // Создание экземпляра DiskMap с временным файлом
-        DiskMap tempDiskMap = new DiskMap(tempFilePath.toString());
+        diskMap.putAll(testData);
 
-        assertThat(tempDiskMap.get("key1")).isEqualTo("value1");
-        assertThat(tempDiskMap.get("key2")).isEqualTo("value2");
-
-        // Удаление временного файла
-        Files.delete(tempFilePath);
+        assertThat(diskMap.get("key1")).isEqualTo("value1");
+        assertThat(diskMap.get("key2")).isEqualTo("value2");
     }
 
     @Test
-    void saveToFile() throws IOException {
-        // Создание временного файла
-        File tempFile = File.createTempFile("temp", ".txt");
-        Path tempFilePath = tempFile.toPath();
+    @DisplayName("Тест на корректную отработку функции clear() для самописного класса")
+    void testThatClearMapReturnedIfMapEmpty() {
+        diskMap.put("key1", "value1");
+        diskMap.put("key2", "value2");
 
-        // Создание экземпляра DiskMap с временным файлом
-        DiskMap tempDiskMap = new DiskMap(tempFilePath.toString());
+        diskMap.clear();
 
-        tempDiskMap.put("key1", "value1");
-        tempDiskMap.put("key2", "value2");
+        assertThat(diskMap.size()).isEqualTo(0);
+        assertThat(diskMap.isEmpty()).isTrue();
+    }
 
-        // Загрузка данных из временного файла
-        Map<String, String> loadedData = Files.lines(tempFilePath)
-            .map(line -> line.split(":"))
-            .collect(Collectors.toMap(parts -> parts[0], parts -> parts[1]));
+    @Test
+    @DisplayName("Тест на корректную отработку функции entrySet() для самописного класса")
+    void testThatPutValsAndReturnedChekOfFuctionEntrySet() {
+        diskMap.put("key1", "value1");
+        diskMap.put("key2", "value2");
 
-        assertThat(loadedData).containsEntry("key1", "value1");
-        assertThat(loadedData).containsEntry("key2", "value2");
-
-        // Удаление временного файла
-        Files.delete(tempFilePath);
+        assertThat(diskMap.entrySet()).containsExactlyInAnyOrder(
+            Map.entry("key1", "value1"),
+            Map.entry("key2", "value2")
+        );
     }
 }

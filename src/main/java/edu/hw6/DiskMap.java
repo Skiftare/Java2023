@@ -1,13 +1,20 @@
 package edu.hw6;
 
-import java.io.*;
-import org.jetbrains.annotations.NotNull;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import org.apache.logging.log4j.LogManager;
+import org.jetbrains.annotations.NotNull;
 
 public class DiskMap implements Map<String, String> {
+    private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
     private String filePath;
     private Map<String, String> map;
 
@@ -24,7 +31,7 @@ public class DiskMap implements Map<String, String> {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.info(e.getMessage());
             }
         }
     }
@@ -42,7 +49,7 @@ public class DiskMap implements Map<String, String> {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.info(e.getMessage());
         }
     }
 
@@ -53,7 +60,7 @@ public class DiskMap implements Map<String, String> {
                 writer.newLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.info(e.getMessage());
         }
     }
 
