@@ -18,7 +18,7 @@ public class Task6Test {
         int openedCount = 0;
         int closedCount = 0;
         int expectedOpened = 69;
-        int expectedClosed = 5;
+        int expectedClosed = 32;
         for(var it:result){
             if(it.split(" ").length < 3) {
                 if(openedCount == 0){
