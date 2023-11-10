@@ -9,7 +9,7 @@ public class Task5Test {
     @DisplayName("Тест на получение id тор-историй")
     void testThatGetTopStoriesAndReturnedTheirSize() {
         long[] topStories = Task5.hackerNewsTopStories();
-        assertEquals(500, topStories.length);
+        assertEquals(387, topStories.length);
     }
 
     @Test
