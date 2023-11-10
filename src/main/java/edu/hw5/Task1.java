@@ -12,8 +12,6 @@ public class Task1 {
     private static final String PATTERN_STRING = "yyyy-MM-dd, HH:mm";
     private static final String EXCEPTION_MESSAGE = "Wrong time format";
 
-
-
     private static Duration calculateDurationForString(@NotNull String input) {
         try {
             String[] parts = input.split(" - ");
