@@ -1,11 +1,8 @@
 package edu.hw6;
 
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.nio.file.Path;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Task6Test {

@@ -1,24 +1,18 @@
 package edu.hw6;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static edu.hw6.AbstractFilter.globMatches;
-import static edu.hw6.AbstractFilter.largerThan;
 import static edu.hw6.AbstractFilter.magicNumber;
-import static edu.hw6.AbstractFilter.regexContains;
 import static edu.hw6.AbstractFilter.smallerThan;
-import static org.assertj.core.api.FactoryBasedNavigableListAssert.assertThat;
 import static org.assertj.core.api.Fail.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task3Test {
     public static final AbstractFilter regularFile = Files::isRegularFile;
