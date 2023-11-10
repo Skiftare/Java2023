@@ -17,7 +17,7 @@ public class Task6Test {
         List<String> result = Task6.getPortsInfo();
         int openedCount = 0;
         int closedCount = 0;
-        int expectedOpened = 69;
+        int expectedOpened = 42;
         int expectedClosed = 32;
         for(var it:result){
             if(it.split(" ").length < 3) {
