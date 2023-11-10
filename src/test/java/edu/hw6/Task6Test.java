@@ -27,7 +27,7 @@ public class Task6Test {
                 openedCount++;
             } else{
                 if(closedCount == 0){
-                    assertEquals("TCP\t137\tNETBIOS-NS (NetBIOS Name Service)", it);
+                    assertEquals("TCP\t137\tNETBIOS-NS (NetBIOS Name Service)\n", it);
                 }
                 closedCount++;
             }
