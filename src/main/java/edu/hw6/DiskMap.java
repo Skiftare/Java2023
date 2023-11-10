@@ -17,6 +17,7 @@ public class DiskMap implements Map<String, String> {
         this.map = new HashMap<>();
         loadFromFile();
     }
+
     private void createFileIfNotExists() {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -29,6 +30,7 @@ public class DiskMap implements Map<String, String> {
     }
 
     private void loadFromFile() {
+        map.clear();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -82,6 +84,7 @@ public class DiskMap implements Map<String, String> {
 
     @Override
     public String put(String key, String value) {
+        loadFromFile();
         String previousValue = map.put(key, value);
         saveToFile();
         return previousValue;
@@ -97,41 +100,36 @@ public class DiskMap implements Map<String, String> {
     @Override
     public void putAll(@NotNull Map<? extends String, ? extends String> m) {
 
+        loadFromFile();
+        map.putAll(m);
+        saveToFile();
     }
 
     @Override
     public void clear() {
-
+        map.clear();
+        saveToFile();
     }
 
     @NotNull
     @Override
     public Set<String> keySet() {
-        return null;
+        loadFromFile();
+        return map.keySet();
     }
 
     @NotNull
     @Override
     public Collection<String> values() {
-        return null;
+        loadFromFile();
+        return map.values();
     }
 
     @NotNull
     @Override
     public Set<Entry<String, String>> entrySet() {
-        return null;
+        loadFromFile();
+        return map.entrySet();
     }
 
-    // Другие методы интерфейса Map<String, String> можно реализовать аналогичным образом
-
-    public static void main(String[] args) {
-        DiskMap diskMap = new DiskMap("data.dat");
-        diskMap.put("key1", "value1");
-        diskMap.put("key2", "value2");
-        diskMap.put("key3", "value3");
-
-        System.out.println(diskMap.get("key1")); // Выводит "value1"
-        System.out.println(diskMap.get("key2")); // Выводит "value2"
-        System.out.println(diskMap.get("key3")); // Выводит "value3"
-    }
 }

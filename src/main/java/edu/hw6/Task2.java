@@ -1,5 +1,6 @@
 package edu.hw6;
 
+import org.apache.logging.log4j.LogManager;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
@@ -9,10 +10,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.nio.Buffer.*;
+import java.util.logging.Logger;
 
 public class Task2 {
+    private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
     public static String makeCopyName(Path path, String income){
-        String fileName = path.getFileName().toString();
+        String fileName = income;
         String baseName = fileName.substring(0, fileName.lastIndexOf('.'));
         String extension = fileName.substring(fileName.lastIndexOf('.'));
         String newFileName = baseName + " — копия" + extension;
@@ -26,8 +29,8 @@ public class Task2 {
     }
 
     public static void cloneFile(Path path) {
-        String newFileName = makeCopyName(path,path.getFileName().toString());
 
+        String newFileName = makeCopyName(path,path.getFileName().toString());
         try (RandomAccessFile sourceFile = new RandomAccessFile(path.toFile(), "r");
              FileChannel sourceChannel = sourceFile.getChannel();
              FileChannel destinationChannel = FileChannel.open(path.resolveSibling(newFileName),
@@ -35,15 +38,11 @@ public class Task2 {
 
             MappedByteBuffer buffer = sourceChannel.map(FileChannel.MapMode.READ_ONLY, 0, sourceChannel.size());
             destinationChannel.write(buffer);
-            System.out.println("Копия файла успешно создана: " + newFileName);
+            String buf = ("Копия файла успешно создана: " + newFileName);
+            LOGGER.info(buf);
         } catch (IOException e) {
-            System.out.println("Ошибка при создании копии файла: " + e.getMessage());
+            String buf = ("Ошибка при создании копии файла: " + e.getMessage());
+            LOGGER.info(buf);
         }
-    }
-
-    public static void main(String[] args) throws IOException {
-        Path filePath = Paths.get("src/main/java/edu/hw6/Tinkoff Bank Biggest Secret.txt");
-        cloneFile(filePath);
-
     }
 }

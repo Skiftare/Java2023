@@ -22,18 +22,19 @@ public class WikipediaParser {
                     if(!buf.contains(Integer.toString(portNumber)) || buf.split("/").length <2){
                         continue;
                     }
+
                     var portAndProtocol = buf.split("/");
                     String port = portAndProtocol[0];
                     String protocol = portAndProtocol[1];
                     String description = cells.get(1).text();
                     if (port.equals(Integer.toString(portNumber))) {
-                        return new PortDescription(port, description,protocol);
+                        return new PortDescription(port, description,protocol, 0);
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new PortDescription(null,"","");
+        return new PortDescription(null,"","", 0);
     }
 }
