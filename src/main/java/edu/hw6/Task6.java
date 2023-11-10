@@ -44,7 +44,7 @@ public class Task6 {
                 resultOfScan.add(TSP_STRING + port + '\n');
             } catch (IOException e) {
                 resultOfScan.add(
-                    TSP_STRING + port + "\t" + WikipediaParser.getPortDescription(port).getDescription() + '\n');
+                    TSP_STRING + port + '\t' + WikipediaParser.getPortDescription(port).getDescription() + '\n');
             }
 
             try {
@@ -53,7 +53,7 @@ public class Task6 {
                 resultOfScan.add(UDP_STRING + port + '\n');
             } catch (IOException e) {
                 resultOfScan.add(
-                    UDP_STRING + port + "\t" + WikipediaParser.getPortDescription(port).getDescription() + '\n');
+                    UDP_STRING + port + '\t' + WikipediaParser.getPortDescription(port).getDescription() + '\n');
             }
         }
         return resultOfScan;
