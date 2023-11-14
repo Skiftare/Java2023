@@ -8,7 +8,6 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
-import java.util.regex.Pattern;
 
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
     default AbstractFilter and(AbstractFilter other) {
@@ -25,10 +24,6 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
     }
 
     default void close() {
-    }
-
-    static AbstractFilter largerThan(long size) {
-        return entry -> Files.size(entry) > size;
     }
 
     static AbstractFilter smallerThan(long size) {
@@ -57,12 +52,6 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         final PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:" + glob);
         return entry -> matcher.matches(entry.getFileName());
     }
-
-    static AbstractFilter regexContains(String regex) {
-        final Pattern pattern = Pattern.compile(regex);
-        return entry -> pattern.matcher(entry.getFileName().toString()).find();
-    }
-
 
     boolean accept(Path entry) throws IOException;
 

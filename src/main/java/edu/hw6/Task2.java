@@ -14,9 +14,8 @@ public class Task2 {
     private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
     public static String makeCopyName(Path path, String income) {
-        String fileName = income;
-        String baseName = fileName.substring(0, fileName.lastIndexOf('.'));
-        String extension = fileName.substring(fileName.lastIndexOf('.'));
+        String baseName = income.substring(0, income.lastIndexOf('.'));
+        String extension = income.substring(income.lastIndexOf('.'));
         String newFileName = baseName + " — копия" + extension;
 
         int copyNumber = 1;

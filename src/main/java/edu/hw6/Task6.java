@@ -16,8 +16,10 @@ public class Task6 {
     private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
     static HashSet<Integer> portSet = new HashSet<>();
     private static final String PORTS_FILE_PATH = "src/main/java/edu/hw6/ports.json";
-    private static final String TSP_STRING = "TCP\t";
-    private static final String UDP_STRING = "UDP\t";
+    private static final Character ENDL_CHAR = '\n';
+    private static final Character TAB_CHAR = '\t';
+    private static final String TSP_STRING = "TCP" + TAB_CHAR;
+    private static final String UDP_STRING = "UDP" + TAB_CHAR;
 
     public static void readPortsMapFromFile() {
 
@@ -33,28 +35,37 @@ public class Task6 {
         }
     }
 
+    private static String tspScan(int port) {
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            serverSocket.close();
+            return TSP_STRING + port + ENDL_CHAR;
+        } catch (IOException e) {
+            return
+                TSP_STRING + port + TAB_CHAR + WikipediaParser.getPortDescription(port).description() + ENDL_CHAR;
+        }
+
+    }
+
+    private static String updScan(int port) {
+        try {
+            DatagramSocket datagramSocket = new DatagramSocket(port);
+            datagramSocket.close();
+            return UDP_STRING + port + ENDL_CHAR;
+        } catch (IOException e) {
+            return
+                UDP_STRING + port + TAB_CHAR + WikipediaParser.getPortDescription(port).description() + ENDL_CHAR;
+
+        }
+
+    }
 
     public static List<String> getPortsInfo() {
         List<String> resultOfScan = new ArrayList<>();
         readPortsMapFromFile();
         for (int port : portSet) {
-            try {
-                ServerSocket serverSocket = new ServerSocket(port);
-                serverSocket.close();
-                resultOfScan.add(TSP_STRING + port + '\n');
-            } catch (IOException e) {
-                resultOfScan.add(
-                    TSP_STRING + port + '\t' + WikipediaParser.getPortDescription(port).getDescription() + '\n');
-            }
-
-            try {
-                DatagramSocket datagramSocket = new DatagramSocket(port);
-                datagramSocket.close();
-                resultOfScan.add(UDP_STRING + port + '\n');
-            } catch (IOException e) {
-                resultOfScan.add(
-                    UDP_STRING + port + '\t' + WikipediaParser.getPortDescription(port).getDescription() + '\n');
-            }
+            resultOfScan.add(tspScan(port));
+            resultOfScan.add(updScan(port));
         }
         return resultOfScan;
     }
