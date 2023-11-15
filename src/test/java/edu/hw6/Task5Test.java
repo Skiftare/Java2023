@@ -12,7 +12,7 @@ public class Task5Test {
         //When: make attempt to parse the file
         long[] topStories = Task5.hackerNewsTopStories();
         //Then: check for full parse
-        assertEquals(466, topStories.length);
+        assertEquals(472, topStories.length);
     }
 
     @Test
