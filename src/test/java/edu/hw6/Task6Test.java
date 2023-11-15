@@ -13,8 +13,8 @@ public class Task6Test {
     void testThatGetPortsAndReturnedStateOfMostPopularPorts(){
         //Given: ports
         List<String> result = Task6.getPortsInfo();
-        int expectedOpened = 74;
-        int expectedClosed = 0;
+        int expectedOpened = 42;
+        int expectedClosed = 32;
         List<String> expectOpened = new ArrayList<>();
         List<String> expectClosed = new ArrayList<>();
         //When: get lists of opened and closed ports
@@ -31,7 +31,7 @@ public class Task6Test {
         //Then: check for right scan of ports
         assertEquals(expectClosed.size(),expectedClosed);
         assertEquals(expectOpened.size(), expectedOpened);
-        //assertEquals(expectClosed.get(0), "TCP\t137\tNETBIOS-NS (NetBIOS Name Service)\n");
+        assertEquals(expectClosed.get(0), "TCP\t137\tNETBIOS-NS (NetBIOS Name Service)\n");
         assertEquals(expectOpened.get(0), "TCP\t27017\n");
     }
 
