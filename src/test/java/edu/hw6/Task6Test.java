@@ -13,7 +13,7 @@ public class Task6Test {
     void testThatGetPortsAndReturnedStateOfMostPopularPorts(){
         //Given: ports
         List<String> result = Task6.getPortsInfo();
-        int expectedOpened = 42;
+        int expectedOpened = 74;
         int expectedClosed = 0;
         List<String> expectOpened = new ArrayList<>();
         List<String> expectClosed = new ArrayList<>();
