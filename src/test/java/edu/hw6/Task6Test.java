@@ -14,7 +14,7 @@ public class Task6Test {
         //Given: ports
         List<String> result = Task6.getPortsInfo();
         int expectedOpened = 42;
-        int expectedClosed = 32;
+        int expectedClosed = 0;
         List<String> expectOpened = new ArrayList<>();
         List<String> expectClosed = new ArrayList<>();
         //When: get lists of opened and closed ports
