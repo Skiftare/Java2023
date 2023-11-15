@@ -16,9 +16,9 @@ public class WikipediaParser {
 
     private static boolean checkerFowParser(Element row, int portNumber) {
         Elements cells = row.select("td");
+
         if (cells.size() >= NEED_CELL_SIZE) {
-            String buf = cells.get(0).text();
-            return buf.contains(Integer.toString(portNumber)) && buf.split("/").length < 2;
+            return Integer.toString(portNumber).equals(row.select("td").get(0).text().split("/")[0]);
         }
         return false;
     }
@@ -30,11 +30,8 @@ public class WikipediaParser {
             Elements rows = document.select("table.wikitable tbody tr");
             for (Element row : rows) {
                 if (checkerFowParser(row, portNumber)) {
-                    String description = row.select("td").get(1).text();
-                    String port = row.select("td").get(0).text().split("/")[0];
-                    if (port.equals(Integer.toString(portNumber))) {
-                        return new PortDescription(description);
-                    }
+                    return new PortDescription(row.select("td").get(1).text());
+
                 }
             }
         } catch (IOException e) {
