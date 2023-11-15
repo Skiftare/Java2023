@@ -19,7 +19,7 @@ public class Task6Test {
         List<String> expectClosed = new ArrayList<>();
         //When: get lists of opened and closed ports
         for(var it:result){
-            if(it.split(" ").length < 3) {
+            if(it.split("\t").length < 3) {
                 expectOpened.add(it);
                 System.out.println(it);
             } else{
