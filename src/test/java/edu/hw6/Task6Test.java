@@ -1,5 +1,6 @@
 package edu.hw6;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,27 +11,25 @@ public class Task6Test {
     @Test
     @DisplayName("Тест открытых/закрытых портов - считаем количество и проверяем первые вхождения")
     void testThatGetPortsAndReturnedStateOfMostPopularPorts(){
-
+        //Given: ports
         List<String> result = Task6.getPortsInfo();
-        int openedCount = 0;
-        int closedCount = 0;
         int expectedOpened = 42;
         int expectedClosed = 32;
+        List<String> expectOpened = new ArrayList<>();
+        List<String> expectClosed = new ArrayList<>();
+        //When: get lists of opened and closed ports
         for(var it:result){
             if(it.split(" ").length < 3) {
-                if(openedCount == 0){
-                    assertEquals("TCP\t27017\n", it);
-                }
-                openedCount++;
+                expectOpened.add(it);
             } else{
-                if(closedCount == 0){
-                    assertEquals("TCP\t137\tNETBIOS-NS (NetBIOS Name Service)\n", it);
-                }
-                closedCount++;
+                expectClosed.add(it);
             }
         }
-        assertEquals(expectedClosed,closedCount);
-        assertEquals(expectedOpened,openedCount);
+        //Then: check for right scan of ports
+        assertEquals(expectClosed.size(),expectedClosed);
+        assertEquals(expectOpened.size(), expectedOpened);
+        assertEquals(expectClosed.get(0), "TCP\t137\tNETBIOS-NS (NetBIOS Name Service)\n");
+        assertEquals(expectOpened.get(0), "TCP\t27017\n");
     }
 
 }

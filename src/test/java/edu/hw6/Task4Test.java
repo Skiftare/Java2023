@@ -11,10 +11,13 @@ public class Task4Test {
     @Test
     @DisplayName("Тест на запись в файл строки через outputStreamComposition")
     void testGetPathWithStringAndRetunedFileInPathWithWrittenString() throws IOException {
+        //Given: tempFile and string to write
         Path tempFile = Files.createTempFile("output", ".txt");
         String expected = "Programming is learned by writing programs. ― Brian Kernighan";
+        //When: trying to write in file
         Task4.outputStreamComposition(expected,tempFile);
         String fileContent = Files.readString(tempFile);
+        //Then: check for succ write
         assertEquals(expected+'\n', fileContent);
         Files.delete(tempFile);
     }

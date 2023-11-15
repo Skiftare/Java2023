@@ -21,9 +21,11 @@ public class Task1Test {
     @Test
     @DisplayName("Тест на корректную отработку функции put() для самописного класса")
     void testThatPutValsAndReturnedCheckOfTheyExist() {
+        Given: // empty diskMap
+        When:
         diskMap.put("key1", "value1");
         diskMap.put("key2", "value2");
-
+        Then:
         assertThat(diskMap.get("key1")).isEqualTo("value1");
         assertThat(diskMap.get("key2")).isEqualTo("value2");
     }
