@@ -45,6 +45,12 @@
 
         <jacoco-maven-plugin.version>0.8.10</jacoco-maven-plugin.version>
     </properties>
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
 
     <dependencyManagement>
         <dependencies>
@@ -55,6 +61,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+
 
             <dependency>
                 <groupId>org.junit</groupId>
@@ -72,6 +80,12 @@
             <artifactId>annotations</artifactId>
             <version>${jetbrains-annotations.version}</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.skebir</groupId>
+            <artifactId>prettytable</artifactId>
+            <version>1.0</version>
         </dependency>
 
         <!-- Logging -->
@@ -107,7 +121,13 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.16.2</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
