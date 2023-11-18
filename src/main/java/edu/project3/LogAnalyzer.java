@@ -24,7 +24,7 @@ import org.apache.logging.log4j.Logger;
 
 public class LogAnalyzer {
 
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
     private final Map<Date, Integer> timeLocalMap = new HashMap<>();
     private final Map<String, Integer> remoteAddrMap = new HashMap<>();
     private final Map<String, Integer> requestMap = new HashMap<>();
@@ -38,7 +38,7 @@ public class LogAnalyzer {
     private Date maxDate = null;
     private Integer totalRequests = 0;
     private Integer totalResponseSizeByKB = 0;
-    private final String yearMonthAndDate = "yyyy-MM-dd";
+    private static final String YEAR_MONTH_AND_DATE = "yyyy-MM-dd";
     private final String hoursMinutestAndSeconds = "HH:mm:ss";
     private final String httpString = "http";
 
@@ -78,11 +78,11 @@ public class LogAnalyzer {
     }
 
     private static Date convert(String dateString) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatter = new SimpleDateFormat(YEAR_MONTH_AND_DATE);
         try {
             return formatter.parse(dateString);
         } catch (ParseException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
             return null;
         }
     }
@@ -115,7 +115,7 @@ public class LogAnalyzer {
                 file.createNewFile();
             }
         } catch (IOException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
     }
 
@@ -123,7 +123,7 @@ public class LogAnalyzer {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToOutputFile, true))) {
             writer.write(tables.printAsString(fileFormat));
         } catch (IOException e) {
-            logger.info("Ошибка при записи файла: " + e.getMessage());
+            LOGGER.info("Ошибка при записи файла: " + e.getMessage());
         }
     }
 
@@ -272,13 +272,13 @@ public class LogAnalyzer {
                 }
             }
         } catch (IOException e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
 
-        logger.info("Логи обработаны, началась запись в:");
-        logger.info(pathToOutputFile);
+        LOGGER.info("Логи обработаны, началась запись в:");
+        LOGGER.info(pathToOutputFile);
         writeAllStats(readedLogs, fromStr, toStr);
-        logger.info("Логи записаны");
+        LOGGER.info("Логи записаны");
 
     }
 
@@ -292,7 +292,7 @@ public class LogAnalyzer {
 
     private void printFirstExtraMetric() {
         SimpleDateFormat dateFormatForOutput = new SimpleDateFormat(
-            yearMonthAndDate + "'  '" + hoursMinutestAndSeconds
+            YEAR_MONTH_AND_DATE + "'  '" + hoursMinutestAndSeconds
         );
         Table table = new Table("Метрика дат из логов", "Дата");
         table.nameTable("Первая доп. метрика");
@@ -334,8 +334,6 @@ public class LogAnalyzer {
     ) {
         Table table = new Table("Метрика", "Значение");
         table.nameTable("Общая информация");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
         if (path.get(0).startsWith(httpString)) {
             table.addRow("URL", parseArrayAsOneString(path));
         } else {
