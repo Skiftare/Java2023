@@ -21,10 +21,8 @@ public class Task6Test {
         for (var it : result) {
             if (it.split("\t").length < 3) {
                 expectOpened.add(it);
-                System.out.println(it);
             } else {
                 expectClosed.add(it);
-                System.out.println(it);
             }
         }
 
