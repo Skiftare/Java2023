@@ -18,7 +18,7 @@ public class Task4Test {
         Task4.outputStreamComposition(expected, tempFile);
         String fileContent = Files.readString(tempFile);
         //Then: check for succ write
-        assertEquals(expected + '\n', fileContent);
+        assertEquals(expected + '\n', fileContent); //Тут решил не ставить StringBuilder, потому что.. Ну, это из пушки по воробьям. Производительность и память жалко.
         Files.delete(tempFile);
     }
 }
