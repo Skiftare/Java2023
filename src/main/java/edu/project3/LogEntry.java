@@ -1,6 +1,5 @@
 package edu.project3;
 
-import java.time.OffsetDateTime;
 import java.util.Date;
 
 public class LogEntry {
@@ -69,6 +68,7 @@ public class LogEntry {
     public void setHttpUserAgent(String group) {
         this.httpUserAgent = group;
     }
+
     public String getHttpReferer() {
         return this.httpReferer;
     }
