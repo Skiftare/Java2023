@@ -2,6 +2,7 @@ package edu.project3;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,13 +23,16 @@ public class LogAnalyzer {
 
     private final static Logger LOGGER = LogManager.getLogger();
 
-    static Map<Date, Integer> timeLocalMap = new HashMap<>();
-    static Map<String, Integer> adressMap = new HashMap<>();
-    static Map<String, Integer> requestMap = new HashMap<>();
-    static Map<Integer, Integer> statusMap = new HashMap<>();
-    static Map<Integer, Integer> bodyBytesSentMap = new HashMap<>();
-    static Map<String, Integer> refererMap = new HashMap<>();
-    static Map<String, Integer> agentMap = new HashMap<>();
+    private static final Map<Date, Integer> timeLocalMap = new HashMap<>();
+    private static final Map<String, Integer> adressMap = new HashMap<>();
+    private static final Map<String, Integer> requestMap = new HashMap<>();
+    private static final Map<Integer, Integer> statusMap = new HashMap<>();
+    private static final Map<Integer, Integer> bodyBytesSentMap = new HashMap<>();
+    private static final Map<String, Integer> refererMap = new HashMap<>();
+    private static final Map<String, Integer> agentMap = new HashMap<>();
+    private static String FILE_FORMAT;
+    private static String PATH_TO_OUTPUT_FILE;
+    private static final String FOLDER_FOR_OUTPUT = "src/main/java/edu/project3/resources/";
 
     private static <T> void put(Map<T, Integer> m, T val) {
         m.put(val, m.getOrDefault(val, 0) + 1);
@@ -55,15 +59,32 @@ public class LogAnalyzer {
             return (curr.compareTo(from) >= 0 && curr.compareTo(to) <= 0);
         }
     }
+    private static void initFile() {
 
-    private static void writeToFile(String format, String content) {
-        String fileName = "output." + format; // Имя файла с расширением в зависимости от формата
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-            writer.write(content);
-            System.out.println("Файл успешно записан.");
+        StringBuilder filePathBuilder = new StringBuilder();
+        filePathBuilder.append(FOLDER_FOR_OUTPUT).append("output").append(FILE_FORMAT);
+        PATH_TO_OUTPUT_FILE = filePathBuilder.toString();
+        try {
+            File file = new File(PATH_TO_OUTPUT_FILE);
+            if (file.exists()) {
+                try(FileWriter writer = new FileWriter(file)) {
+                    writer.write("");
+                }
+            } else {
+                file.createNewFile();
+            }
         } catch (IOException e) {
-            System.out.println("Ошибка при записи файла: " + e.getMessage());
+            LOGGER.info(e.getMessage());
+        }
+    }
+
+    private static void writeToFile(PrettyTable tables) {
+         // Имя файла с расширением в зависимости от формата
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(PATH_TO_OUTPUT_FILE, true))) {
+            writer.write(String.valueOf(tables));
+        } catch (IOException e) {
+            LOGGER.info("Ошибка при записи файла: " + e.getMessage());
         }
     }
 
@@ -98,14 +119,18 @@ public class LogAnalyzer {
         if (path == null) {
             throw new RuntimeException("no path to parse logs");
         }
+        if(format == null){
+            FILE_FORMAT = ".txt";
+        }
+        else{
+            FILE_FORMAT = format.equals("markdown") ? ".md" : ".adoc";
+        }
+        initFile();
 
         int totalRequests = 0;
         int totalResponseSizeByKB = 0;
-
+        BufferedReader reader = null;
         try {
-
-            BufferedReader reader;
-            assert path != null;
             if (path.startsWith("http")) {
                 URL url = new URL(path);
                 reader = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -125,7 +150,6 @@ public class LogAnalyzer {
                     put(requestMap, log.getRequest());
                     put(statusMap, log.getStatus());
                     totalResponseSizeByKB += (log.getBodyBytesSent() / (8 * 1024));
-                    //System.out.println(log.getBodyBytesSent());
                     put(bodyBytesSentMap, log.getBodyBytesSent());
                     put(refererMap, log.getHttpReferer());
                     put(agentMap, log.getRemoteUser());
@@ -144,19 +168,23 @@ public class LogAnalyzer {
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-        //System.out.println(timeLocalMap);
-        //return ;
-
-        //LocalDateTime fromDate = from.isEmpty() ? null : LocalDateTime.parse(from, LOG_DATE_FORMATTER);
-        //LocalDateTime toDate = to.isEmpty() ? null : LocalDateTime.parse(to, LOG_DATE_FORMATTER);
-
-        printGeneralInfo(path, fromStr, toStr, totalRequests, totalResponseSizeByKB, format);
-        printResourceStats(refererMap, format);
-        printResponseCodeStats(statusMap, format);
+        LOGGER.info("Логи обрботаны, началась запись");
+        printGeneralInfo(path, fromStr, toStr, totalRequests, totalResponseSizeByKB);
+        printResourceStats();
+        printResponseCodeStats();
 
         printFirstExtraMetric(minDate, maxDate);
-        printSecondExtraMetric(statusMap);
+        printSecondExtraMetric();
+        LOGGER.info("Логи записаны");
 
     }
 
@@ -166,18 +194,21 @@ public class LogAnalyzer {
         table.addRow("С какого момента стали поступать логи:", dateFormat.format(minDate));
         table.addRow("До какого момента поступали логи: ", dateFormat.format(maxDate));
         LOGGER.info(table);
+        writeToFile(table);
     }
 
-    private static void printSecondExtraMetric(Map<Integer, Integer> responseCodes) {
+    private static void printSecondExtraMetric() {
         PrettyTable table = new PrettyTable("Статус ответа", "Количество ответов");
         int[] respCodes = new int[6];
-        for (Map.Entry<Integer, Integer> entry : responseCodes.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : LogAnalyzer.statusMap.entrySet()) {
             respCodes[entry.getKey() / 100]+=entry.getValue();
         }
         for (int i = 1; i < 6; i++) {
             table.addRow(ResponseCodeParser.analyzeStatusCode(100 * i + 1), Integer.toString(respCodes[i]));
         }
         LOGGER.info(table);
+        writeToFile(table);
+
     }
 
     private static void printGeneralInfo(
@@ -185,14 +216,10 @@ public class LogAnalyzer {
         String fromDate,
         String toDate,
         int totalRequests,
-        int totalResponseSize,
-        String format
+        int totalResponseSize
     ) {
 
-        if (format != null && (format.equals("markdown") || format.equals("adoc"))) {
-            System.out.println("Все данные, выводимые в консоль, дублируются в файле: output." +
-                (format == "markdown" ? "md" : "adoc"));
-        }
+
         PrettyTable table = new PrettyTable("Метрика", "значение");
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'  'HH:mm:ss");
         table.addRow("Файл(ы)", path);
@@ -202,31 +229,26 @@ public class LogAnalyzer {
         table.addRow("Средний размер ответа (в КБ)",
             (totalRequests > 0 ? (totalResponseSize / totalRequests) + "b" : "-"));
         LOGGER.info(table);
+        writeToFile(table);
 
-        /*System.out.println("|        Метрика        |     Значение |");
-        System.out.println("|:---------------------:|-------------:|");
-        System.out.println("|       Файл(-ы)        | `" + path + "` |");
-        //System.out.println("|    Начальная дата     | " + ( + " |");
-        //System.out.println("|     Конечная дата     | " +  + " |");
-        System.out.println("|  Количество запросов  | " + totalRequests + " |");
-        System.out.println("| Средний размер ответа (в КБ) | " + (totalRequests > 0 ? (totalResponseSize / totalRequests) + "b" : "-") + " |\n");
-    */
+
     }
 
-    private static void printResourceStats(Map<String, Integer> resourceCounts, String format) {
+    private static void printResourceStats() {
         LOGGER.info("\n#### Запрашиваемые ресурсы\n");
         PrettyTable table = new PrettyTable("Ресурс", "Количество");
-        for (Map.Entry<String, Integer> entry : resourceCounts.entrySet()) {
+        for (Map.Entry<String, Integer> entry : LogAnalyzer.refererMap.entrySet()) {
             table.addRow(entry.getKey(), entry.getValue().toString());
         }
         LOGGER.info(table);
+        writeToFile(table);
 
     }
 
-    private static void printResponseCodeStats(Map<Integer, Integer> responseCodes, String format) {
+    private static void printResponseCodeStats() {
         LOGGER.info("\n#### Коды ответа\n");
         PrettyTable table = new PrettyTable("Код", "Имя", "Количество");
-        for (Map.Entry<Integer, Integer> entry : responseCodes.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : LogAnalyzer.statusMap.entrySet()) {
             table.addRow(
                 Integer.toString(entry.getKey()),
                 ResponseCodeParser.getResponseCodeName(Integer.toString(entry.getKey())),
@@ -235,5 +257,7 @@ public class LogAnalyzer {
 
         }
         LOGGER.info(table);
+        writeToFile(table);
+
     }
 }
