@@ -18,7 +18,6 @@ public class Task5Test {
 
     @Test
     @DisplayName("Тест на получение заголовка по id")
-
     void testThatGetStoryIdAndReturnedTitle() {
         //Given: request for check site
         //When: make attempt to parse the news by id

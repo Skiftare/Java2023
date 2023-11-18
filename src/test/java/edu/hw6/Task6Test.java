@@ -10,7 +10,7 @@ public class Task6Test {
 
     @Test
     @DisplayName("Тест открытых/закрытых портов - считаем количество и проверяем первые вхождения")
-    void testThatGetPortsAndReturnedStateOfMostPopularPorts(){
+    void testThatGetPortsAndReturnedStateOfMostPopularPorts() {
         //Given: ports
         List<String> result = Task6.getPortsInfo();
         int expectedOpened = 42;
@@ -18,18 +18,18 @@ public class Task6Test {
         List<String> expectOpened = new ArrayList<>();
         List<String> expectClosed = new ArrayList<>();
         //When: get lists of opened and closed ports
-        for(var it:result){
-            if(it.split("\t").length < 3) {
+        for (var it : result) {
+            if (it.split("\t").length < 3) {
                 expectOpened.add(it);
                 System.out.println(it);
-            } else{
+            } else {
                 expectClosed.add(it);
                 System.out.println(it);
             }
         }
 
         //Then: check for right scan of ports
-        assertEquals(expectClosed.size(),expectedClosed);
+        assertEquals(expectClosed.size(), expectedClosed);
         assertEquals(expectOpened.size(), expectedOpened);
         assertEquals(expectClosed.get(0), "TCP\t137\tNETBIOS-NS (NetBIOS Name Service)\n");
         assertEquals(expectOpened.get(0), "TCP\t27017\n");

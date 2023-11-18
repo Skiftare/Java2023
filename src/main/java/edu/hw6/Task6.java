@@ -14,21 +14,22 @@ import org.apache.logging.log4j.LogManager;
 public class Task6 {
 
     private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
-    static HashSet<Integer> portSet = new HashSet<>();
     private static final String PORTS_FILE_PATH = "src/main/java/edu/hw6/ports.json";
     private static final Character ENDL_CHAR = '\n';
     private static final Character TAB_CHAR = '\t';
     private static final String TSP_STRING = "TCP" + TAB_CHAR;
     private static final String UDP_STRING = "UDP" + TAB_CHAR;
+    private static final HashSet<Integer> PORT_SET = new HashSet<>();
+    private static final String SPLIT_STRING = ", ";
 
     public static void readPortsMapFromFile() {
 
         try (BufferedReader reader = new BufferedReader(new FileReader(PORTS_FILE_PATH))) {
             String json = reader.readLine();
-            String[] portStrings = json.substring(1, json.length() - 1).split(", ");
+            String[] portStrings = json.substring(1, json.length() - 1).split(SPLIT_STRING);
             for (String portString : portStrings) {
                 int port = Integer.parseInt(portString);
-                portSet.add(port);
+                PORT_SET.add(port);
             }
         } catch (IOException e) {
             LOGGER.info(e.getMessage());
@@ -44,7 +45,6 @@ public class Task6 {
             return
                 TSP_STRING + port + TAB_CHAR + WikipediaParser.getPortDescription(port).description() + ENDL_CHAR;
         }
-
     }
 
     private static String updScan(int port) {
@@ -55,15 +55,13 @@ public class Task6 {
         } catch (IOException e) {
             return
                 UDP_STRING + port + TAB_CHAR + WikipediaParser.getPortDescription(port).description() + ENDL_CHAR;
-
         }
-
     }
 
     public static List<String> getPortsInfo() {
         List<String> resultOfScan = new ArrayList<>();
         readPortsMapFromFile();
-        for (int port : portSet) {
+        for (int port : PORT_SET) {
             resultOfScan.add(tspScan(port));
             resultOfScan.add(updScan(port));
         }

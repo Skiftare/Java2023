@@ -14,10 +14,10 @@ import java.util.zip.CheckedOutputStream;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class Task4 {
+    private static final Character ENDL_CHAR = '\n';
+
     public static void outputStreamComposition(String text, Path filePath) {
-
         try (OutputStream outputStream = Files.newOutputStream(filePath, StandardOpenOption.CREATE);
-
              CheckedOutputStream checkedOutputStream = new CheckedOutputStream(outputStream, new CRC32());
              BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(checkedOutputStream);
              OutputStreamWriter outputStreamWriter = new OutputStreamWriter(
@@ -25,8 +25,7 @@ public class Task4 {
                  StandardCharsets.UTF_8
              );
              PrintWriter printWriter = new PrintWriter(outputStreamWriter)) {
-
-            printWriter.print(text + '\n');
+            printWriter.print(text + ENDL_CHAR);
         } catch (IOException e) {
             throw new RuntimeException("Compositioning has been failed");
         }

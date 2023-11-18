@@ -15,10 +15,10 @@ public class Task4Test {
         Path tempFile = Files.createTempFile("output", ".txt");
         String expected = "Programming is learned by writing programs. ― Brian Kernighan";
         //When: trying to write in file
-        Task4.outputStreamComposition(expected,tempFile);
+        Task4.outputStreamComposition(expected, tempFile);
         String fileContent = Files.readString(tempFile);
         //Then: check for succ write
-        assertEquals(expected+'\n', fileContent);
+        assertEquals(expected + '\n', fileContent);
         Files.delete(tempFile);
     }
 }

@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class DiskMap implements Map<String, String> {
     private final static org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
-    private String filePath;
-    private Map<String, String> map;
+    private final String filePath;
+    private final Map<String, String> map;
 
     public DiskMap(String filePath) {
         this.filePath = filePath;
@@ -29,7 +29,9 @@ public class DiskMap implements Map<String, String> {
         File file = new File(filePath);
         if (!file.exists()) {
             try {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    LOGGER.info("Файл создать не удалось");
+                }
             } catch (IOException e) {
                 LOGGER.info(e.getMessage());
             }

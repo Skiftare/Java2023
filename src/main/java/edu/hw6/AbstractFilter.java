@@ -10,22 +10,6 @@ import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 
 public interface AbstractFilter extends DirectoryStream.Filter<Path> {
-    default AbstractFilter and(AbstractFilter other) {
-        return new AbstractFilter() {
-            @Override
-            public boolean accept(Path entry) throws IOException {
-                return AbstractFilter.this.accept(entry) && other.accept(entry);
-            }
-
-            public void close() {
-                AbstractFilter.this.close();
-            }
-        };
-    }
-
-    default void close() {
-    }
-
     static AbstractFilter smallerThan(long size) {
         return entry -> Files.size(entry) < size;
     }
@@ -53,7 +37,22 @@ public interface AbstractFilter extends DirectoryStream.Filter<Path> {
         return entry -> matcher.matches(entry.getFileName());
     }
 
-    boolean accept(Path entry) throws IOException;
+    default AbstractFilter and(AbstractFilter other) {
+        return new AbstractFilter() {
+            @Override
+            public boolean accept(Path entry) throws IOException {
+                return AbstractFilter.this.accept(entry) && other.accept(entry);
+            }
 
+            public void close() {
+                AbstractFilter.this.close();
+            }
+        };
+    }
+
+    default void close() {
+    }
+
+    boolean accept(Path entry) throws IOException;
 
 }
