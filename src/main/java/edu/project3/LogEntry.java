@@ -10,7 +10,9 @@ public class LogEntry {
     private int status;
     private int bodyBytesSent;
     private String httpReferer;
-    private String httpUserAgent;
+
+    public LogEntry() {
+    }
 
     public String getRemoteAddr() {
         return remoteAddr;
@@ -24,8 +26,8 @@ public class LogEntry {
         return remoteUser;
     }
 
-    public void setRemoteUser(String remoteUser) {
-        this.remoteUser = remoteUser;
+    public void setRemoteUser(String incomeUser) {
+        this.remoteUser = incomeUser;
     }
 
     public Date getTimeLocal() {
@@ -65,15 +67,10 @@ public class LogEntry {
     }
 
     public void setHttpUserAgent(String group) {
-        this.httpUserAgent = group;
     }
 
     public String getHttpReferer() {
         return this.httpReferer;
-    }
-
-    public String getHttpUserAgent() {
-        return this.httpUserAgent;
     }
 
 }

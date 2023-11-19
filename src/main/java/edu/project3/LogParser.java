@@ -80,19 +80,20 @@ public class LogParser {
 
         LogEntry entry = new LogEntry();
 
-        String regex = "^(\\S+) - - \\[([^]]+)] \"([^\"]+)\" (\\d+) (\\d+) \"([^\"]+)\" \"([^\"]+)\"$";
+        String regex = "^(\\S+) - (\\S+) \\[([^]]+)] \"([^\"]+)\" (\\d+) (\\d+) \"([^\"]+)\" \"([^\"]+)\"$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(logLine);
 
         if (matcher.matches()) {
 
             entry.setRemoteAddr(matcher.group(1));
-            entry.setTimeLocal(convert(matcher.group(2)));
-            entry.setRequest(matcher.group(3));
-            entry.setStatus(Integer.parseInt(matcher.group(4)));
-            entry.setBodyBytesSent(Integer.parseInt(matcher.group(5)));
-            entry.setHttpReferer(matcher.group(6));
-            entry.setHttpUserAgent(matcher.group(7));
+            entry.setRemoteUser(matcher.group(2));
+            entry.setTimeLocal(convert(matcher.group(3)));
+            entry.setRequest(matcher.group(4));
+            entry.setStatus(Integer.parseInt(matcher.group(5)));
+            entry.setBodyBytesSent(Integer.parseInt(matcher.group(6)));
+            entry.setHttpReferer(matcher.group(7));
+            entry.setHttpUserAgent(matcher.group(8));
             return entry;
         } else {
             throw new IllegalArgumentException("Некорректная строка лога: " + logLine);
