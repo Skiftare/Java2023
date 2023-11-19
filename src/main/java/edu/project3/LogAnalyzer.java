@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,62 +19,62 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 
 public class LogAnalyzer {
 
     private static final Logger LOGGER = LogManager.getLogger();
-    private final Map<Date, Integer> timeLocalMap = new HashMap<>();
-    private final Map<String, Integer> remoteAddrMap = new HashMap<>();
-    private final Map<String, Integer> requestMap = new HashMap<>();
-    private final Map<Integer, Integer> statusMap = new HashMap<>();
-    private final Map<Integer, Integer> bodyBytesSentMap = new HashMap<>();
-    private final Map<String, Integer> httpRefererMap = new HashMap<>();
-    private final Map<String, Integer> httpUserAgentMap = new HashMap<>();
-    private String fileFormat;
-    private String pathToOutputFile;
-    private Date minDate = null;
-    private Date maxDate = null;
-    private Integer totalRequests = 0;
-    private Integer totalResponseSizeByKB = 0;
-    private static final String YEAR_MONTH_AND_DATE = "yyyy-MM-dd";
-    private final String hoursMinutestAndSeconds = "HH:mm:ss";
-    private final String httpString = "http";
-
+    private static final Map<Date, Integer> TIME_LOCAL_MAP = new HashMap<>();
+    private static final Map<String, Integer> REMOTE_ADDR_MAP = new HashMap<>();
+    private static final Map<String, Integer> REQUEST_MAP = new HashMap<>();
+    private static final Map<Integer, Integer> STATUS_MAP = new HashMap<>();
+    private static final Map<Integer, Integer> BODY_BYTES_SENT_MAP = new HashMap<>();
+    private static final Map<String, Integer> HTTP_REFERER_MAP = new HashMap<>();
+    private static final Map<String, Integer> HTTP_USER_AGENT_MAP = new HashMap<>();
+    private static String fileFormat;
+    private static String pathToOutputFile;
+    private static Date minDate = null;
+    private static Date maxDate = null;
+    private static Integer totalRequests = 0;
+    private static Integer totalResponseSizeByKB = 0;
+    private final static String YEAR_MONTH_AND_DATE = "yyyy-MM-dd";
+    private final static String HOURS_MINUTES_AND_SECONDS = "HH:mm:ss";
+    private final static String HTTP_STRING = "http";
+    private final static int BYTES_IN_KILOBYTE = 1024;
+    private final static int VARIATIONS_OF_RESPONSE_CODES = 6;
+    private final static int MULTIPLIER_FOR_CODES = 100;
 
     public Map<Date, Integer> getTimeLocalMap() {
-        return timeLocalMap;
+        return TIME_LOCAL_MAP;
     }
 
     public Map<String, Integer> getRemoteAddrMap() {
-        return remoteAddrMap;
+        return REMOTE_ADDR_MAP;
     }
 
     public Map<String, Integer> getRequestMap() {
-        return requestMap;
+        return REQUEST_MAP;
     }
 
     public Map<Integer, Integer> getStatusMap() {
-        return statusMap;
+        return STATUS_MAP;
     }
 
     public Map<Integer, Integer> getBodyBytesSentMap() {
-        return bodyBytesSentMap;
+        return BODY_BYTES_SENT_MAP;
     }
 
     public Map<String, Integer> getHttpRefererMap() {
-        return httpRefererMap;
+        return HTTP_REFERER_MAP;
     }
 
     public Map<String, Integer> getHttpUserAgentMap() {
-        return httpUserAgentMap;
+        return HTTP_USER_AGENT_MAP;
     }
 
-
-
-    private <T> void put(Map<T, Integer> m, T val) {
+    private static <T> void put(Map<T, Integer> m, T val) {
         m.put(val, m.getOrDefault(val, 0) + 1);
     }
 
@@ -87,24 +88,22 @@ public class LogAnalyzer {
         }
     }
 
-    private boolean isCurrInRange(Date curr, Date from, Date to) {
+    private static boolean isCurrInRange(Date curr, Date from, Date to) {
         if (from == null && to == null) {
             return true;
-        } else if (from == null && to != null) {
+        } else if (from == null) {
             return curr.compareTo(to) <= 0;
-        } else if (from != null && to == null) {
+        } else if (to == null) {
             return (curr.compareTo(from) >= 0);
         } else {
             return (curr.compareTo(from) >= 0 && curr.compareTo(to) <= 0);
         }
     }
 
-    private void initFile() {
+    private static void initFile() {
 
-        StringBuilder filePathBuilder = new StringBuilder();
         String folderForOutput = "src/main/java/edu/project3/resources/";
-        filePathBuilder.append(folderForOutput).append("output").append(fileFormat);
-        pathToOutputFile = filePathBuilder.toString();
+        pathToOutputFile = folderForOutput + "output" + fileFormat;
         try {
             File file = new File(pathToOutputFile);
             if (file.exists()) {
@@ -112,14 +111,16 @@ public class LogAnalyzer {
                     writer.write("");
                 }
             } else {
-                file.createNewFile();
+                if(!file.createNewFile()){
+                    LOGGER.info("Файл создать не удалось");
+                }
             }
         } catch (IOException e) {
             LOGGER.info(e.getMessage());
         }
     }
 
-    private void writeToFile(Table tables) {
+    private static void writeToFile(Table tables) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToOutputFile, true))) {
             writer.write(tables.printAsString(fileFormat));
         } catch (IOException e) {
@@ -127,22 +128,19 @@ public class LogAnalyzer {
         }
     }
 
-    private void putParsedDataToMaps(LogEntry log) {
-        put(remoteAddrMap, log.getRemoteAddr());
-        put(requestMap, log.getRequest());
-        put(statusMap, log.getStatus());
-        put(bodyBytesSentMap, log.getBodyBytesSent());
-        put(httpRefererMap, log.getHttpReferer());
-        put(httpUserAgentMap, log.getRemoteUser());
-        put(timeLocalMap, log.getTimeLocal());
+    private static void putParsedDataToMaps(LogEntry log) {
+        put(REMOTE_ADDR_MAP, log.getRemoteAddr());
+        put(REQUEST_MAP, log.getRequest());
+        put(STATUS_MAP, log.getStatus());
+        put(BODY_BYTES_SENT_MAP, log.getBodyBytesSent());
+        put(HTTP_REFERER_MAP, log.getHttpReferer());
+        put(HTTP_USER_AGENT_MAP, log.getRemoteUser());
+        put(TIME_LOCAL_MAP, log.getTimeLocal());
     }
 
-    @SuppressWarnings("MagicNumber")
-    private void updateVariablesByLog(LogEntry log) {
-        int bytesInKilobyte = 1024;
+    private static void updateVariablesByLog(LogEntry log) {
         totalRequests++;
-        totalResponseSizeByKB += log.getBodyBytesSent() / bytesInKilobyte;
-
+        totalResponseSizeByKB += log.getBodyBytesSent() / BYTES_IN_KILOBYTE;
 
         if (maxDate == null || log.getTimeLocal().compareTo(maxDate) >= 0) {
             maxDate = log.getTimeLocal();
@@ -152,7 +150,7 @@ public class LogAnalyzer {
         }
     }
 
-    private void parseOneLog(String line, Date from, Date to) {
+    private static void parseOneLog(String line, Date from, Date to) {
         LogEntry log = LogParser.parse(line);
         if (isCurrInRange(log.getTimeLocal(), from, to)) {
             putParsedDataToMaps(log);
@@ -160,7 +158,7 @@ public class LogAnalyzer {
         }
     }
 
-    private List<Path> findLogFiles(String logPath) throws IOException {
+    private static List<Path> findLogFiles(String logPath) throws IOException {
         List<Path> logFiles = new ArrayList<>();
 
         File file = new File(logPath);
@@ -179,42 +177,60 @@ public class LogAnalyzer {
         return logFiles;
     }
 
-    private List<Path> findFilesRecursively(String logPath) throws IOException {
+    private static List<Path> findFilesRecursively(String logPath) {
         List<Path> logFiles = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         String[] folders = logPath.split("/");
-        for (String subDir: folders) {
+        for (String subDir : folders) {
             if (Pattern.matches("[\\w.-]+", subDir)) {
                 sb.append(subDir).append('/');
             } else {
                 break;
             }
         }
-        String  baseDir = sb.toString();
-        List<File> subPaths =
-            Files.walk(Paths.get(baseDir))
-            .filter(Files::isRegularFile)
-            .map(Path::toFile)
-            .toList();
-        for (File subPath : subPaths) {
-            if (subPath.toPath().getFileName().toString().equals(folders[folders.length - 1])) {
-                logFiles.add(subPath.toPath());
+        String baseDir = sb.toString();
+        try (Stream<Path> stream = Files.walk(Paths.get(baseDir))) {
+            List<File> subPaths = stream
+                .filter(Files::isRegularFile)
+                .map(Path::toFile)
+                .toList();
+            for (File subPath : subPaths) {
+                if (subPath.toPath().getFileName().toString().equals(folders[folders.length - 1])) {
+                    logFiles.add(subPath.toPath());
+                }
             }
+        } catch (IOException e) {
+            LOGGER.info(e.getMessage());
         }
 
         return logFiles;
     }
 
-    private String parseArrayAsOneString(ArrayList<String> incomeArray) {
+    private static String parseArrayAsOneString(ArrayList<String> incomeArray) {
         StringBuilder sb = new StringBuilder();
-        for (String element: incomeArray) {
+        for (String element : incomeArray) {
             sb.append(element).append('\t');
         }
         return sb.toString();
     }
 
+    public static void resetStaticVariables() {
+        TIME_LOCAL_MAP.clear();
+        REMOTE_ADDR_MAP.clear();
+        REQUEST_MAP.clear();
+        STATUS_MAP.clear();
+        BODY_BYTES_SENT_MAP.clear();
+        HTTP_REFERER_MAP.clear();
+        HTTP_USER_AGENT_MAP.clear();
+        minDate = null;
+        maxDate = null;
+        totalRequests = 0;
+        totalResponseSizeByKB = 0;
+    }
 
-    public void main(String[] args) {
+    //main static; accept path to logs with output format && optional parameters, such as filter by date
+    @SuppressWarnings("UncommentedMain")
+    public static void main(String[] args) {
         String path = null;
         Date from = null;
         Date to = null;
@@ -240,7 +256,6 @@ public class LogAnalyzer {
                     fileFormat = args[i + 1];
                     break;
                 default:
-
             }
         }
         if (path == null) {
@@ -250,8 +265,8 @@ public class LogAnalyzer {
         fileFormat = fileFormat.equals("markdown") ? ".md" : ".adoc";
         initFile();
         try {
-            if (path.startsWith(httpString)) {
-                URL url = new URL(path);
+            if (path.startsWith(HTTP_STRING)) {
+                URL url = URI.create(path).toURL();
                 readedLogs.add(String.valueOf(url));
                 BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 
@@ -262,7 +277,7 @@ public class LogAnalyzer {
                 reader.close();
             } else {
                 List<Path> paths = findLogFiles(path);
-                for (Path logPath: paths) {
+                for (Path logPath : paths) {
                     readedLogs.add(logPath.toString());
                     BufferedReader reader = Files.newBufferedReader(logPath);
                     while ((line = reader.readLine()) != null) {
@@ -280,61 +295,66 @@ public class LogAnalyzer {
         writeAllStats(readedLogs, fromStr, toStr);
         LOGGER.info("Логи записаны");
 
+
     }
 
-    private void writeAllStats(ArrayList<String> path, String fromStr, String toStr) {
+    private static void writeAllStats(ArrayList<String> path, String fromStr, String toStr) {
         printGeneralInfo(path, fromStr, toStr);
         printResourceStats();
         printResponseCodeStats();
         printFirstExtraMetric();
         printSecondExtraMetric();
+        printUserAgentStats();
     }
 
-    private void printFirstExtraMetric() {
+    private static void printFirstExtraMetric() {
         SimpleDateFormat dateFormatForOutput = new SimpleDateFormat(
-            YEAR_MONTH_AND_DATE + "'  '" + hoursMinutestAndSeconds
+            YEAR_MONTH_AND_DATE + "'  '" + HOURS_MINUTES_AND_SECONDS
         );
         Table table = new Table("Метрика дат из логов", "Дата");
         table.nameTable("Первая доп. метрика");
-        table.addRow("С какого момента стали поступать логи:",
+        table.addRow(
+            "С какого момента стали поступать логи:",
             minDate == null ? "-" : dateFormatForOutput.format(minDate)
         );
-        table.addRow("До какого момента поступали логи: ",
+        table.addRow(
+            "До какого момента поступали логи: ",
             maxDate == null ? "-" : dateFormatForOutput.format(maxDate)
         );
         writeToFile(table);
     }
 
-    @SuppressWarnings("MagicNumber")
-    private void printSecondExtraMetric() {
+    private static void printSecondExtraMetric() {
         Table table = new Table("Статус ответа", "Количество ответов");
         table.nameTable("Вторая доп. метрика");
-        int variationsOfResponceCodes = 6;
-        int multiplyerForCodes = 100;
-        int firstNumber = 0;
-        int[] respCodes = new int[variationsOfResponceCodes];
-        for (Map.Entry<Integer, Integer> entry : statusMap.entrySet()) {
-            firstNumber = entry.getKey() / multiplyerForCodes - (entry.getKey() % multiplyerForCodes == 0 ? 1 : 0);
+        int firstNumber;
+        int[] respCodes = new int[VARIATIONS_OF_RESPONSE_CODES];
+        for (Map.Entry<Integer, Integer> entry : STATUS_MAP.entrySet()) {
+            firstNumber = entry.getKey() / MULTIPLIER_FOR_CODES - (entry.getKey() % MULTIPLIER_FOR_CODES == 0 ? 1 : 0);
             respCodes[firstNumber] += entry.getValue();
         }
-        for (int i = 1; i < variationsOfResponceCodes; i++) {
+        for (int i = 1; i < VARIATIONS_OF_RESPONSE_CODES; i++) {
 
             table.addRow(
-                ResponseCodeParser.analyzeStatusCode(multiplyerForCodes * i + 1),
+                ResponseCodeParser.analyzeStatusCode(MULTIPLIER_FOR_CODES * i + 1),
                 Integer.toString(respCodes[i])
             );
         }
         writeToFile(table);
     }
+    private static void printUserAgentStats() {
+        Table table = new Table("Пользовательский агент", "Количество запросов");
+        table.nameTable("Статистика пользовательских агентов");
+        for (Map.Entry<String, Integer> entry : HTTP_USER_AGENT_MAP.entrySet()) {
+            table.addRow(entry.getKey(), entry.getValue().toString());
+        }
+        writeToFile(table);
+    }
 
-    private void printGeneralInfo(
-        ArrayList<String> path,
-        String fromDate,
-        String toDate
-    ) {
+    private static void printGeneralInfo(ArrayList<String> path, String fromDate, String toDate) {
         Table table = new Table("Метрика", "Значение");
         table.nameTable("Общая информация");
-        if (path.get(0).startsWith(httpString)) {
+        if (path.get(0).startsWith(HTTP_STRING)) {
             table.addRow("URL", parseArrayAsOneString(path));
         } else {
             table.addRow("Файл(ы)", parseArrayAsOneString(path));
@@ -342,29 +362,27 @@ public class LogAnalyzer {
         table.addRow("Начальная дата", (fromDate != null ? fromDate : "-"));
         table.addRow("Конечная дата", (toDate != null ? toDate : "-"));
         table.addRow("Количество запросов", Integer.toString(totalRequests));
-        table.addRow("Средний размер ответа (в КБ)",
-            (totalRequests > 0 ? (totalResponseSizeByKB / totalRequests) + "KB" : "-"));
+        table.addRow(
+            "Средний размер ответа (в КБ)",
+            (totalRequests > 0 ? (totalResponseSizeByKB / totalRequests) + "KB" : "-")
+        );
         writeToFile(table);
-
 
     }
 
-    private void printResourceStats() {
-
+    private static void printResourceStats() {
         Table table = new Table("Ресурс", "Запросов");
         table.nameTable("Запрашиваемые ресурсы");
-        for (Map.Entry<String, Integer> entry : httpRefererMap.entrySet()) {
+        for (Map.Entry<String, Integer> entry : HTTP_REFERER_MAP.entrySet()) {
             table.addRow(entry.getKey(), entry.getValue().toString());
         }
         writeToFile(table);
-
     }
 
-    private void printResponseCodeStats() {
-
+    private static void printResponseCodeStats() {
         Table table = new Table("Код", "Имя", "Количество");
         table.nameTable("Коды ответа");
-        for (Map.Entry<Integer, Integer> entry : statusMap.entrySet()) {
+        for (Map.Entry<Integer, Integer> entry : STATUS_MAP.entrySet()) {
             table.addRow(
                 Integer.toString(entry.getKey()),
                 ResponseCodeParser.getResponseCodeName(Integer.toString(entry.getKey())),
