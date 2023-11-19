@@ -111,7 +111,7 @@ public class LogAnalyzer {
                     writer.write("");
                 }
             } else {
-                if(!file.createNewFile()){
+                if (!file.createNewFile()) {
                     LOGGER.info("Файл создать не удалось");
                 }
             }
@@ -342,8 +342,9 @@ public class LogAnalyzer {
         }
         writeToFile(table);
     }
+
     private static void printUserAgentStats() {
-        Table table = new Table("Пользовательский агент", "Количество запросов");
+        Table table = new Table("Пользовательский агент", "Число запросов");
         table.nameTable("Статистика пользовательских агентов");
         for (Map.Entry<String, Integer> entry : HTTP_USER_AGENT_MAP.entrySet()) {
             table.addRow(entry.getKey(), entry.getValue().toString());
