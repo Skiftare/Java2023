@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,6 +34,7 @@ public class LogAnalyzer {
     private static final Map<Integer, Integer> BODY_BYTES_SENT_MAP = new HashMap<>();
     private static final Map<String, Integer> HTTP_REFERER_MAP = new HashMap<>();
     private static final Map<String, Integer> HTTP_USER_AGENT_MAP = new HashMap<>();
+    private static final Map<String, Integer> REMOTE_USER = new HashMap<>();
     private static String fileFormat;
     private static String pathToOutputFile;
     private static Date minDate = null;
@@ -72,6 +74,10 @@ public class LogAnalyzer {
 
     public Map<String, Integer> getHttpUserAgentMap() {
         return HTTP_USER_AGENT_MAP;
+    }
+
+    public Map<String, Integer> getRemoteUserMap() {
+        return REMOTE_USER;
     }
 
     private static <T> void put(Map<T, Integer> m, T val) {
@@ -134,7 +140,8 @@ public class LogAnalyzer {
         put(STATUS_MAP, log.getStatus());
         put(BODY_BYTES_SENT_MAP, log.getBodyBytesSent());
         put(HTTP_REFERER_MAP, log.getHttpReferer());
-        put(HTTP_USER_AGENT_MAP, log.getRemoteUser());
+        put(HTTP_USER_AGENT_MAP, log.getHttpUserAgent());
+        put(REMOTE_USER, log.getRemoteUser());
         put(TIME_LOCAL_MAP, log.getTimeLocal());
     }
 
@@ -226,15 +233,14 @@ public class LogAnalyzer {
         maxDate = null;
         totalRequests = 0;
         totalResponseSizeByKB = 0;
+        REMOTE_USER.clear();
     }
 
     private static ArrayList<String> parseArgs(String[] args) {
         ArrayList<String> result = new ArrayList<>();
         for (String str : args) {
             String[] words = str.split(" ");
-            for (String word : words) {
-                result.add(word);
-            }
+            result.addAll(Arrays.asList(words));
         }
         return result;
     }
@@ -355,8 +361,14 @@ public class LogAnalyzer {
     }
 
     private static void printUserAgentStats() {
-        Table table = new Table("Пользовательский агент", "Кол-во запросов");
-        table.nameTable("Статистика пользовательских агентов");
+        Table table = new Table("REMOTE_USER", "Кол-во запросов");
+        table.nameTable("REMOTE_USER stats");
+        for (Map.Entry<String, Integer> entry : REMOTE_USER.entrySet()) {
+            table.addRow(entry.getKey(), entry.getValue().toString());
+        }
+        writeToFile(table);
+
+        table = new Table("HTTP_USER_AGENT_MAP", "Кол-во обращений");
         for (Map.Entry<String, Integer> entry : HTTP_USER_AGENT_MAP.entrySet()) {
             table.addRow(entry.getKey(), entry.getValue().toString());
         }

@@ -28,7 +28,8 @@ public class TestForLogAnalyzer {
         assertEquals(6, logAnalyzer.getStatusMap().size());
         assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
         assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(1, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(1, logAnalyzer.getRemoteUserMap().size());
+        assertEquals (136, logAnalyzer.getHttpUserAgentMap().size());
     }
 
     @Test
@@ -46,7 +47,8 @@ public class TestForLogAnalyzer {
         assertEquals(6, logAnalyzer.getStatusMap().size());
         assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
         assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(4, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(4, logAnalyzer.getRemoteUserMap().size());
+        assertEquals (136, logAnalyzer.getHttpUserAgentMap().size());
 
     }
 
@@ -66,6 +68,8 @@ public class TestForLogAnalyzer {
         assertEquals(0, logAnalyzer.getBodyBytesSentMap().size());
         assertEquals(0, logAnalyzer.getHttpRefererMap().size());
         assertEquals(0, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(0, logAnalyzer.getRemoteUserMap().size());
+        assertEquals (0, logAnalyzer.getHttpUserAgentMap().size());
 
     }
     @Test
@@ -84,7 +88,8 @@ public class TestForLogAnalyzer {
         assertEquals(6, logAnalyzer.getStatusMap().size());
         assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
         assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(4, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(136, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(4, logAnalyzer.getRemoteUserMap().size());
 
     }
 
@@ -104,7 +109,7 @@ public class TestForLogAnalyzer {
         assertEquals(6, logAnalyzer.getStatusMap().size());
         assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
         assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(4, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(136, logAnalyzer.getHttpUserAgentMap().size());
     }
 
 }

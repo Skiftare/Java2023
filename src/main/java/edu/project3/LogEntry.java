@@ -10,6 +10,7 @@ public class LogEntry {
     private int status;
     private int bodyBytesSent;
     private String httpReferer;
+    private String httpUserAgent;
 
     public LogEntry() {
     }
@@ -66,11 +67,18 @@ public class LogEntry {
         this.httpReferer = group;
     }
 
-    public void setHttpUserAgent(String group) {
-    }
-
     public String getHttpReferer() {
         return this.httpReferer;
     }
+
+    public void setHttpUserAgent(String group) {
+        this.httpUserAgent = group;
+    }
+
+    public String getHttpUserAgent() {
+        return this.httpUserAgent;
+    }
+
+
 
 }

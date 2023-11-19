@@ -3,7 +3,7 @@
 | Метрика | Значение 
 
 |Файл(ы)
-|D:\Tasks\Java\Java2023\src\test\java\edu\project3\resources\log1.txt	
+|C:\Users\bkiri\OneDrive\Документы\GitHub\Java2023\src\test\java\edu\project3\resources\log1.txt	
 
 |Начальная дата
 |-
@@ -107,9 +107,9 @@
 |0
 
 |===
-Статистика пользовательских агентов
+REMOTE_USER stats
 |===
-| Пользовательский агент | Число запросов 
+| REMOTE_USER | Кол-во запросов 
 
 |User2
 |2
@@ -124,114 +124,416 @@
 |51462
 
 |===
-Топ запрашиваемых ресурсов
-|===
-| Сайт/источник | Кол-во обращений 
-
-|GET /downloads/product_1 HTTP/1.1
-|30276
-
-|GET /downloads/product_2 HTTP/1.1
-|21034
-
-|GET /downloads/product_3 HTTP/1.1
-|73
-
-|HEAD /downloads/product_2 HTTP/1.1
-|70
-
-|HEAD /downloads/product_1 HTTP/1.1
-|13
 
 |===
-Третья доп. метрика
-|===
-| Загруженность | Момент максимальной ногрузки 
+| HTTP_USER_AGENT_MAP | Кол-во обращений 
 
-|Год
-|2015
-|Месяц
+|Apache-HttpClient/4.3.5 (java 1.5)
 |4
-|№ недели в году
-|22
-|День недели
+
+|Java/1.7.0_55
 |2
 
-|===
-Распределение запросов по часам
-|===
-| Час | Кол-во запросов 
+|Ubuntu APT-HTTP/1.3 (0.7.25.3ubuntu9.15)
+|6
 
-|00:00 - 00:59
-|2124
+|Debian Apt-Cacher-NG/0.8.0
+|2
 
-|01:00 - 01:59
-|2209
+|Debian APT-HTTP/1.3 (0.8.16~exp5ubuntu13.7)
+|60
 
-|02:00 - 02:59
-|2106
+|Chef Client/10.18.2 (ruby-1.8.7-p249; ohai-6.16.0; x86_64-linux; +http://opscode.com)
+|5
 
-|03:00 - 03:59
-|2178
+|Twitterbot/1.0
+|1
 
-|04:00 - 04:59
-|2176
+|Chef Client/11.8.2 (ruby-1.9.3-p484; ohai-6.22.0; x86_64-linux; +http://opscode.com)
+|1
 
-|05:00 - 05:59
-|2168
+|Debian APT-HTTP/1.3 (0.9.7.9)
+|11365
 
-|06:00 - 06:59
-|2163
+|Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36
+|3
 
-|07:00 - 07:59
-|2135
+|Chef Client/12.0.1 (ruby-2.1.5-p273; ohai-8.0.1; x86_64-linux-gnu; +http://opscode.com)
+|1
 
-|08:00 - 08:59
-|2145
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.12)
+|344
 
-|09:00 - 09:59
-|2157
+|python-requests/2.2.1 CPython/2.6.6 Linux/2.6.32-431.el6.x86_64
+|4
 
-|10:00 - 10:59
-|2182
+|Java/1.7.0_51
+|1
 
-|11:00 - 11:59
-|2116
+|Debian APT-HTTP/1.3 (1.0.9.5)
+|19
 
-|12:00 - 12:59
-|2041
+|Axel 2.4 (Linux)
+|6
 
-|13:00 - 13:59
-|2096
+|Wget/1.13.4 (linux-gnu)
+|438
 
-|14:00 - 14:59
-|2159
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.2)
+|429
 
-|15:00 - 15:59
-|2131
+|Debian APT-HTTP/1.3 (0.9.7.8)
+|750
 
-|16:00 - 16:59
-|2102
+|Ubuntu APT-HTTP/1.3 (0.7.9ubuntu17.6)
+|4
 
-|17:00 - 17:59
-|2174
+|-
+|14
 
-|18:00 - 18:59
-|2170
+|Debian APT-HTTP/1.3 (0.8.13.2ubuntu4.3)
+|24
 
-|19:00 - 19:59
-|2151
+|Mozilla/5.0 (Windows NT 5.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.104 Safari/537.36
+|132
 
-|20:00 - 20:59
-|2178
+|Java/1.6.0_31
+|1
 
-|21:00 - 21:59
-|2119
+|Chef Client/11.12.4 (ruby-1.9.3-p484; ohai-7.0.4; x86_64-linux; +http://opscode.com)
+|21
 
-|22:00 - 22:59
-|2120
+|Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36
+|1
 
-|23:00 - 23:59
-|2166
+|Chef Client/11.12.8 (ruby-2.1.3-p242; ohai-7.0.4; x86_64-linux-gnu; +http://opscode.com)
+|1
+
+|Chef Client/10.34.4 (ruby-1.9.3-p547; ohai-6.24.2; x86_64-linux; +http://opscode.com)
+|1
+
+|Debian APT-HTTP/1.3 (1.0.9.4)
+|13
+
+|Debian APT-HTTP/1.3 (1.0.9.2ubuntu2)
+|143
+
+|Wget/1.14 (linux-gnu)
+|11
+
+|Debian Apt-Cacher-NG/0.7.2
+|72
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.7)
+|1255
+
+|Chef Client/11.4.0 (ruby-1.9.3-p0; ohai-6.16.0; x86_64-linux; +http://opscode.com)
+|1
+
+|Wget/1.12 (linux-gnu)
+|11
+
+|Wget/1.11.4 Red Hat modified
+|2
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.14)
+|288
+
+|Chef Knife/11.10.4 (ruby-2.0.0-p481; ohai-6.20.0; x86_64-linux; +http://opscode.com)
+|3
+
+|Chef Client/11.10.0 (ruby-1.9.3-p484; ohai-6.20.0; x86_64-linux; +http://opscode.com)
+|12
+
+|Chef Client/11.10.4 (ruby-1.9.3-p484; ohai-6.20.0; x86_64-linux; +http://opscode.com)
+|34
+
+|Chef Client/12.0.1 (ruby-2.1.4-p265; ohai-8.0.1; x86_64-linux; +http://opscode.com)
+|22
+
+|Wget/1.15 (linux-gnu)
+|74
+
+|Chef Client/11.10.2 (ruby-1.9.3-p484; ohai-6.20.0; x86_64-linux; +http://opscode.com)
+|2
+
+|Chef Client/11.16.4 (ruby-1.9.3-p547; ohai-7.4.0; x86_64-linux; +http://opscode.com)
+|127
+
+|Chef Client/11.16.4 (ruby-1.9.3-p547; ohai-7.4.0; i686-linux; +http://opscode.com)
+|1
+
+|Chef Client/11.16.0 (ruby-1.9.3-p547; ohai-7.4.0; x86_64-linux; +http://opscode.com)
+|27
+
+|Mozilla/5.0 (X11; Linux x86_64; rv:25.0) Gecko/20100101 Firefox/25.0
+|1
+
+|Chef Knife/11.8.2 (ruby-1.9.3-p484; ohai-6.14.0; x86_64-linux; +http://opscode.com)
+|1
+
+|curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.14.0.0 zlib/1.2.3 libidn/1.18 libssh2/1.4.2
+|15
+
+|Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36
+|1
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.16)
+|5740
+
+|dnf/0.5.4
+|4
+
+|Chef Client/11.4.4 (ruby-1.9.3-p286; ohai-6.16.0; x86_64-linux; +http://opscode.com)
+|18
+
+|Debian APT-HTTP/1.3 (0.7.20.2)
+|20
+
+|ansible-httpget
+|1
+
+|Debian APT-HTTP/1.3 (1.0.1ubuntu2)
+|11830
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.15)
+|49
+
+|Chef Client/11.12.8 (ruby-1.9.3-p484; ohai-7.0.4; x86_64-linux; +http://opscode.com)
+|151
+
+|Chef Client/11.6.2 (ruby-1.9.3-p448; ohai-6.18.0; x86_64-linux; +http://opscode.com)
+|279
+
+|urlgrabber/3.10 yum/3.4.3
+|104
+
+|None
+|11
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10)
+|75
+
+|Mozilla/4.0 (compatible;)
+|3
+
+|urlgrabber/3.1.0 yum/3.2.19
+|5
+
+|Chef Client/11.16.2 (ruby-1.9.3-p547; ohai-7.4.0; x86_64-linux; +http://opscode.com)
+|34
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.5)
+|175
+
+|python-requests/2.0.0 CPython/2.6.6 Linux/2.6.32-358.18.1.el6.x86_64
+|30
+
+|Java/1.8.0_20
+|3
+
+|Chef Client/11.8.0 (ruby-1.9.3-p448; ohai-6.20.0; x86_64-linux; +http://opscode.com)
+|2
+
+|Chef Client/10.18.2 (ruby-1.8.7-p352; ohai-6.16.0; x86_64-linux; +http://opscode.com)
+|2
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.17)
+|1827
+
+|Debian APT-HTTP/1.3 (0.8.13.2ubuntu4.6)
+|36
+
+|Debian APT-HTTP/1.3 (0.9.12.1)
+|90
+
+|Chef Client/11.6.0 (ruby-1.9.3-p429; ohai-6.18.0; x86_64-linux; +http://opscode.com)
+|2
+
+|Debian APT-HTTP/1.3 (1.0.6)
+|18
+
+|Mozilla/5.0 (compatible; MSIE 6.0; Windows NT 5.0)
+|4
+
+|Debian APT-HTTP/1.3 (0.9.9.1~ubuntu1)
+|290
+
+|Java/1.8.0_25
+|2
+
+|Chef Client/11.8.2 (ruby-1.9.3-p484; ohai-6.20.0; x86_64-linux; +http://opscode.com)
+|30
+
+|urlgrabber/3.1.0 yum/3.2.22
+|107
+
+|urlgrabber/3.9.1 yum/3.4.3
+|708
+
+|Chef Client/10.32.2 (ruby-1.9.3-p484; ohai-6.22.0; x86_64-linux; +http://opscode.com)
+|1
+
+|Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0
+|1
+
+|Python-urllib/2.7
+|1
+
+|Chef Knife/11.10.4 (ruby-1.9.3-p484; ohai-6.20.0; x86_64-linux; +http://opscode.com)
+|2
+
+|curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.16.1 Basic ECC zlib/1.2.3 libidn/1.18 libssh2/1.4.2
+|3
+
+|curl/7.22.0 (x86_64-pc-linux-gnu) libcurl/7.22.0 OpenSSL/1.0.1 zlib/1.2.3.4 libidn/1.23 librtmp/2.3
+|34
+
+|Java/1.7.0_09
+|3
+
+|libwww-perl/6.05
+|6
+
+|Ubuntu APT-HTTP/1.3 (0.7.25.3ubuntu9.17.1)
+|10
+
+|Go 1.1 package http
+|6
+
+|Chef Client/11.12.2 (ruby-1.9.3-p484; ohai-7.0.2; x86_64-linux; +http://opscode.com)
+|89
+
+|Chef Client/10.26.0 (ruby-1.9.3-p286; ohai-6.16.0; x86_64-linux; +http://opscode.com)
+|1
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.21)
+|6723
+
+|Mozilla/5.0 Gecko/20100115 Firefox/3.6
+|10
+
+|apt-cacher/1.7.6 libcurl/7.26.0 GnuTLS/2.12.20 zlib/1.2.7 libidn/1.25 libssh2/1.4.2 librtmp/2.3
+|24
+
+|curl/7.19.7 (x86_64-redhat-linux-gnu) libcurl/7.19.7 NSS/3.15.3 zlib/1.2.3 libidn/1.18 libssh2/1.4.2
+|11
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.20.1)
+|592
+
+|Ubuntu APT-HTTP/1.3 (0.7.25.3ubuntu9.13)
+|6
+
+|Debian APT-HTTP/1.3 (1.0.9.3)
+|40
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.3)
+|37
+
+|Debian Apt-Cacher-NG/0.7.27
+|75
+
+|Debian Apt-Cacher-NG/0.7.26
+|1
+
+|apt-cacher/1.6.12 libcurl/7.21.0 GnuTLS/2.8.6 zlib/1.2.3.4 libidn/1.15
+|3
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.19)
+|84
+
+|Debian APT-CURL/1.0 (0.9.9.1~ubuntu1)
+|28
+
+|Chef Client/11.8.2 (ruby-1.9.3-p484; ohai-6.14.0; x86_64-linux; +http://opscode.com)
+|3
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.10)
+|306
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.22)
+|3855
+
+|urlgrabber/3.9.1 yum/3.2.27
+|1
+
+|ZYpp 10.4.5 (curl 7.22.0) openSUSE-12.1-x86_64
+|8
+
+|Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0
+|1
+
+|urlgrabber/3.9.1 yum/3.2.29
+|792
+
+|Debian APT-HTTP/1.3 (0.8.10.3)
+|618
+
+|Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36
+|1
+
+|Chef Client/11.14.2 (ruby-1.9.3-p484; ohai-7.2.0; x86_64-linux; +http://opscode.com)
+|9
+
+|curl/7.29.0
+|2
+
+|Java/1.7.0_71
+|2
+
+|Debian Apt-Cacher-NG/0.5.1
+|43
+
+|Ruby
+|1
+
+|Ubuntu APT-HTTP/1.3 (0.7.25.3ubuntu9.14)
+|20
+
+|Debian Apt-Cacher-NG/0.7.11
+|303
+
+|urlgrabber/3.10.1 yum/3.4.3
+|14
+
+|Debian APT-HTTP/1.3 (1.0.9.2)
+|10
+
+|Chef Client/12.0.0 (ruby-2.1.4-p265; ohai-8.0.1; x86_64-linux; +http://opscode.com)
+|4
+
+|Chef Client/11.10.4 (ruby-1.9.3-p484; ohai-6.16.0; x86_64-linux; +http://opscode.com)
+|1
+
+|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.11)
+|64
+
+|Debian APT-HTTP/1.3 (0.9.7.5ubuntu5.1)
+|27
+
+|Homebrew 0.9.5 (Ruby 2.0.0-481; Mac OS X 10.10.1)
+|1
+
+|Chef Client/11.14.6 (ruby-1.9.3-p484; ohai-7.2.4; x86_64-linux; +http://opscode.com)
+|8
+
+|Mozilla/5.0 (X11; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0
+|5
+
+|libwww-perl/5.836
+|2
+
+|Chef Client/12.0.3 (ruby-2.1.4-p265; ohai-8.0.1; x86_64-linux; +http://opscode.com)
+|72
+
+|Debian APT-HTTP/1.3 (0.9.7.7ubuntu4)
+|85
+
+|Java/1.7.0_65
+|10
+
+|Chef Client/11.14.2 (ruby-1.9.3-p194; ohai-7.2.0; x86_64-linux; +http://opscode.com)
+|1
 
 |===
