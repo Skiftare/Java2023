@@ -35,7 +35,7 @@ public class ResponseCodeParser {
     @SuppressWarnings("MagicNumber")
     private static boolean checkerFowParser(Element row, String responseCode) {
         Elements columns = row.select("td");
-        Integer needCellSize = 3;
+        int needCellSize = 3;
         return columns.size() >= needCellSize && columns.get(0).text().equals(responseCode);
     }
 
