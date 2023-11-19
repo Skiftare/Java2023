@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import static java.util.Collections.reverseOrder;
 
 public class LogAnalyzer {
 
@@ -45,6 +47,9 @@ public class LogAnalyzer {
     private final static int BYTES_IN_KILOBYTE = 1024;
     private final static int VARIATIONS_OF_RESPONSE_CODES = 6;
     private final static int MULTIPLIER_FOR_CODES = 100;
+    private final static int TOP_N = 10;
+    private final static int HOURS_IN_DAY = 24;
+
 
     public Map<Date, Integer> getTimeLocalMap() {
         return TIME_LOCAL_MAP;
@@ -305,6 +310,10 @@ public class LogAnalyzer {
         printFirstExtraMetric();
         printSecondExtraMetric();
         printUserAgentStats();
+        printTopNRequestedResources(TOP_N);
+        printBusiestPeriodMetric();
+        printRequestDistributionByHour();
+
     }
 
     private static void printFirstExtraMetric() {
@@ -347,10 +356,96 @@ public class LogAnalyzer {
         Table table = new Table("Пользовательский агент", "Число запросов");
         table.nameTable("Статистика пользовательских агентов");
         for (Map.Entry<String, Integer> entry : HTTP_USER_AGENT_MAP.entrySet()) {
-            table.addRow(entry.getKey(), entry.getValue().toString());
+            table.addRow(entry.getKey() == null ? "-" : entry.getKey(), entry.getValue().toString());
         }
         writeToFile(table);
     }
+
+    private static void printTopNRequestedResources(int topN) {
+        Table table = new Table("Сайт/источник", "Кол-во обращений");
+        table.nameTable("Топ запрашиваемых ресурсов");
+        List<Map.Entry<String, Integer>> sortedResources = new ArrayList<>(REQUEST_MAP.entrySet());
+        sortedResources.sort(Map.Entry.comparingByValue(reverseOrder()));
+        for (int i = 0; i < Math.min(topN, sortedResources.size()); i++) {
+            Map.Entry<String, Integer> entry = sortedResources.get(i);
+            table.addRow(entry.getKey(), entry.getValue().toString());
+        }
+
+        writeToFile(table);
+    }
+
+    private static void printRequestDistributionByHour() {
+        Table table = new Table("Час", "Кол-во запросов");
+        table.nameTable("Распределение запросов по часам");
+        int[] requestCountsByHour = new int[HOURS_IN_DAY];
+        for (Map.Entry<Date, Integer> entry : TIME_LOCAL_MAP.entrySet()) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(entry.getKey());
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            requestCountsByHour[hour] += entry.getValue();
+        }
+        for (int hour = 0; hour < HOURS_IN_DAY; hour++) {
+            table.addRow(String.format("%02d:00 - %02d:59", hour, hour), Integer.toString(requestCountsByHour[hour]));
+        }
+
+        writeToFile(table);
+    }
+
+    private static void printBusiestPeriodMetric() {
+        Map<Integer, Integer> yearFrequency = new HashMap<>();
+        Map<Integer, Integer> monthFrequency = new HashMap<>();
+        Map<Integer, Integer> weekFrequency = new HashMap<>();
+        Map<Integer, Integer> dayOfWeekFrequency = new HashMap<>();
+        for (Date date : TIME_LOCAL_MAP.keySet()) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int week = calendar.get(Calendar.WEEK_OF_YEAR);
+            int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+            yearFrequency.put(year, yearFrequency.getOrDefault(year, 0) + 1);
+            monthFrequency.put(month, monthFrequency.getOrDefault(month, 0) + 1);
+            weekFrequency.put(week, weekFrequency.getOrDefault(week, 0) + 1);
+            dayOfWeekFrequency.put(dayOfWeek, dayOfWeekFrequency.getOrDefault(dayOfWeek, 0) + 1);
+        }
+        int busiestYear = findBusiestPeriod(yearFrequency);
+        int busiestMonth = findBusiestPeriod(monthFrequency);
+        int busiestWeek = findBusiestPeriod(weekFrequency);
+        int busiestDayOfWeek = findBusiestPeriod(dayOfWeekFrequency);
+        Table table = new Table("Загруженность", "Момент максимальной ногрузки");
+        table.nameTable("Третья доп. метрика");
+        table.addRow(
+            "Год", Integer.toString(busiestYear),
+            "Месяц", Integer.toString(busiestMonth),
+            "№ недели в году", Integer.toString(busiestWeek),
+            "День недели", Integer.toString(busiestDayOfWeek)
+        );
+        writeToFile(table);
+    }
+
+    private static int findBusiestPeriod(Map<Integer, Integer> frequencyMap) {
+        int busiestPeriod = -1;
+        int maxFrequency = 0;
+
+        // Iterate over the frequency map to find the busiest period
+        for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+            int period = entry.getKey();
+            int frequency = entry.getValue();
+
+            if (frequency > maxFrequency) {
+                busiestPeriod = period;
+                maxFrequency = frequency;
+            }
+        }
+
+        return busiestPeriod;
+    }
+
+
+
+
+
+
 
     private static void printGeneralInfo(ArrayList<String> path, String fromDate, String toDate) {
         Table table = new Table("Метрика", "Значение");

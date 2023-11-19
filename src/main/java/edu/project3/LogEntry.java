@@ -12,7 +12,6 @@ public class LogEntry {
     private String httpReferer;
     private String httpUserAgent;
 
-    // getters and setters
     public String getRemoteAddr() {
         return remoteAddr;
     }

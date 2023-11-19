@@ -9,11 +9,11 @@ public class Table {
     private String nameOfTable = "";
     private final List<String> headers = new ArrayList<>();
     private final List<List<String>> data = new ArrayList<>();
-    private final String toggleTableModeForAdoc = "|===";
-    private final Character endlChar = '\n';
-    private final Character cellSeparator = '|';
-    private final String tableNameDeterminantForMarkdown = "# ";
-    private final String headerAndBodySeparatorForMarkdown = "|---";
+    private static final String TOGGLE_TABLE_MODE_FOR_ADOC = "|===";
+    private static final Character ENDL_CHAR = '\n';
+    private static final Character CELL_SEPARATOR = '|';
+    private static final String TABLE_NAME_DETERMINANT_FOR_MARKDOWN = "# ";
+    private static final String HEADER_AND_BODY_SEPARATOR_FOR_MARKDOWN = "|---";
 
     public Table(String... headers) {
         this.headers.addAll(Arrays.asList(headers));
@@ -30,40 +30,40 @@ public class Table {
     public String printAsString(String format) {
         if (Objects.equals(format, ".adoc")) {
             StringBuilder sb = new StringBuilder();
-            sb.append(nameOfTable).append(endlChar);
-            sb.append(toggleTableModeForAdoc).append(endlChar);
+            sb.append(nameOfTable).append(ENDL_CHAR);
+            sb.append(TOGGLE_TABLE_MODE_FOR_ADOC).append(ENDL_CHAR);
             for (String header : headers) {
                 sb.append("| ").append(header).append(" ");
             }
-            sb.append(endlChar);
-            sb.append(endlChar);
+            sb.append(ENDL_CHAR);
+            sb.append(ENDL_CHAR);
 
-            for (int i = 0; i < data.size(); i++) {
-                for (int j = 0; j < data.get(i).size(); j++) {
-                    sb.append(cellSeparator).append(data.get(i).get(j)).append(endlChar);
+            for (List<String> datum : data) {
+                for (String s : datum) {
+                    sb.append(CELL_SEPARATOR).append(s).append(ENDL_CHAR);
                 }
-                sb.append(endlChar);
+                sb.append(ENDL_CHAR);
             }
-            sb.append(toggleTableModeForAdoc).append(endlChar);
+            sb.append(TOGGLE_TABLE_MODE_FOR_ADOC).append(ENDL_CHAR);
             return sb.toString();
         } else {
             StringBuilder markdown = new StringBuilder();
-            markdown.append(tableNameDeterminantForMarkdown).append(nameOfTable).append(endlChar);
-            markdown.append(cellSeparator);
+            markdown.append(TABLE_NAME_DETERMINANT_FOR_MARKDOWN).append(nameOfTable).append(ENDL_CHAR);
+            markdown.append(CELL_SEPARATOR);
             for (String header : headers) {
-                markdown.append(header).append(cellSeparator);
+                markdown.append(header).append(CELL_SEPARATOR);
             }
-            markdown.append(endlChar);
-            markdown.append(headerAndBodySeparatorForMarkdown.repeat(headers.size()));
-            markdown.append(cellSeparator).append(endlChar);
+            markdown.append(ENDL_CHAR);
+            markdown.append(HEADER_AND_BODY_SEPARATOR_FOR_MARKDOWN.repeat(headers.size()));
+            markdown.append(CELL_SEPARATOR).append(ENDL_CHAR);
             for (List<String> row : data) {
-                markdown.append(cellSeparator);
+                markdown.append(CELL_SEPARATOR);
                 for (String cell : row) {
-                    markdown.append(cell).append(cellSeparator);
+                    markdown.append(cell).append(CELL_SEPARATOR);
                 }
-                markdown.append(endlChar);
+                markdown.append(ENDL_CHAR);
             }
-            markdown.append(endlChar);
+            markdown.append(ENDL_CHAR);
             return markdown.toString();
         }
     }
