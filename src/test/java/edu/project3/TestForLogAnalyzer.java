@@ -88,8 +88,8 @@ public class TestForLogAnalyzer {
         assertEquals(6, logAnalyzer.getStatusMap().size());
         assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
         assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(136, logAnalyzer.getHttpUserAgentMap().size());
         assertEquals(4, logAnalyzer.getRemoteUserMap().size());
+        assertEquals(136, logAnalyzer.getHttpUserAgentMap().size());
 
     }
 
@@ -111,5 +111,5 @@ public class TestForLogAnalyzer {
         assertEquals(8, logAnalyzer.getHttpRefererMap().size());
         assertEquals(136, logAnalyzer.getHttpUserAgentMap().size());
     }
-
+    //TODO: we checked by the count. But we didn't checked amount (must be x2, we can see it in files)
 }

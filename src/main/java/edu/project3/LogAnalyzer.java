@@ -37,6 +37,9 @@ public class LogAnalyzer {
     private static final Map<String, Integer> REMOTE_USER = new HashMap<>();
     private static String fileFormat;
     private static String pathToOutputFile;
+    private static final String FOLDER_FOR_OUTPUT = "src/main/java/edu/project3/resources/";
+    private static String fileName = null;
+
     private static Date minDate = null;
     private static Date maxDate = null;
     private static Integer totalRequests = 0;
@@ -106,10 +109,16 @@ public class LogAnalyzer {
         }
     }
 
-    private static void initFile() {
+    private static String makeFileName() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH_mm");
+        String currentDate = dateFormat.format(new Date());
+        return currentDate + "_LogAnalyzer_output";
+    }
 
-        String folderForOutput = "src/main/java/edu/project3/resources/";
-        pathToOutputFile = folderForOutput + "output" + fileFormat;
+    private static void initFile() {
+        //Does we always need to write in the same location, even re-write files?
+        //I think not
+        pathToOutputFile = FOLDER_FOR_OUTPUT + fileName + fileFormat;
         try {
             File file = new File(pathToOutputFile);
             if (file.exists()) {
@@ -253,6 +262,7 @@ public class LogAnalyzer {
         Date to = null;
         String fromStr = null;
         String toStr = null;
+        fileName = makeFileName();
         String line;
         ArrayList<String> readedLogs = new ArrayList<>();
         ArrayList<String> parsedArds = parseArgs(args);
@@ -307,7 +317,7 @@ public class LogAnalyzer {
             LOGGER.info(e.getMessage());
         }
 
-        LOGGER.info("Логи обработаны, началась запись в:");
+        LOGGER.info("Логи обработаны, началась запись в: ");
         LOGGER.info(pathToOutputFile);
         writeAllStats(readedLogs, fromStr, toStr);
         LOGGER.info("Логи записаны");
