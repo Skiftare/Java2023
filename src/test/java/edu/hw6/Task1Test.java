@@ -38,9 +38,11 @@ public class Task1Test {
     @DisplayName("Тест на корректную отработку функции put() для самописного класса")
     void testThatPutValsAndReturnedCheckOfTheyExist() {
         // empty DISK_MAP
+
         //put vals
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
         DISK_MAP.put(SECOND_KEY_OF_TEST_MAP, SECOND_VAL_OF_TEST_MAP);
+
         //check that vals in map
         assertThat(DISK_MAP.get(FIRST_KEY_OF_TEST_MAP)).isEqualTo(FIRST_VAL_OF_TEST_MAP);
         assertThat(DISK_MAP.get(SECOND_KEY_OF_TEST_MAP)).isEqualTo(SECOND_VAL_OF_TEST_MAP);
@@ -52,8 +54,10 @@ public class Task1Test {
         // map with two vals
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
         DISK_MAP.put(SECOND_KEY_OF_TEST_MAP, SECOND_VAL_OF_TEST_MAP);
+
         //delete val1
         assertThat(DISK_MAP.remove(FIRST_KEY_OF_TEST_MAP)).isEqualTo(FIRST_VAL_OF_TEST_MAP);
+
         //val1 doesnt exist
         assertThat(DISK_MAP.get(FIRST_KEY_OF_TEST_MAP)).isNull();
     }
@@ -64,6 +68,7 @@ public class Task1Test {
         // map with two vals
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
         DISK_MAP.put(SECOND_KEY_OF_TEST_MAP, SECOND_VAL_OF_TEST_MAP);
+
         //we have two vals in map
         assertThat(DISK_MAP.size()).isEqualTo(2);
     }
@@ -72,6 +77,7 @@ public class Task1Test {
     @DisplayName("Тест на корректную отработку функции isEmpty() -> True для самописного класса")
     void testThatPutNoValsAndReturnedTrueIsEmptyMap() {
         // empty DISK_MAP
+
         //map is empty
         assertThat(DISK_MAP.isEmpty()).isTrue();
     }
@@ -81,6 +87,7 @@ public class Task1Test {
     void testThatPutValsAndReturnedFalseIsEmptyMap() {
         // DISK_MAP with 1 element
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
+
         //map is NOT empty
         assertThat(DISK_MAP.isEmpty()).isFalse();
     }
@@ -90,12 +97,15 @@ public class Task1Test {
     void testThatPutValsAndReturnedContainsValsByKey() {
         // map with one val
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
+
         //map contains only this val
         assertThat(DISK_MAP.containsKey(FIRST_KEY_OF_TEST_MAP)).isTrue();
         assertThat(DISK_MAP.containsKey(SECOND_KEY_OF_TEST_MAP)).isFalse();
         assertThat(DISK_MAP.size()).isEqualTo(1);
+
         //put one more val
         DISK_MAP.put(SECOND_KEY_OF_TEST_MAP, SECOND_VAL_OF_TEST_MAP);
+
         //map contains only these two vals
         assertThat(DISK_MAP.keySet()).containsExactlyInAnyOrder(FIRST_KEY_OF_TEST_MAP, SECOND_KEY_OF_TEST_MAP);
 
@@ -106,6 +116,7 @@ public class Task1Test {
     void testThatPutValsAndReturnedContainsValues() {
         //map with one val
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
+
         //map containsValue() return True only for this one val
         assertThat(DISK_MAP.containsValue(FIRST_VAL_OF_TEST_MAP)).isTrue();
         assertThat(DISK_MAP.containsValue(SECOND_VAL_OF_TEST_MAP)).isFalse();
@@ -118,8 +129,10 @@ public class Task1Test {
         //Empty DISK_MAP and Map<> in Test
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
         DISK_MAP.put(SECOND_KEY_OF_TEST_MAP, SECOND_VAL_OF_TEST_MAP);
+
         //put one map with two vals into DISK_MAP
         DISK_MAP.putAll(testData);
+
         //in DISK_MAP we have vals, which were in Map<> in Test
         assertThat(DISK_MAP.get(FIRST_KEY_OF_TEST_MAP)).isEqualTo(FIRST_VAL_OF_TEST_MAP);
         assertThat(DISK_MAP.get(SECOND_KEY_OF_TEST_MAP)).isEqualTo(SECOND_VAL_OF_TEST_MAP);
@@ -131,8 +144,10 @@ public class Task1Test {
         // map with two vals
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
         DISK_MAP.put(SECOND_KEY_OF_TEST_MAP, SECOND_VAL_OF_TEST_MAP);
+
         // we clear() map
         DISK_MAP.clear();
+
         //we don't have anything in map
         assertThat(DISK_MAP.size()).isEqualTo(0);
         assertThat(DISK_MAP.isEmpty()).isTrue();
@@ -144,7 +159,9 @@ public class Task1Test {
         // map with two vals
         DISK_MAP.put(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP);
         DISK_MAP.put(SECOND_KEY_OF_TEST_MAP, SECOND_VAL_OF_TEST_MAP);
+
         //we re-create our map into set
+
         // contains exactly same elements
         assertThat(DISK_MAP.entrySet()).containsExactlyInAnyOrder(
             Map.entry(FIRST_KEY_OF_TEST_MAP, FIRST_VAL_OF_TEST_MAP),

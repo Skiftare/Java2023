@@ -17,10 +17,12 @@ public class Task6Test {
         List<String> result = Task6.getPortsInfo();
         int expectedOpened = 42;
         int expectedClosed = 32;
+        //Given: expected data
         String expectedFirstClosed = "TCP\t137\tNETBIOS-NS (NetBIOS Name Service)\n";
         String expectedFirstOpened = "TCP\t27017\n";
         List<String> expectOpened = new ArrayList<>();
         List<String> expectClosed = new ArrayList<>();
+
         //When: get lists of opened and closed ports
         for (var it : result) {
             if (it.split(TAB_CHAR).length < 3) {

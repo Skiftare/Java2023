@@ -31,8 +31,8 @@ public class Task3Test {
             .and(smallerThan(100_000))
             .and(magicNumber(0x89, 'P', 'N', 'G'))
             .and(globMatches("*.png"));
-        //Then: we get 1 file for our parameters
 
+        //Then: we get 1 file for our parameters
         try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of(FILE_PATH), filter)) {
             Iterator<Path> iterator = entries.iterator();
             if (iterator.hasNext()) {
@@ -43,6 +43,7 @@ public class Task3Test {
                 fail("No matching file found");
             }
         }
+
     }
 
     @Test
@@ -56,6 +57,7 @@ public class Task3Test {
             .and(smallerThan(0))
             .and(magicNumber(0x89, 'P', 'X', 'G'))
             .and(globMatches("*.png"));
+
         //Then: we get no file for our parameters
         try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of(FILE_PATH), filter)) {
             Iterator<Path> iterator = entries.iterator();
