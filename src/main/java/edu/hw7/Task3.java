@@ -38,12 +38,11 @@ public class Task3 implements PersonDatabase {
     @Nullable
     public Person findByName(String name) {
         synchronized (lock) {
-            for (Person person : cache.values()) {
-                if (person.getName().equals(name) && isNotNull(person.getAddress()) && isNotNull(person.getPhoneNumber())) {
-                   return person;
-                }
-            }
-            return null;
+            return cache.values().stream()
+                .parallel()
+                .filter(person -> person.getName().equals(name) && isNotNull(person.getAddress()) && isNotNull(person.getPhoneNumber()))
+                .findFirst()
+                .orElse(null);
         }
     }
 
@@ -51,26 +50,23 @@ public class Task3 implements PersonDatabase {
     @Override
     public Person findByAddress(String address) {
         synchronized (lock) {
-            for (Person person : cache.values()) {
-                if (person.getAddress().equals(address) && isNotNull(person.getName()) && isNotNull(person.getPhoneNumber())) {
-                    return person;
-                }
-            }
-            return null;
+            return cache.values().stream()
+                .parallel()
+                .filter(person -> person.getAddress().equals(address) && isNotNull(person.getName()) && isNotNull(person.getPhoneNumber()))
+                .findFirst()
+                .orElse(null);
         }
-
     }
 
     @Nullable
     @Override
     public Person findByPhone(String phoneNumber) {
         synchronized (lock) {
-            for (Person person : cache.values()) {
-                if (person.getPhoneNumber().equals(phoneNumber) && isNotNull(person.getName()) && isNotNull(person.getAddress())) {
-                    return person;
-                }
-            }
-            return null;
+            return cache.values().stream()
+                .parallel()
+                .filter(person -> person.getPhoneNumber().equals(phoneNumber) && isNotNull(person.getName()) && isNotNull(person.getAddress()))
+                .findFirst()
+                .orElse(null);
         }
     }
 }
