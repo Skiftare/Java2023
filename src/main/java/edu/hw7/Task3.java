@@ -15,6 +15,27 @@ public class Task3 implements PersonDatabase {
     private boolean isNotNull(Object obj) {
         return obj != null;
     }
+    private Person mergeBasedOnFuture(Person originalData, Person newData){
+        String name, address, phoneNumber;
+        if (newData.getName() == null) {
+            name = originalData.getName();
+        } else{
+            name = newData.getName();
+        }
+        if (newData.getAddress() == null) {
+            address = originalData.getAddress();
+        } else {
+            address = newData.getAddress();
+        }
+        if (newData.getPhoneNumber() == null) {
+            phoneNumber = originalData.getPhoneNumber();
+        } else {
+            phoneNumber = newData.phoneNumber();
+        }
+        return new Person(originalData.getId(), name, address, phoneNumber);
+    }
+
+
 
     @Override
     public void add(Person person) {
@@ -22,7 +43,8 @@ public class Task3 implements PersonDatabase {
             if (!cache.containsKey(person.id())) {
                 cache.put(person.id(), person);
             } else {
-                throw new RuntimeException("The uniqueness of the keys is violated");
+                cache.replace(person.id(), mergeBasedOnFuture(cache.get(person.id()), person));
+
             }
         }
     }
@@ -34,13 +56,19 @@ public class Task3 implements PersonDatabase {
         }
     }
 
+    public void clearCache(){
+        synchronized (lock){
+            cache.clear();
+        }
+    }
+
     @Override
     @Nullable
     public Person findByName(String name) {
         synchronized (lock) {
             return cache.values().stream()
                 .parallel()
-                .filter(person -> person.getName().equals(name) && isNotNull(person.getAddress()) && isNotNull(person.getPhoneNumber()))
+                .filter(person -> isNotNull(person.getName()) && person.getName().equals(name) && isNotNull(person.getAddress()) && isNotNull(person.getPhoneNumber()))
                 .findFirst()
                 .orElse(null);
         }
@@ -52,7 +80,7 @@ public class Task3 implements PersonDatabase {
         synchronized (lock) {
             return cache.values().stream()
                 .parallel()
-                .filter(person -> person.getAddress().equals(address) && isNotNull(person.getName()) && isNotNull(person.getPhoneNumber()))
+                .filter(person ->  isNotNull(person.getAddress()) && person.getAddress().equals(address) && isNotNull(person.getName()) && isNotNull(person.getPhoneNumber()))
                 .findFirst()
                 .orElse(null);
         }
@@ -64,7 +92,7 @@ public class Task3 implements PersonDatabase {
         synchronized (lock) {
             return cache.values().stream()
                 .parallel()
-                .filter(person -> person.getPhoneNumber().equals(phoneNumber) && isNotNull(person.getName()) && isNotNull(person.getAddress()))
+                .filter(person ->  isNotNull(person.getPhoneNumber()) && person.getPhoneNumber().equals(phoneNumber) && isNotNull(person.getName()) && isNotNull(person.getAddress()))
                 .findFirst()
                 .orElse(null);
         }
