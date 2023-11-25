@@ -161,6 +161,7 @@ public class Task3Point5Test {
     public void testThatGetPersondAndDeleteItAndReturnedNoResultaAfterIt(PersonDatabase task3) {
         //given: person
         Person person1 = new Person(1, "John Doe", "123 Main St", "555-1234");
+        task3.add(person1);
         assertThat(Objects.requireNonNull(task3.findByName(person1.getName()).get(0))).isEqualTo(person1);
         //when: we delete it
         task3.delete(person1.getId());
