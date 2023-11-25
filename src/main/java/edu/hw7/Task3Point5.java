@@ -1,10 +1,11 @@
 package edu.hw7;
 
-import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 public class Task3Point5 implements PersonDatabase {
     private final Map<Integer, Person> cache;
@@ -19,6 +20,28 @@ public class Task3Point5 implements PersonDatabase {
         return obj != null;
     }
 
+    private Person mergeBasedOnFuture(Person originalData, Person newData) {
+        String name;
+        String address;
+        String phoneNumber;
+        if (newData.getName() == null) {
+            name = originalData.getName();
+        } else {
+            name = newData.getName();
+        }
+        if (newData.getAddress() == null) {
+            address = originalData.getAddress();
+        } else {
+            address = newData.getAddress();
+        }
+        if (newData.getPhoneNumber() == null) {
+            phoneNumber = originalData.getPhoneNumber();
+        } else {
+            phoneNumber = newData.phoneNumber();
+        }
+        return new Person(originalData.getId(), name, address, phoneNumber);
+    }
+
     @Override
     public void add(Person person) {
         lock.writeLock().lock();
@@ -26,7 +49,8 @@ public class Task3Point5 implements PersonDatabase {
             if (!cache.containsKey(person.id())) {
                 cache.put(person.id(), person);
             } else {
-                throw new RuntimeException("The uniqueness of the keys is violated");
+                cache.replace(person.id(), mergeBasedOnFuture(cache.get(person.id()), person));
+
             }
         } finally {
             lock.writeLock().unlock();
@@ -44,48 +68,49 @@ public class Task3Point5 implements PersonDatabase {
     }
 
     @Override
-    @Nullable
-    public Person findByName(String name) {
+    public List<Person> findByName(String name) {
         lock.readLock().lock();
         try {
-            for (Person person : cache.values()) {
-                if (person.getName().equals(name) && isNotNull(person.getAddress()) && isNotNull(person.getPhoneNumber())) {
-                    return person;
-                }
-            }
-            return null;
+            return cache.values().stream()
+                .parallel()
+                .filter(person -> isNotNull(person.getName())
+                    && person.getName().equals(name)
+                    && isNotNull(person.getAddress())
+                    && isNotNull(person.getPhoneNumber()))
+                .collect(Collectors.toList());
+
         } finally {
             lock.readLock().unlock();
         }
     }
 
     @Override
-    @Nullable
-    public Person findByAddress(String address) {
+    public List<Person> findByAddress(String address) {
         lock.readLock().lock();
         try {
-            for (Person person : cache.values()) {
-                if (person.getAddress().equals(address) && isNotNull(person.getName()) && isNotNull(person.getPhoneNumber())) {
-                    return person;
-                }
-            }
-            return null;
+            return cache.values().stream()
+                .parallel()
+                .filter(person -> isNotNull(person.getAddress())
+                    && person.getAddress().equals(address)
+                    && isNotNull(person.getName())
+                    && isNotNull(person.getPhoneNumber()))
+                .collect(Collectors.toList());
         } finally {
             lock.readLock().unlock();
         }
     }
 
     @Override
-    @Nullable
-    public Person findByPhone(String phoneNumber) {
+    public List<Person> findByPhone(String phoneNumber) {
         lock.readLock().lock();
         try {
-            for (Person person : cache.values()) {
-                if (person.getPhoneNumber().equals(phoneNumber) && isNotNull(person.getName()) && isNotNull(person.getAddress())) {
-                    return person;
-                }
-            }
-            return null;
+            return cache.values().stream()
+                .parallel()
+                .filter(person -> isNotNull(person.getPhoneNumber())
+                    && person.getPhoneNumber().equals(phoneNumber)
+                    && isNotNull(person.getName())
+                    && isNotNull(person.getAddress()))
+                .collect(Collectors.toList());
         } finally {
             lock.readLock().unlock();
         }

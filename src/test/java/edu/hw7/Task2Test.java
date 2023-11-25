@@ -35,9 +35,7 @@ public class Task2Test {
         //when for each num we generate factorial
         //then we get exception
         Throwable ex = assertThrows(
-            RuntimeException.class, ()-> {
-                edu.hw7.Task2.factorial(testData);
-            }
+            RuntimeException.class, ()-> Task2.factorial(testData)
         );
         assertEquals(ex.getMessage(), "No factorial for negate number");
     }

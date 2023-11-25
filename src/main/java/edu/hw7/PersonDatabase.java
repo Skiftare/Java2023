@@ -1,12 +1,15 @@
 package edu.hw7;
 
-import org.jetbrains.annotations.Nullable;
+import java.util.List;
 
 interface PersonDatabase {
     void add(Person person);
+
     void delete(int id);
 
-    @Nullable Person findByName(String name);
-    @Nullable Person findByAddress(String address);
-    @Nullable Person findByPhone(String phone);
+    List<Person> findByName(String name);
+
+    List<Person> findByAddress(String address);
+
+    List<Person> findByPhone(String phone);
 }
