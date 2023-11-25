@@ -14,11 +14,12 @@ public class Task1Test {
     @DisplayName("100 потоков, каждый увеличивает на 1000")
     public void testThatGetManyThreadsAndManyIncrementsPerThreadsAndReturnedMultipleByIncrementing()
         throws InterruptedException {
+
         //given: numThreads > 1, increments > 1
         int numThreads = 100;
         int numIncrementsPerThread = 1000;
-
         Thread[] threads = new Thread[numThreads];
+
         //when: create (num) threads, in each (increments) times we make ++ to value
         for (int i = 0; i < numThreads; i++) {
             threads[i] = new Thread(() -> {
@@ -32,6 +33,7 @@ public class Task1Test {
         for (int i = 0; i < numThreads; i++) {
             threads[i].join();
         }
+
         //then: get in value: num*increments
         assertThat(Task1.counter.get()).isEqualTo(numThreads * numIncrementsPerThread);
     }
@@ -39,11 +41,12 @@ public class Task1Test {
     @DisplayName("1 поток, увеличивает на 1000")
     public void testThatGetOneThreadAndManyIncrementsPerThreadsAndReturnedMultipleByIncrementing()
         throws InterruptedException {
+
         //given: numThreads = 1, increments > 1
         int numThreads = 1;
         int numIncrementsPerThread = 1000;
-
         Thread[] threads = new Thread[numThreads];
+
         //when: create (num) thread, in each (increments) times we make ++ to value
         for (int i = 0; i < numThreads; i++) {
             threads[i] = new Thread(() -> {
@@ -53,10 +56,10 @@ public class Task1Test {
             });
             threads[i].start();
         }
-
         for (int i = 0; i < numThreads; i++) {
             threads[i].join();
         }
+
         //then: get in value: (increments)
         assertThat(Task1.counter.get()).isEqualTo(numThreads * numIncrementsPerThread);
     }
@@ -69,8 +72,8 @@ public class Task1Test {
         //given: numThreads >1 increments = 1
         int numThreads = 1000;
         int numIncrementsPerThread = 1;
-
         Thread[] threads = new Thread[numThreads];
+
         //when: create (num) threads, in them 1 times we make ++ to value
         for (int i = 0; i < numThreads; i++) {
             threads[i] = new Thread(() -> {
@@ -80,10 +83,10 @@ public class Task1Test {
             });
             threads[i].start();
         }
-
         for (int i = 0; i < numThreads; i++) {
             threads[i].join();
         }
+
         //then: get in value: (num)
         assertThat(Task1.counter.get()).isEqualTo(numThreads * numIncrementsPerThread);
     }

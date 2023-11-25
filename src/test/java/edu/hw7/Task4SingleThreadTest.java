@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Task4SingleThreadTest {
     @Test
     void testThatGetIterationsAndReturnedCountPiWithGoodPrecision() {
+        //given: iterations
         long iterationsPerThread = (long) 1e7;
-
+        //when: we calk pi
         double pi = Task4SingleThread.calckPi(iterationsPerThread);
-
-        // Assert that the calculated pi value is within a small range of the actual pi value
+        //then: it has good precision
         assertEquals(Math.PI, pi, 0.01);
     }
 
@@ -18,11 +18,12 @@ public class Task4SingleThreadTest {
 
     @Test
     void testThatGetHugeAmountIterationsAndReturnedCountPiWithVeryGoodPrecision() {
+        //given: more iterations
         long iterationsPerThread = (long) 1e9;
-
+        //when: we calk pi
         double pi = Task4SingleThread.calckPi(iterationsPerThread);
 
-        // Assert that the calculated pi value is within a small range of the actual pi value
+        //then: it has better precision
         assertEquals(Math.PI, pi, 0.001);
     }
 }

@@ -2,7 +2,7 @@ package edu.hw7;
 
 import java.util.List;
 
-interface PersonDatabase {
+public interface PersonDatabase {
     void add(Person person);
 
     void delete(int id);

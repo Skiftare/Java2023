@@ -66,6 +66,7 @@ public class Task3 implements PersonDatabase {
     }
 
     @Override
+    @Nullable
     public List<Person> findByName(String name) {
         synchronized (lock) {
             return cache.values().stream()

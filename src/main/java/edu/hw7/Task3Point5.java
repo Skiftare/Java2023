@@ -1,5 +1,6 @@
 package edu.hw7;
 
+import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,7 @@ public class Task3Point5 implements PersonDatabase {
     }
 
     @Override
+    @Nullable
     public List<Person> findByName(String name) {
         lock.readLock().lock();
         try {
@@ -85,6 +87,7 @@ public class Task3Point5 implements PersonDatabase {
     }
 
     @Override
+    @Nullable
     public List<Person> findByAddress(String address) {
         lock.readLock().lock();
         try {
@@ -101,6 +104,7 @@ public class Task3Point5 implements PersonDatabase {
     }
 
     @Override
+    @Nullable
     public List<Person> findByPhone(String phoneNumber) {
         lock.readLock().lock();
         try {

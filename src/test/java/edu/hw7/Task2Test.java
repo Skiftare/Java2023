@@ -18,10 +18,12 @@ public class Task2Test {
         for(int i = 0;i<=testBorder;i++){
             testData.add(i);
         }
+
         //when for each num we generate factorial
         for(int data: testData){
             realResults.add(edu.hw7.Task2.factorial(data));
         }
+
         //then: check with expected
         for(int i = 0;i<=testBorder;i++){
             assertEquals(expectedResults[i], realResults.get(i));
@@ -32,7 +34,9 @@ public class Task2Test {
     void testThatGetNegateNAndReturnedException(){
         //given: testData num
         int testData = -1;
+
         //when for each num we generate factorial
+
         //then we get exception
         Throwable ex = assertThrows(
             RuntimeException.class, ()-> Task2.factorial(testData)
