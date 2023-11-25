@@ -1,6 +1,5 @@
 package edu.project4;
 
-import java.awt.Point;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -48,8 +47,8 @@ public class FractalRenderer {
 
                             synchronized (pixel) {
                                 // Подмешиваем цвет и увеличиваем hit count
-                                pixel = new Pixel(pixel.r, pixel.g, pixel.b, pixel.hitCount + 1);
-                                image.setPixel(pwr.x, pwr.y, pixel);
+                                pixel = new Pixel(pixel.getR(), pixel.getG(), pixel.getB(), pixel.getHitCount() + 1);
+                                image.setPixel(pwr.getX(), pwr.getY(), pixel);
                             }
                         }
                     }
