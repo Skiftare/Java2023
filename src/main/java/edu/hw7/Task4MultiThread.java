@@ -6,8 +6,8 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Task4MultiThread implements Runnable {
-    private static final AtomicLong totalCount = new AtomicLong(0);
-    private static final AtomicLong circleCount = new AtomicLong(0);
+    private static final AtomicLong TOTAL_COUNT = new AtomicLong(0);
+    private static final AtomicLong CIRCLE_COUNT = new AtomicLong(0);
     private final long iterations;
     private static final double FOUR_VAL_FOR_MONTE_KARLO = 4.0;
     private static final double HALF_ONE_FOR_POINT_GENERATOR = 0.5;
@@ -28,7 +28,7 @@ public class Task4MultiThread implements Runnable {
         executor.shutdown();
         executor.awaitTermination(Long.MAX_VALUE, java.util.concurrent.TimeUnit.NANOSECONDS);
 
-        return FOUR_VAL_FOR_MONTE_KARLO * (circleCount.get() / (double) totalCount.get());
+        return FOUR_VAL_FOR_MONTE_KARLO * (CIRCLE_COUNT.get() / (double) TOTAL_COUNT.get());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Task4MultiThread implements Runnable {
             localTotalCount++;
         }
 
-        totalCount.addAndGet(localTotalCount);
-        circleCount.addAndGet(localCircleCount);
+        TOTAL_COUNT.addAndGet(localTotalCount);
+        CIRCLE_COUNT.addAndGet(localCircleCount);
     }
 }
