@@ -155,4 +155,17 @@ public class Task3Point5Test {
         assertThat(Objects.requireNonNull(task3.findByPhone(updatedPerson3.getPhoneNumber())).get(0)).isEqualTo(updatedPerson3);
         assertThat(Objects.requireNonNull(task3.findByName(updatedPerson4.getName())).get(0)).isEqualTo(updatedPerson4);
     }
+    @ParameterizedTest
+    @MethodSource("data")
+    @DisplayName("Test for deleting")
+    public void testThatGetPersondAndDeleteItAndReturnedNoResultaAfterIt(PersonDatabase task3) {
+        //given: person
+        Person person1 = new Person(1, "John Doe", "123 Main St", "555-1234");
+        assertThat(Objects.requireNonNull(task3.findByName(person1.getName()).get(0))).isEqualTo(person1);
+        //when: we delete it
+        task3.delete(person1.getId());
+        //then: we can't find it
+        assertThat(task3.findByName(person1.getName()).size()).isEqualTo(0);
+    }
+
 }

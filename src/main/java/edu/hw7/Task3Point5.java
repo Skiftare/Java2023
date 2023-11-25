@@ -1,12 +1,12 @@
 package edu.hw7;
 
-import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.stream.Collectors;
+import org.jetbrains.annotations.Nullable;
 
 public class Task3Point5 implements PersonDatabase {
     private final Map<Integer, Person> cache;

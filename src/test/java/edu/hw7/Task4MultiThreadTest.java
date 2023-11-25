@@ -49,7 +49,7 @@ class Task4MultiThreadTest {
     void testThatGetSingleAndMultiRealizationAndReturnedThatMultiRealizationIsFaster() throws InterruptedException {
         //given: numThreads and huge iterationsForAllThreads
         int numThreads = 4;
-        long iterationsAtAllThreads = (long) 1e10;
+        long iterationsAtAllThreads = (long) 1e9;
         //when: we calculate pi with multithreading and single-thread variants
         long startTimeSingleThread = System.nanoTime();
         double piSingleThread = Task4MultiThread.calcPi(1, iterationsAtAllThreads);

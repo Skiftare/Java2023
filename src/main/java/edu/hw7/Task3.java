@@ -59,12 +59,6 @@ public class Task3 implements PersonDatabase {
         }
     }
 
-    public void clearCache() {
-        synchronized (lock) {
-            cache.clear();
-        }
-    }
-
     @Override
     @Nullable
     public List<Person> findByName(String name) {
