@@ -48,7 +48,7 @@ public class FractalRenderer {
                             synchronized (pixel) {
                                 // Подмешиваем цвет и увеличиваем hit count
                                 pixel = new Pixel(pixel.getR(), pixel.getG(), pixel.getB(), pixel.getHitCount() + 1);
-                                image.setPixel(pwr.getX(), pwr.getY(), pixel);
+                                image.setPixel((int) Math.floor(pwr.getX()), (int) Math.floor(pwr.getY()), pixel);
                             }
                         }
                     }
