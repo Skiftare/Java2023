@@ -9,14 +9,14 @@ public class PasswordGenerator {
     public static void main(String[] args) {
         BlockingQueue<String> passwordQueue = new LinkedBlockingQueue<>();
 
-        Thread[] threads = new Thread[1];
+        Thread[] threads = new Thread[3];
         for (int i = 0; i < threads.length; i++) {
             threads[i] = new Thread(() -> {
                 generatePasswords(passwordQueue);
             });
             threads[i].start();
         }
-я
+
         for (Thread thread : threads) {
             try {
                 thread.join();

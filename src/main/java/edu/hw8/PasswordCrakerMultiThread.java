@@ -1,4 +1,5 @@
 package edu.hw8;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -18,6 +19,10 @@ public class PasswordCrakerMultiThread {
 
         private static final int NUM_THREADS = 4;
 
+    public static void main(String[] args) {
+        executeCracken(PASSWORDS, 4);
+    }
+
         public static void executeCracken(String[] passwords, int numberOfThreads) {
             Map<String, String> passwordMap = new HashMap<>();
 
@@ -32,22 +37,43 @@ public class PasswordCrakerMultiThread {
 
             long startTime = System.currentTimeMillis();
 
-            for (int i = 0; i < 10_000; i++) {
-                int start = i * (10_000 / NUM_THREADS);
-                int end = (i + 1) * (10_000 / NUM_THREADS);
+            HashCrypter.init();
+            System.out.println("start");
 
-                executorService.submit(() -> {
-                    for (int j = start; j < end; j++) {
-                        String password = generatePassword(j);
-                        String hash = md5Hash(password);
+            for (long j = HashCrypter.hashCodeString("0000"); j < HashCrypter.hashCodeString("ZZZZ"); j++) {
+                String password = HashCrypter.hashDecodeString(j);
+                String hash = md5Hash(password);
 
-                        if (passwordMap.containsKey(hash)) {
-                            String username = passwordMap.get(hash);
-                            System.out.println("Username: " + username + ", Password: " + password);
-                        }
-                    }
-                });
+                if (passwordMap.containsKey(hash)) {
+                    String username = passwordMap.get(hash);
+                    System.out.println("Username: " + username + ", Password: " + password);
+                }
             }
+            System.out.println("4-d");
+            for (long j = HashCrypter.hashCodeString("00000"); j < HashCrypter.hashCodeString("ZZZZZ"); j++) {
+                String password = HashCrypter.hashDecodeString(j);
+                String hash = md5Hash(password);
+
+                if (passwordMap.containsKey(hash)) {
+                    String username = passwordMap.get(hash);
+                    System.out.println("Username: " + username + ", Password: " + password);
+                }
+
+            }
+            System.out.println("5-d");
+
+            for (long j = HashCrypter.hashCodeString("000000"); j < HashCrypter.hashCodeString("ZZZZZZ"); j++) {
+                String password = HashCrypter.hashDecodeString(j);
+                String hash = md5Hash(password);
+
+                if (passwordMap.containsKey(hash)) {
+                    String username = passwordMap.get(hash);
+                    System.out.println("Username: " + username + ", Password: " + password);
+                }
+            }
+            System.out.println("6-d");
+
+
 
             executorService.shutdown();
 
