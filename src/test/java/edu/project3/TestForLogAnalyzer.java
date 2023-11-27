@@ -3,13 +3,14 @@ package edu.project3;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestForLogAnalyzer {
 
     @BeforeEach
     public void resetAll(){
-        LogAnalyzer.resetStaticVariables();
+        DataClass.resetStaticVariables();
     }
     @Test
     @DisplayName("Парсинг с сайта")
@@ -22,33 +23,33 @@ public class TestForLogAnalyzer {
         LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
         //then: check for same sizes in all maps
-        assertEquals(22467, logAnalyzer.getTimeLocalMap().size());
-        assertEquals(2660, logAnalyzer.getRemoteAddrMap().size());
-        assertEquals(5, logAnalyzer.getRequestMap().size());
-        assertEquals(6, logAnalyzer.getStatusMap().size());
-        assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
-        assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(1, logAnalyzer.getRemoteUserMap().size());
-        assertEquals (136, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(22467, DataClass.getTimeLocalMap().size());
+        assertEquals(2660, DataClass.getRemoteAddrMap().size());
+        assertEquals(5, DataClass.getRequestMap().size());
+        assertEquals(6, DataClass.getStatusMap().size());
+        assertEquals(187, DataClass.getBodyBytesSentMap().size());
+        assertEquals(8, DataClass.getHttpRefererMap().size());
+        assertEquals(1, DataClass.getRemoteUserMap().size());
+        assertEquals (136, DataClass.getHttpUserAgentMap().size());
     }
 
     @Test
     @DisplayName("Парсинг с чётко данного пути в системе")
-    public void testThatGetPathToOneFileAndReturnsMetric() {
+    public void testThatGetPathToOneFileAndReturnsMetric() throws IOException {
         //given: full path
         String[] args = {"--path", "src/test/java/edu/project3/resources/log1.txt","--format", "adoc"};
         //when: parse all logs
         LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
         //then: check for same sizes in all maps
-        assertEquals(22467, logAnalyzer.getTimeLocalMap().size());
-        assertEquals(2660, logAnalyzer.getRemoteAddrMap().size());
-        assertEquals(5, logAnalyzer.getRequestMap().size());
-        assertEquals(6, logAnalyzer.getStatusMap().size());
-        assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
-        assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(4, logAnalyzer.getRemoteUserMap().size());
-        assertEquals (136, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(22467, DataClass.getTimeLocalMap().size());
+        assertEquals(2660, DataClass.getRemoteAddrMap().size());
+        assertEquals(5, DataClass.getRequestMap().size());
+        assertEquals(6, DataClass.getStatusMap().size());
+        assertEquals(187, DataClass.getBodyBytesSentMap().size());
+        assertEquals(8, DataClass.getHttpRefererMap().size());
+        assertEquals(4, DataClass.getRemoteUserMap().size());
+        assertEquals (136, DataClass.getHttpUserAgentMap().size());
 
     }
 
@@ -61,15 +62,15 @@ public class TestForLogAnalyzer {
         LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
         //then: check for same sizes in all maps
-        assertEquals(0, logAnalyzer.getTimeLocalMap().size());
-        assertEquals(0, logAnalyzer.getRemoteAddrMap().size());
-        assertEquals(0, logAnalyzer.getRequestMap().size());
-        assertEquals(0, logAnalyzer.getStatusMap().size());
-        assertEquals(0, logAnalyzer.getBodyBytesSentMap().size());
-        assertEquals(0, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(0, logAnalyzer.getHttpUserAgentMap().size());
-        assertEquals(0, logAnalyzer.getRemoteUserMap().size());
-        assertEquals (0, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(0, DataClass.getTimeLocalMap().size());
+        assertEquals(0, DataClass.getRemoteAddrMap().size());
+        assertEquals(0, DataClass.getRequestMap().size());
+        assertEquals(0, DataClass.getStatusMap().size());
+        assertEquals(0, DataClass.getBodyBytesSentMap().size());
+        assertEquals(0, DataClass.getHttpRefererMap().size());
+        assertEquals(0, DataClass.getHttpUserAgentMap().size());
+        assertEquals(0, DataClass.getRemoteUserMap().size());
+        assertEquals (0, DataClass.getHttpUserAgentMap().size());
 
     }
     @Test
@@ -81,15 +82,15 @@ public class TestForLogAnalyzer {
         LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
         //then: check for same sizes in all maps
-        assertEquals(22467, logAnalyzer.getTimeLocalMap().size());
-        assertEquals(22467, logAnalyzer.getTimeLocalMap().size());
-        assertEquals(2660, logAnalyzer.getRemoteAddrMap().size());
-        assertEquals(5, logAnalyzer.getRequestMap().size());
-        assertEquals(6, logAnalyzer.getStatusMap().size());
-        assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
-        assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(4, logAnalyzer.getRemoteUserMap().size());
-        assertEquals(136, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(22467, DataClass.getTimeLocalMap().size());
+        assertEquals(22467, DataClass.getTimeLocalMap().size());
+        assertEquals(2660, DataClass.getRemoteAddrMap().size());
+        assertEquals(5, DataClass.getRequestMap().size());
+        assertEquals(6, DataClass.getStatusMap().size());
+        assertEquals(187, DataClass.getBodyBytesSentMap().size());
+        assertEquals(8, DataClass.getHttpRefererMap().size());
+        assertEquals(4, DataClass.getRemoteUserMap().size());
+        assertEquals(136, DataClass.getHttpUserAgentMap().size());
 
     }
 
@@ -102,14 +103,14 @@ public class TestForLogAnalyzer {
         LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
         //then: check for same sizes in all maps
-        assertEquals(22467, logAnalyzer.getTimeLocalMap().size());
-        assertEquals(22467, logAnalyzer.getTimeLocalMap().size());
-        assertEquals(2660, logAnalyzer.getRemoteAddrMap().size());
-        assertEquals(5, logAnalyzer.getRequestMap().size());
-        assertEquals(6, logAnalyzer.getStatusMap().size());
-        assertEquals(187, logAnalyzer.getBodyBytesSentMap().size());
-        assertEquals(8, logAnalyzer.getHttpRefererMap().size());
-        assertEquals(136, logAnalyzer.getHttpUserAgentMap().size());
+        assertEquals(22467, DataClass.getTimeLocalMap().size());
+        assertEquals(22467, DataClass.getTimeLocalMap().size());
+        assertEquals(2660, DataClass.getRemoteAddrMap().size());
+        assertEquals(5, DataClass.getRequestMap().size());
+        assertEquals(6, DataClass.getStatusMap().size());
+        assertEquals(187, DataClass.getBodyBytesSentMap().size());
+        assertEquals(8, DataClass.getHttpRefererMap().size());
+        assertEquals(136, DataClass.getHttpUserAgentMap().size());
     }
     //TODO: we checked by the count. But we didn't checked amount (must be x2, we can see it in files)
 }

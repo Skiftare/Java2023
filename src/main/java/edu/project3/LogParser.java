@@ -6,28 +6,12 @@ import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import static edu.project3.DateFormatter.convertMonthForOneLogParsing;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class LogParser {
 
 
-    private static Month convertMonth(String monthString) {
-        return switch (monthString) {
-            case "Jan" -> Month.JANUARY;
-            case "Feb" -> Month.FEBRUARY;
-            case "Mar" -> Month.MARCH;
-            case "Apr" -> Month.APRIL;
-            case "May" -> Month.MAY;
-            case "Jun" -> Month.JUNE;
-            case "Jul" -> Month.JULY;
-            case "Aug" -> Month.AUGUST;
-            case "Sep" -> Month.SEPTEMBER;
-            case "Oct" -> Month.OCTOBER;
-            case "Nov" -> Month.NOVEMBER;
-            case "Dec" -> Month.DECEMBER;
-            default -> throw new IllegalArgumentException("Некорректный месяц: " + monthString);
-        };
-    }
 
     @SuppressWarnings("MagicNumber")
     private static String[] stupidParse(String incomeString) {
@@ -52,13 +36,12 @@ public class LogParser {
         return parts;
     }
 
-    @SuppressWarnings("MagicNumber")
     private static Date convert(String dateString) {
         String[] parts = stupidParse(dateString);
         int partOfStringWithDay = 0;
         int day = Integer.parseInt(parts[partOfStringWithDay]);
         int monthIndex = 1;
-        Month month = convertMonth(parts[monthIndex]);
+        Month month = convertMonthForOneLogParsing(parts[monthIndex]);
         int yearIndex = 2;
         int year = Integer.parseInt(parts[yearIndex]);
         int hourIndex = 3;
