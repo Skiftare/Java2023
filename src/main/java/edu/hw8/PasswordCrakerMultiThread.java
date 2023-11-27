@@ -1,5 +1,7 @@
 package edu.hw8;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -19,11 +21,11 @@ public class PasswordCrakerMultiThread {
 
         private static final int NUM_THREADS = 4;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         executeCracken(PASSWORDS, 4);
     }
 
-        public static void executeCracken(String[] passwords, int numberOfThreads) {
+        public static void executeCracken(String[] passwords, int numberOfThreads) throws IOException {
             Map<String, String> passwordMap = new HashMap<>();
 
             for (String password : PASSWORDS) {
@@ -38,10 +40,13 @@ public class PasswordCrakerMultiThread {
             long startTime = System.currentTimeMillis();
 
             HashCrypter.init();
+            FileWriter fileWriter = new FileWriter("pas.txt");
             System.out.println("start");
+
 
             for (long j = HashCrypter.hashCodeString("0000"); j < HashCrypter.hashCodeString("ZZZZ"); j++) {
                 String password = HashCrypter.hashDecodeString(j);
+                fileWriter.write(password);
                 String hash = md5Hash(password);
 
                 if (passwordMap.containsKey(hash)) {
@@ -53,6 +58,7 @@ public class PasswordCrakerMultiThread {
             for (long j = HashCrypter.hashCodeString("00000"); j < HashCrypter.hashCodeString("ZZZZZ"); j++) {
                 String password = HashCrypter.hashDecodeString(j);
                 String hash = md5Hash(password);
+                fileWriter.write(password);
 
                 if (passwordMap.containsKey(hash)) {
                     String username = passwordMap.get(hash);
@@ -65,13 +71,14 @@ public class PasswordCrakerMultiThread {
             for (long j = HashCrypter.hashCodeString("000000"); j < HashCrypter.hashCodeString("ZZZZZZ"); j++) {
                 String password = HashCrypter.hashDecodeString(j);
                 String hash = md5Hash(password);
-
+                fileWriter.write(password);
                 if (passwordMap.containsKey(hash)) {
                     String username = passwordMap.get(hash);
                     System.out.println("Username: " + username + ", Password: " + password);
                 }
             }
             System.out.println("6-d");
+            fileWriter.close();
 
 
 
