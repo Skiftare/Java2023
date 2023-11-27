@@ -16,7 +16,18 @@ import java.util.stream.Stream;
 @SuppressWarnings("HideUtilityClassConstructor")
 public class FileAndPathManager {
     public static String makeFileName() {
-        return DateFormatter.getCurrentDateAsString() + "_LogAnalyzer_output";
+        //IDE предлагала заменить StringBuilder на String.
+        String baseName = DateFormatter.getCurrentDateAsString() + "_LogAnalyzer_output";
+        String fileName = baseName;
+        int count = 1;
+        while (new File(UtilityClass.getFolderForOutput()
+            + fileName
+            + UtilityClass.getFileFormat())
+            .exists()) {
+            fileName = baseName + "_" + count;
+            count++;
+        }
+        return fileName;
     }
 
     public static void initFileForLogOutput() {
@@ -25,7 +36,6 @@ public class FileAndPathManager {
         UtilityClass.setPathToOutputFile(
             UtilityClass.getFolderForOutput()
                 + UtilityClass.getFileName()
-
                 + UtilityClass.getFileFormat()
         );
         try {

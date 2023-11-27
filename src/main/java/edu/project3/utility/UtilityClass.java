@@ -4,7 +4,7 @@ package edu.project3.utility;
 public class UtilityClass {
     public static String fileFormat;
     public static String pathToOutputFile;
-    public static final String FOLDER_FOR_OUTPUT = "src/main/java/edu/project3/resources/";
+    public static final String FOLDER_FOR_OUTPUT = "src/main/resources/";
     public static String fileName = null;
 
 

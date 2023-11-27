@@ -37,7 +37,7 @@ public class ResponseCodeParser {
     }
 
     public static String getResponseCodeName(String responseCode) {
-        try {
+        try { //Тут падает checkstyle, если пустую строчку оставить
             Document doc = Jsoup.connect(HTTP_URL).get();
             String chooseAllTrInTbodyAtElementTableWithClassStandartTable = "table.standard-table tbody tr";
 
