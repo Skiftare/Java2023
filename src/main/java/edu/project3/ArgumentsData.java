@@ -13,10 +13,7 @@ public class ArgumentsData {
     private static Date to = null;
     private static String fromStr = null;
     private static String toStr = null;
-    private static String fileFormat = null;
 
-
-    // Getters
     public static String getPath() {
         return path;
     }
@@ -37,9 +34,6 @@ public class ArgumentsData {
         return toStr;
     }
 
-
-
-    // Setters
     public static void setPath(String path) {
         ArgumentsData.path = path;
     }
@@ -60,9 +54,6 @@ public class ArgumentsData {
         ArgumentsData.toStr = toStr;
     }
 
-
-
-
     private static ArrayList<String> parseArgs(String[] args) {
         ArrayList<String> result = new ArrayList<>();
         for (String str : args) {
@@ -77,7 +68,7 @@ public class ArgumentsData {
 
         ArrayList<String> parsedArgs = parseArgs(args);
 
-        for (int i = 0; i < parsedArgs.size(); i+=2) {
+        for (int i = 0; i < parsedArgs.size(); i += 2) {
 
             switch (parsedArgs.get(i)) {
                 case "--path":
@@ -97,7 +88,6 @@ public class ArgumentsData {
                 default:
                     ErrorLogger.createLogError("неизветсный аргумент");
             }
-
         }
         if (path == null) {
             throw new RuntimeException("no path to parse logs");
@@ -105,7 +95,5 @@ public class ArgumentsData {
         assert UtilityClass.getFileFormat() != null;
         UtilityClass.setFileFormat(UtilityClass.getFileFormat().equals("markdown") ? ".md" : ".adoc");
         UtilityClass.setFileName(FileAndPathManager.makeFileName());
-
-
     }
 }

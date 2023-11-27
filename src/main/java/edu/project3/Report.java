@@ -11,7 +11,7 @@ public class Report {
             tables = new ArrayList<>();
         }
 
-        public void addTable(Table newIncomeTable){
+        public void addTable(Table newIncomeTable) {
             tables.add(newIncomeTable);
         }
 

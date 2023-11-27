@@ -39,9 +39,9 @@ public class ResponseCodeParser {
     public static String getResponseCodeName(String responseCode) {
         try {
             Document doc = Jsoup.connect(HTTP_URL).get();
-            String ChooseAllTrInTbodyAtElementTableWithClassStandartTable = "table.standard-table tbody tr";
+            String chooseAllTrInTbodyAtElementTableWithClassStandartTable = "table.standard-table tbody tr";
 
-            Elements rows = doc.select(ChooseAllTrInTbodyAtElementTableWithClassStandartTable);
+            Elements rows = doc.select(chooseAllTrInTbodyAtElementTableWithClassStandartTable);
             for (Element row : rows) {
                 if (checkerFowParser(row, responseCode)) {
                     Elements cells = row.select("td");

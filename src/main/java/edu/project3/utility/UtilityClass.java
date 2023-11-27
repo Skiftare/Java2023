@@ -1,5 +1,6 @@
 package edu.project3.utility;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class UtilityClass {
     public static String fileFormat;
     public static String pathToOutputFile;
@@ -13,6 +14,7 @@ public class UtilityClass {
     public final static int BYTES_IN_KILOBYTE = 1024;
     public final static int VARIATIONS_OF_RESPONSE_CODES = 6;
     public final static int MULTIPLIER_FOR_CODES = 100;
+
     public static String getFileFormat() {
         return fileFormat;
     }

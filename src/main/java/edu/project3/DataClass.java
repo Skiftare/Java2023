@@ -22,11 +22,11 @@ public class DataClass {
     private static Integer totalRequests = 0;
     private static Integer totalResponseSizeByKB = 0;
 
-    public static Date getMinDate(){
+    public static Date getMinDate() {
         return  minDate;
     }
 
-    public static Date getMaxDate(){
+    public static Date getMaxDate() {
         return  maxDate;
     }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import static edu.project3.DateFormatter.formatDateForLogs;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class ReportGenerator {
     private static Table printFirstExtraMetric() {
 
@@ -26,14 +27,17 @@ public class ReportGenerator {
         table.nameTable("Вторая доп. метрика");
         int firstNumber;
         int[] respCodes = new int[UtilityClass.getVariationsOfResponseCodes()];
-        for (Map.Entry<Integer, Integer> entry : DataClass.getStatusMap().entrySet()) {
-            firstNumber = entry.getKey() / UtilityClass.getMultiplierForCodes() - (entry.getKey() %  UtilityClass.getMultiplierForCodes() == 0 ? 1 : 0);
+        for (Map.Entry<Integer, Integer> entry
+            : DataClass.getStatusMap().entrySet()) {
+            firstNumber = entry.getKey() / UtilityClass.getMultiplierForCodes()
+                - (entry.getKey() %  UtilityClass.getMultiplierForCodes() == 0
+                ? 1 : 0);
             respCodes[firstNumber] += entry.getValue();
         }
         for (int i = 1; i < UtilityClass.getVariationsOfResponseCodes(); i++) {
 
             table.addRow(
-                ResponseCodeParser.analyzeStatusCode( UtilityClass.getMultiplierForCodes() * i + 1),
+                ResponseCodeParser.analyzeStatusCode(UtilityClass.getMultiplierForCodes() * i + 1),
                 Integer.toString(respCodes[i])
             );
         }
@@ -48,7 +52,8 @@ public class ReportGenerator {
         }
         return table;
     }
-    private static Table printHttpUserAgentStats(){
+
+    private static Table printHttpUserAgentStats() {
 
         Table table = new Table("HTTP_USER_AGENT_MAP", "Кол-во обращений");
         for (Map.Entry<String, Integer> entry : DataClass.getHttpUserAgentMap().entrySet()) {
@@ -74,14 +79,15 @@ public class ReportGenerator {
         } else {
             table.addRow("Файл(ы)", parseArrayAsOneString(DataClass.getReadedLogs()));
         }
-        table.addRow("Начальная дата", (ArgumentsData.getFrom() != null ? ArgumentsData.getFromStr() : "-"));
-        table.addRow("Конечная дата", (ArgumentsData.getTo() != null ? ArgumentsData.getToStr() : "-"));
+        table.addRow("Начальная дата", (ArgumentsData.getFrom() != null
+            ? ArgumentsData.getFromStr() : "-"));
+        table.addRow("Конечная дата", (ArgumentsData.getTo() != null
+            ? ArgumentsData.getToStr() : "-"));
         table.addRow("Количество запросов", Integer.toString(DataClass.getTotalRequests()));
         table.addRow(
             "Средний размер ответа (в КБ)",
-            (DataClass.getTotalRequests()) > 0 ?
-                (DataClass.getTotalResponseSizeByKB() / DataClass.getTotalRequests()) +
-                    "KB" : "-"
+            (DataClass.getTotalRequests()) > 0
+                ? (DataClass.getTotalResponseSizeByKB() / DataClass.getTotalRequests()) + "KB" : "-"
         );
         return table;
 
@@ -109,7 +115,8 @@ public class ReportGenerator {
         return table;
 
     }
-    public static Report generateReport(){
+
+    public static Report generateReport() {
         Report report = new Report();
         report.addTable(printGeneralInfo());
         report.addTable(printResourceStats());

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class FileAndPathManager {
     public static String makeFileName() {
         return DateFormatter.getCurrentDateAsString() + "_LogAnalyzer_output";
@@ -21,7 +22,6 @@ public class FileAndPathManager {
     public static void initFileForLogOutput() {
         //Does we always need to write in the same location, even re-write files?
         //I think not
-        System.out.println(UtilityClass.getFileFormat());
         UtilityClass.setPathToOutputFile(
             UtilityClass.getFolderForOutput()
                 + UtilityClass.getFileName()
@@ -43,6 +43,7 @@ public class FileAndPathManager {
             ErrorLogger.createLogError(e.getMessage());
         }
     }
+
     public static List<Path> findLogFiles(String logPath) throws IOException {
         List<Path> logFiles = new ArrayList<>();
 

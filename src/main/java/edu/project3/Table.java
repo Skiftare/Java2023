@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import static edu.project3.utility.UtilityTableClass.TOGGLE_TABLE_MODE_FOR_ADOC;
 import static edu.project3.utility.UtilityTableClass.CELL_SEPARATOR;
 import static edu.project3.utility.UtilityTableClass.ENDL_CHAR;
 import static edu.project3.utility.UtilityTableClass.HEADER_AND_BODY_SEPARATOR_FOR_MARKDOWN;
 import static edu.project3.utility.UtilityTableClass.TABLE_NAME_DETERMINANT_FOR_MARKDOWN;
+import static edu.project3.utility.UtilityTableClass.TOGGLE_TABLE_MODE_FOR_ADOC;
 
 public class Table {
     private String nameOfTable = "";
@@ -29,7 +29,7 @@ public class Table {
         data.add(Arrays.asList(row));
     }
 
-    private String printTableAsAdoc(){
+    private String printTableAsAdoc() {
         StringBuilder sb = new StringBuilder();
         sb.append(nameOfTable).append(ENDL_CHAR);
         sb.append(TOGGLE_TABLE_MODE_FOR_ADOC).append(ENDL_CHAR);
@@ -49,7 +49,7 @@ public class Table {
         return sb.toString();
     }
 
-    private String printTableAsMarkdown(){
+    private String printTableAsMarkdown() {
         StringBuilder markdown = new StringBuilder();
         markdown.append(TABLE_NAME_DETERMINANT_FOR_MARKDOWN).append(nameOfTable).append(ENDL_CHAR);
         markdown.append(CELL_SEPARATOR);

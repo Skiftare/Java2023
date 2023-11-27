@@ -14,6 +14,7 @@ import static edu.project3.DataClass.addReadedLog;
 import static edu.project3.DataClass.putParsedLogToDataClass;
 import static edu.project3.FileAndPathManager.findLogFiles;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class InputFileLogsParser {
 
     private static boolean isCurrInRange(Date curr) {
