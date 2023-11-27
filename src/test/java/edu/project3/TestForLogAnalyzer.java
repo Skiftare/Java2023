@@ -3,7 +3,6 @@ package edu.project3;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestForLogAnalyzer {
@@ -18,7 +17,7 @@ public class TestForLogAnalyzer {
     }
 
     void thenCheckRemoteAddrMap(int expectedSize, int actualSize) {
-        assertEquals(expectedSize, DataClass.getRemoteAddrMap().size());
+        assertEquals(expectedSize, actualSize);
     }
 
     void thenCheckRequestMap(int expectedSize, int actualSize) {
@@ -54,7 +53,6 @@ public class TestForLogAnalyzer {
             "--format", "adoc"};
 
         //when: parse all logs
-        LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
 
         //then: check for same sizes in all maps
@@ -70,12 +68,11 @@ public class TestForLogAnalyzer {
 
     @Test
     @DisplayName("Парсинг с чётко данного пути в системе")
-    public void testThatGetPathToOneFileAndReturnsMetric() throws IOException {
+    public void testThatGetPathToOneFileAndReturnsMetric() {
         //given: full path
         String[] args = {"--path", "src/test/java/edu/project3/resources/log1.txt", "--format", "adoc"};
 
         //when: parse all logs
-        LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
 
         thenCheckTimeLocalMap(22467, DataClass.getTimeLocalMap().size());
@@ -98,7 +95,6 @@ public class TestForLogAnalyzer {
                 "2023-09-24"};
 
         //when: parse all logs
-        LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
 
         //then: check for same sizes in all maps
@@ -122,7 +118,6 @@ public class TestForLogAnalyzer {
                 "2023-09-24"};
 
         //when: parse all logs
-        LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
 
         //then: check for same sizes in all maps
@@ -146,7 +141,6 @@ public class TestForLogAnalyzer {
                 "markdown", "--to", "2029-09-24"};
 
         //when: parse all logs
-        LogAnalyzer logAnalyzer = new LogAnalyzer();
         LogAnalyzer.main(args);
 
         //then: check for same sizes in all maps
