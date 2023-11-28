@@ -1,5 +1,6 @@
 package edu.project3;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -61,6 +62,7 @@ public class FileAndPathManager {
                     ErrorLogger.createLogError("Файл создать не удалось");
                 }
             }
+
         } catch (IOException e) {
             ErrorLogger.createLogError(e.getMessage());
         }
@@ -90,6 +92,7 @@ public class FileAndPathManager {
         List<Path> logFiles = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
         String[] folders = logPath.split("/");
+
         for (String subDir : folders) {
             if (Pattern.matches("[\\w.-]+", subDir)) {
                 sb.append(subDir).append('/');
@@ -97,22 +100,30 @@ public class FileAndPathManager {
                 break;
             }
         }
+
         String baseDir = sb.toString();
+
         try (Stream<Path> stream = Files.walk(Paths.get(baseDir))) {
+
             List<File> subPaths = stream
                 .filter(Files::isRegularFile)
                 .map(Path::toFile)
                 .toList();
+
             for (File subPath : subPaths) {
                 if (subPath.toPath().getFileName().toString().equals(folders[folders.length - 1])) {
                     logFiles.add(subPath.toPath());
                 }
             }
+
         } catch (IOException e) {
             ErrorLogger.createLogError(e.getMessage());
         }
-
         return logFiles;
+    }
+
+    static BufferedReader createReaderForLogParser(Path logPath) throws IOException {
+        return Files.newBufferedReader(logPath);
     }
 
     static void writeToFile(Table tables) {
@@ -126,5 +137,6 @@ public class FileAndPathManager {
             ErrorLogger.createLogError("Ошибка при записи файла: " + e.getMessage());
         }
     }
+
 
 }

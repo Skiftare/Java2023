@@ -88,9 +88,11 @@ public class ArgumentsData {
                     ErrorLogger.createLogError("неизветсный аргумент");
             }
         }
+
         if (path == null) {
             throw new RuntimeException("no path to parse logs");
         }
+
         assert FileAndPathManager.getFileFormat() != null;
         FileAndPathManager.setFileFormat(FileAndPathManager.getFileFormat().equals("markdown") ? ".md" : ".adoc");
         FileAndPathManager.makeFileName();

@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
 import static edu.project3.DataClass.addReadedLog;
 import static edu.project3.DataClass.putParsedLogToDataClass;
+import static edu.project3.FileAndPathManager.createReaderForLogParser;
 import static edu.project3.FileAndPathManager.findLogFiles;
 
 @SuppressWarnings("HideUtilityClassConstructor")
@@ -58,14 +58,16 @@ public class InputFileLogsParser {
         try {
             List<Path> paths = findLogFiles(ArgumentsData.getPath());
             String line;
-
             for (Path logPath : paths) {
                 addReadedLog(logPath.toString());
-                BufferedReader reader = Files.newBufferedReader(logPath);
-                while ((line = reader.readLine()) != null) {
-                    parseOneLog(line);
+
+                try (BufferedReader reader = createReaderForLogParser(logPath)) {
+                    while ((line = reader.readLine()) != null) {
+                        parseOneLog(line);
+                    }
+                } catch (Exception e) {
+                    ErrorLogger.createLogError(e.getMessage());
                 }
-                reader.close();
             }
         } catch (IOException e) {
             ErrorLogger.createLogError(e.getMessage());

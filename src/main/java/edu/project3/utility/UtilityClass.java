@@ -2,9 +2,6 @@ package edu.project3.utility;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class UtilityClass {
-
-
-
     public final static String YEAR_MONTH_AND_DATE = "yyyy-MM-dd";
     public final static String HOURS_MINUTES_AND_SECONDS = "HH:mm:ss";
     public final static String HTTP_STRING = "http";
