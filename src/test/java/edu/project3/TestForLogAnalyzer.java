@@ -153,5 +153,4 @@ public class TestForLogAnalyzer {
         thenCheckRemoteUserMap(4, DataClass.getRemoteUserMap().size());
         thenCheckHttpUserAgentMap(136, DataClass.getHttpUserAgentMap().size());
     }
-    //TODO: we checked by the count. But we didn't checked amount (must be x2, we can see it in files)
 }

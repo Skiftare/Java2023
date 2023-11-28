@@ -1,6 +1,5 @@
 package edu.project3;
 
-import edu.project3.utility.UtilityClass;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,7 +70,7 @@ public class Table {
     }
 
     public String printAsString() {
-        String format = UtilityClass.getFileFormat();
+        String format = FileAndPathManager.getFileFormat();
         if (Objects.equals(format, ".adoc")) {
             return printTableAsAdoc();
         } else {

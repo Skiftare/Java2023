@@ -21,7 +21,6 @@ public class TestContentOfReportInLogAnalyzer {
         //when: parse all logs
         LogAnalyzer.main(args);
 
-
         //then: check for some basic content in maps
         Map<String, Integer> httpUserAgentMap = DataClass.getHttpUserAgentMap();
         Map<String,Integer> httpReferMap = DataClass.getHttpRefererMap();
@@ -33,7 +32,6 @@ public class TestContentOfReportInLogAnalyzer {
             11830,
             httpUserAgentMap
         );
-
         thenAssertThatElementInMapExactlyExpectedTimes(
             "Debian APT-HTTP/1.3 (0.9.7.9)",
             11365,
@@ -53,9 +51,6 @@ public class TestContentOfReportInLogAnalyzer {
             13330,
             statusMap
         );
-
-
-
     }
 
     @Test
@@ -64,10 +59,8 @@ public class TestContentOfReportInLogAnalyzer {
         //given: http-server & format
         String[] args = {"--path", "src/test/java/edu/project3/resources/log1.txt", "--format", "markdown"};
 
-
         //when: parse all logs
         LogAnalyzer.main(args);
-
 
         //then: check for some basic content in maps
         Map<String, Integer> httpUserAgentMap = DataClass.getHttpUserAgentMap();
@@ -80,7 +73,6 @@ public class TestContentOfReportInLogAnalyzer {
             11830,
             httpUserAgentMap
         );
-
         thenAssertThatElementInMapExactlyExpectedTimes(
             "Debian APT-HTTP/1.3 (0.9.7.9)",
             11365,
@@ -100,8 +92,5 @@ public class TestContentOfReportInLogAnalyzer {
             13334,
             statusMap
         );
-
-
-
     }
 }

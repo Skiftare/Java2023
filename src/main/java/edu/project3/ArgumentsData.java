@@ -1,6 +1,5 @@
 package edu.project3;
 
-import edu.project3.utility.UtilityClass;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -83,7 +82,7 @@ public class ArgumentsData {
                     setToStr(parsedArgs.get(i + 1));
                     break;
                 case "--format":
-                    UtilityClass.setFileFormat(parsedArgs.get(i + 1));
+                    FileAndPathManager.setFileFormat(parsedArgs.get(i + 1));
                     break;
                 default:
                     ErrorLogger.createLogError("неизветсный аргумент");
@@ -92,8 +91,8 @@ public class ArgumentsData {
         if (path == null) {
             throw new RuntimeException("no path to parse logs");
         }
-        assert UtilityClass.getFileFormat() != null;
-        UtilityClass.setFileFormat(UtilityClass.getFileFormat().equals("markdown") ? ".md" : ".adoc");
-        UtilityClass.setFileName(FileAndPathManager.makeFileName());
+        assert FileAndPathManager.getFileFormat() != null;
+        FileAndPathManager.setFileFormat(FileAndPathManager.getFileFormat().equals("markdown") ? ".md" : ".adoc");
+        FileAndPathManager.makeFileName();
     }
 }

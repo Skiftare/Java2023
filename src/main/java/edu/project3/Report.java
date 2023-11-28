@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Report {
 
-        private List<Table> tables;
+        private final List<Table> tables;
 
         public Report() {
             tables = new ArrayList<>();
