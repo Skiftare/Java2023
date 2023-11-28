@@ -9,7 +9,7 @@ public class TestForLogAnalyzer {
 
     @BeforeEach
     public void resetAll() {
-        DataClass.resetStaticVariables();
+        LogAnalyzer.reset();
     }
 
     void thenCheckTimeLocalMap(int expectedSize, int actualSize) {

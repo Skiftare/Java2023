@@ -56,9 +56,17 @@ public class ReportGenerator {
     private static Table printHttpUserAgentStats() {
 
         Table table = new Table("HTTP_USER_AGENT_MAP", "Кол-во обращений");
-        for (Map.Entry<String, Integer> entry : DataClass.getHttpUserAgentMap().entrySet()) {
+        table.nameTable("Первые 10 самых частых обращений");
+        int countOfRows = 10;
+
+        ArrayList<Map.Entry<String, Integer>> listOfMostPopular = new ArrayList<>(DataClass.getHttpUserAgentMap().entrySet());
+        listOfMostPopular.sort((entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
+
+        for (int i = 0; i < countOfRows && i < listOfMostPopular.size(); i++) {
+            Map.Entry<String, Integer> entry = listOfMostPopular.get(i);
             table.addRow(entry.getKey(), entry.getValue().toString());
         }
+
         return table;
     }
 
@@ -120,9 +128,10 @@ public class ReportGenerator {
         Report report = new Report();
         report.addTable(printGeneralInfo());
         report.addTable(printResourceStats());
-        report.addTable(printFirstExtraMetric());
         report.addTable(printResponseCodeStats());
         report.addTable(printHttpUserAgentStats());
+        report.addTable(printFirstExtraMetric());
+        report.addTable(printSecondExtraMetric());
         return report;
     }
 }
