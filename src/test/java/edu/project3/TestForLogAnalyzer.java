@@ -3,6 +3,9 @@ package edu.project3;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static edu.project3.TestContentOfReportInLogAnalyzer.thenAssertThatElementInHttpRefererMapExistExpectedTimes;
+import static edu.project3.TestContentOfReportInLogAnalyzer.thenAssertThatElementInHttpUserAgentMapExistExpectedTimes;
+import static edu.project3.TestContentOfReportInLogAnalyzer.thenAssertThatElementInStatusMapExistExpectedTimes;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestForLogAnalyzer {
@@ -64,6 +67,27 @@ public class TestForLogAnalyzer {
         thenCheckHttpRefererMap(8, DataClass.getHttpRefererMap().size());
         thenCheckRemoteUserMap(1, DataClass.getRemoteUserMap().size());
         thenCheckHttpUserAgentMap(136, DataClass.getHttpUserAgentMap().size());
+
+        thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(
+            "Debian APT-HTTP/1.3 (1.0.1ubuntu2)",
+            11830
+        );
+        thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(
+            "Debian APT-HTTP/1.3 (0.9.7.9)",
+            11365
+        );
+
+        //Проверка ReferMap
+        thenAssertThatElementInHttpRefererMapExistExpectedTimes(
+            "http://www.elasticsearch.org/overview/elkdownloads/",
+            6
+        );
+
+        //Проверка statusMap
+        thenAssertThatElementInStatusMapExistExpectedTimes(
+            304,
+            13330
+        );
     }
 
     @Test

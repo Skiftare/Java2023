@@ -7,15 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class TestContentOfReportInLogAnalyzer {
-    void thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(String element, int expected){
+    static void thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(String element, int expected){
         assertEquals(expected,DataClass.getHttpUserAgentMap().get(element));
     }
 
-    void thenAssertThatElementInHttpRefererMapExistExpectedTimes(String element, int expected){
+    static void thenAssertThatElementInHttpRefererMapExistExpectedTimes(String element, int expected){
         assertEquals(expected,DataClass.getHttpRefererMap().get(element));
     }
 
-    void thenAssertThatElementInStatusMapExistExpectedTimes(int element, int expected){
+    static void thenAssertThatElementInStatusMapExistExpectedTimes(int element, int expected){
         assertEquals(expected,DataClass.getStatusMap().get(element));
     }
 
