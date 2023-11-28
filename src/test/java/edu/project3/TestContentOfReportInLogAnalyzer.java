@@ -24,6 +24,13 @@ public class TestContentOfReportInLogAnalyzer {
 
         //then: check for some basic content in maps
 
+        //Проверка ReferMap
+        thenAssertThatElementInMapExactlyExpectedTimes(
+            "http://www.elasticsearch.org/overview/elkdownloads/",
+            6,
+            DataClass.getHttpRefererMap()
+        );
+
         // Проверка основного содержимого карты HTTP_USER_AGENT_MAP
         thenAssertThatElementInMapExactlyExpectedTimes(
             "Debian APT-HTTP/1.3 (1.0.1ubuntu2)",
@@ -34,13 +41,6 @@ public class TestContentOfReportInLogAnalyzer {
             "Debian APT-HTTP/1.3 (0.9.7.9)",
             11365,
             DataClass.getHttpUserAgentMap()
-        );
-
-        //Проверка ReferMap
-        thenAssertThatElementInMapExactlyExpectedTimes(
-            "http://www.elasticsearch.org/overview/elkdownloads/",
-        6,
-            DataClass.getHttpRefererMap()
         );
 
         //Проверка statusMap
@@ -63,6 +63,13 @@ public class TestContentOfReportInLogAnalyzer {
 
         //then: check for some basic content in maps
 
+        //Проверка statusMap
+        thenAssertThatElementInMapExactlyExpectedTimes(
+            304,
+            13334,
+            DataClass.getStatusMap()
+        );
+
         // Проверка основного содержимого карты HTTP_USER_AGENT_MAP
         thenAssertThatElementInMapExactlyExpectedTimes(
             "Debian APT-HTTP/1.3 (1.0.1ubuntu2)",
@@ -82,12 +89,6 @@ public class TestContentOfReportInLogAnalyzer {
             DataClass.getHttpRefererMap()
         );
 
-        //Проверка statusMap
-        thenAssertThatElementInMapExactlyExpectedTimes(
-            304,
-            13334,
-            DataClass.getStatusMap()
-        );
         LogAnalyzer.reset();
     }
 }
