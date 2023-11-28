@@ -1,8 +1,6 @@
 package edu.project3;
 
 import java.io.IOException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,7 +9,6 @@ import org.jsoup.select.Elements;
 @SuppressWarnings("HideUtilityClassConstructor")
 public class ResponseCodeParser {
     private static final String HTTP_URL = "https://developer.mozilla.org/ru/docs/Web/HTTP/Status";
-    private static final Logger LOGGER = LogManager.getLogger();
 
     @SuppressWarnings("MagicNumber")
     public static String analyzeStatusCode(int statusCode) {
@@ -40,17 +37,21 @@ public class ResponseCodeParser {
     }
 
     public static String getResponseCodeName(String responseCode) {
-        try {
-
+        try { //Тут падает checkstyle, если пустую строчку оставить
             Document doc = Jsoup.connect(HTTP_URL).get();
-            Elements rows = doc.select("table.standard-table tbody tr");
+            String chooseAllTrInTbodyAtElementTableWithClassStandartTable = "table.standard-table tbody tr";
+
+            Elements rows = doc.select(chooseAllTrInTbodyAtElementTableWithClassStandartTable);
             for (Element row : rows) {
                 if (checkerFowParser(row, responseCode)) {
-                    return row.select("td").get(1).text();
+                    Elements cells = row.select("td");
+                    Element secondCell = cells.get(1);
+                    String cellText = secondCell.text();
+                    return cellText;
                 }
             }
         } catch (IOException e) {
-            LOGGER.info(e.getMessage());
+            ErrorLogger.createLogError(e.getMessage());
         }
         return "Объяснение для данного кода не найдено";
     }
