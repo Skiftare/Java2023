@@ -57,8 +57,7 @@ public class ResponseCodeParser {
                 if (checkerFowParser(row, responseCode)) {
                     Elements cells = row.select("td");
                     Element secondCell = cells.get(1);
-                    String cellText = secondCell.text();
-                    return cellText;
+                    return secondCell.text();
                 }
             }
         } catch (IOException e) {
