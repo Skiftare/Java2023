@@ -1,7 +1,6 @@
 package edu.project3;
 
 import java.util.Map;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,10 +10,7 @@ public class TestContentOfReportInLogAnalyzer {
     <K,V> void thenAssertThatElementInMapExactlyExpectedTimes(K element, V expectedCount, Map<K,V> map){
         assertEquals(expectedCount,map.get(element));
     }
-    @BeforeEach
-    public void resetAll() {
-        LogAnalyzer.reset();
-    }
+
     @Test
     @DisplayName("Парсинг с сайта")
     public void testThatGetHttpAndReturnsContentOfMetricFile() {
@@ -53,6 +49,7 @@ public class TestContentOfReportInLogAnalyzer {
             13330,
             DataClass.getStatusMap()
         );
+        LogAnalyzer.reset();
     }
 
     @Test
@@ -91,5 +88,6 @@ public class TestContentOfReportInLogAnalyzer {
             13334,
             DataClass.getStatusMap()
         );
+        LogAnalyzer.reset();
     }
 }
