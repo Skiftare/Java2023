@@ -1,16 +1,23 @@
 package edu.project3;
 
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class TestContentOfReportInLogAnalyzer {
+    void thenCheckHttpRefererMap(int expectedSize, int actualSize) {
+        assertEquals(expectedSize, actualSize);
+    }
     <K,V> void thenAssertThatElementInMapExactlyExpectedTimes(K element, V expectedCount, Map<K,V> map){
         assertEquals(expectedCount,map.get(element));
     }
-
+    @BeforeEach
+    void resetAll(){
+        LogAnalyzer.reset();
+    }
     @Test
     @DisplayName("Парсинг с сайта")
     public void testThatGetHttpAndReturnsContentOfMetricFile() {
@@ -23,7 +30,7 @@ public class TestContentOfReportInLogAnalyzer {
         LogAnalyzer.main(args);
 
         //then: check for some basic content in maps
-
+        thenCheckHttpRefererMap(8, DataClass.getHttpRefererMap().size());
         //Проверка ReferMap
         thenAssertThatElementInMapExactlyExpectedTimes(
             "http://www.elasticsearch.org/overview/elkdownloads/",
@@ -49,7 +56,7 @@ public class TestContentOfReportInLogAnalyzer {
             13330,
             DataClass.getStatusMap()
         );
-        LogAnalyzer.reset();
+
     }
 
     @Test
@@ -89,6 +96,5 @@ public class TestContentOfReportInLogAnalyzer {
             DataClass.getHttpRefererMap()
         );
 
-        LogAnalyzer.reset();
     }
 }
