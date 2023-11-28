@@ -1,6 +1,7 @@
 package edu.project3;
 
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,6 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TestContentOfReportInLogAnalyzer {
     <T,K> void thenAssertThatElementInMapExactlyExpectedTimes(T element, K expectedCount, Map<T,K> map){
         assertEquals(expectedCount,map.get(element));
+    }
+    @BeforeEach
+    public void resetAll() {
+        LogAnalyzer.reset();
     }
     @Test
     @DisplayName("Парсинг с сайта")
