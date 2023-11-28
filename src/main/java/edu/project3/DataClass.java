@@ -22,6 +22,7 @@ public class DataClass {
     private static Integer totalRequests = 0;
     private static Integer totalResponseSizeByKB = 0;
 
+
     public static Date getMinDate() {
         return  minDate;
     }
@@ -114,6 +115,7 @@ public class DataClass {
         HTTP_USER_AGENT_MAP.clear();
         REMOTE_USER.clear();
         READED_LOGS.clear();
+
         minDate = null;
         maxDate = null;
         totalRequests = 0;
