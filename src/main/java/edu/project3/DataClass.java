@@ -14,7 +14,7 @@ public class DataClass {
     private static final Map<Integer, Integer> STATUS_MAP = new HashMap<>();
     private static final Map<Integer, Integer> BODY_BYTES_SENT_MAP = new HashMap<>();
     private static final Map<String, Integer> HTTP_REFERER_MAP = new HashMap<>();
-    private static final Map<String, Integer> HTTP_USER_AGENT_MAP = new HashMap<>();
+    private static Map<String, Integer> HTTP_USER_AGENT_MAP = new HashMap<>();
     private static final Map<String, Integer> REMOTE_USER = new HashMap<>();
     private static final ArrayList<String> READED_LOGS = new ArrayList<>();
     private static Date minDate = null;
