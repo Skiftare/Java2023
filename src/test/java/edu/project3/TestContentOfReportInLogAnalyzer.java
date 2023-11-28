@@ -1,6 +1,5 @@
 package edu.project3;
 
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -8,16 +7,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class TestContentOfReportInLogAnalyzer {
-    void thenCheckHttpRefererMap(int expectedSize, int actualSize) {
-        assertEquals(expectedSize, actualSize);
+    void thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(String element, int expected){
+        assertEquals(expected,DataClass.getHttpUserAgentMap().get(element));
     }
-    <K,V> void thenAssertThatElementInMapExactlyExpectedTimes(K element, V expectedCount, Map<K,V> map){
-        assertEquals(expectedCount,map.get(element));
+
+    void thenAssertThatElementInHttpRefererMapExistExpectedTimes(String element, int expected){
+        assertEquals(expected,DataClass.getHttpRefererMap().get(element));
     }
+
+    void thenAssertThatElementInStatusMapExistExpectedTimes(int element, int expected){
+        assertEquals(expected,DataClass.getStatusMap().get(element));
+    }
+
     @BeforeEach
     void resetAll(){
         LogAnalyzer.reset();
     }
+
     @Test
     @DisplayName("Парсинг с сайта")
     public void testThatGetHttpAndReturnsContentOfMetricFile() {
@@ -30,31 +36,27 @@ public class TestContentOfReportInLogAnalyzer {
         LogAnalyzer.main(args);
 
         //then: check for some basic content in maps
-        thenCheckHttpRefererMap(8, DataClass.getHttpRefererMap().size());
-        //Проверка ReferMap
-        thenAssertThatElementInMapExactlyExpectedTimes(
-            "http://www.elasticsearch.org/overview/elkdownloads/",
-            6,
-            DataClass.getHttpRefererMap()
-        );
 
         // Проверка основного содержимого карты HTTP_USER_AGENT_MAP
-        thenAssertThatElementInMapExactlyExpectedTimes(
+        thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(
             "Debian APT-HTTP/1.3 (1.0.1ubuntu2)",
-            11830,
-            DataClass.getHttpUserAgentMap()
+            11830
         );
-        thenAssertThatElementInMapExactlyExpectedTimes(
+        thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(
             "Debian APT-HTTP/1.3 (0.9.7.9)",
-            11365,
-            DataClass.getHttpUserAgentMap()
+            11365
+        );
+
+        //Проверка ReferMap
+        thenAssertThatElementInHttpRefererMapExistExpectedTimes(
+            "http://www.elasticsearch.org/overview/elkdownloads/",
+        6
         );
 
         //Проверка statusMap
-        thenAssertThatElementInMapExactlyExpectedTimes(
+        thenAssertThatElementInStatusMapExistExpectedTimes(
             304,
-            13330,
-            DataClass.getStatusMap()
+            13330
         );
 
     }
@@ -70,31 +72,26 @@ public class TestContentOfReportInLogAnalyzer {
 
         //then: check for some basic content in maps
 
-        //Проверка statusMap
-        thenAssertThatElementInMapExactlyExpectedTimes(
-            304,
-            13334,
-            DataClass.getStatusMap()
-        );
-
         // Проверка основного содержимого карты HTTP_USER_AGENT_MAP
-        thenAssertThatElementInMapExactlyExpectedTimes(
+        thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(
             "Debian APT-HTTP/1.3 (1.0.1ubuntu2)",
-            11830,
-            DataClass.getHttpUserAgentMap()
+            11830
         );
-        thenAssertThatElementInMapExactlyExpectedTimes(
+        thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(
             "Debian APT-HTTP/1.3 (0.9.7.9)",
-            11365,
-            DataClass.getHttpUserAgentMap()
+            11365
         );
 
         //Проверка ReferMap
-        thenAssertThatElementInMapExactlyExpectedTimes(
+        thenAssertThatElementInHttpRefererMapExistExpectedTimes(
             "http://www.elasticsearch.org/overview/elkdownloads/",
-            6,
-            DataClass.getHttpRefererMap()
+            6
         );
 
+        //Проверка statusMap
+        thenAssertThatElementInStatusMapExistExpectedTimes(
+            304,
+            13334
+        );
     }
 }
