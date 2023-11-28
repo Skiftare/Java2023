@@ -38,7 +38,6 @@ public class DataClass {
         return totalResponseSizeByKB;
     }
 
-
     public static Map<Date, Integer> getTimeLocalMap() {
         return TIME_LOCAL_MAP;
     }

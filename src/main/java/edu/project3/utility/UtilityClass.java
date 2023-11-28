@@ -2,10 +2,7 @@ package edu.project3.utility;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class UtilityClass {
-    public static String fileFormat;
-    public static String pathToOutputFile;
-    public static final String FOLDER_FOR_OUTPUT = "src/main/resources/";
-    public static String fileName = null;
+
 
 
     public final static String YEAR_MONTH_AND_DATE = "yyyy-MM-dd";
@@ -14,35 +11,36 @@ public class UtilityClass {
     public final static int BYTES_IN_KILOBYTE = 1024;
     public final static int VARIATIONS_OF_RESPONSE_CODES = 6;
     public final static int MULTIPLIER_FOR_CODES = 100;
-
-    public static String getFileFormat() {
-        return fileFormat;
-    }
-
-    public static void setFileFormat(String fileFormat) {
-        UtilityClass.fileFormat = fileFormat;
-    }
-
-    public static String getPathToOutputFile() {
-        return pathToOutputFile;
-    }
-
-    public static void setPathToOutputFile(String pathToOutputFile) {
-        UtilityClass.pathToOutputFile = pathToOutputFile;
-    }
-
-    public static String getFolderForOutput() {
-        return FOLDER_FOR_OUTPUT;
-    }
-
-    public static String getFileName() {
-        return fileName;
-    }
-
-    public static void setFileName(String fileName) {
-        UtilityClass.fileName = fileName;
-    }
-
+    public final static int INFORMATIONAL_MIN = 100;
+    public final static int INFORMATIONAL_MAX = 200;
+    public final static int SUCCESSFUL_MIN = 200;
+    public final static int SUCCESSFUL_MAX = 300;
+    public final static int REDIRECTION_MIN = 300;
+    public final static int REDIRECTION_MAX = 400;
+    public final static int CLIENT_ERROR_MIN = 400;
+    public final static int CLIENT_ERROR_MAX = 500;
+    public final static int SERVER_ERROR_MIN = 500;
+    public final static int SERVER_ERROR_MAX = 600;
+    public final static int NEEDED_CELL_SIZE = 3;
+    public static final int PART_OF_STRING_WITH_DAY = 0;
+    public static final int MONTH_INDEX = 1;
+    public static final int YEAR_INDEX = 2;
+    public static final int HOUR_INDEX = 3;
+    public static final int MINUTE_INDEX = 4;
+    public static final int SECOND_INDEX = 5;
+    public static final int OFFSET_HOURS_INDEX = 6;
+    public static final int REMOTE_ADDR_INDEX = 1;
+    public static final int REMOTE_USER_INDEX = 2;
+    public static final int TIME_LOCAL_INDEX = 3;
+    public static final int REQUEST_INDEX = 4;
+    public static final int STATUS_INDEX = 5;
+    public static final int BODY_BYTES_SENT_INDEX = 6;
+    public static final int HTTP_REFERER_INDEX = 7;
+    public static final int HTTP_USER_AGENT_INDEX = 8;
+    public static final int LOG_PARTS_COUNT = 15;
+    public static final int COUNT_OF_USER_AGENT_ROWS = 10;
+    public static final String HTTP_URL = "https://developer.mozilla.org/ru/docs/Web/HTTP/Status";
+    //Тут геттеры не для всего, потому что это же как бы константы, их можно и так подключать.
 
     public static String getYearMonthAndDate() {
         return YEAR_MONTH_AND_DATE;
@@ -67,6 +65,4 @@ public class UtilityClass {
     public static int getMultiplierForCodes() {
         return MULTIPLIER_FOR_CODES;
     }
-
-
 }

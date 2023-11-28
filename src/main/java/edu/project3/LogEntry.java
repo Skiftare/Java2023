@@ -79,6 +79,4 @@ public class LogEntry {
         return this.httpUserAgent;
     }
 
-
-
 }

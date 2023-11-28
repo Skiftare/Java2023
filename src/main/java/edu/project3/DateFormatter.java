@@ -8,17 +8,18 @@ import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 import static edu.project3.LogParser.stupidParse;
+import static edu.project3.utility.UtilityClass.HOUR_INDEX;
+import static edu.project3.utility.UtilityClass.MINUTE_INDEX;
+import static edu.project3.utility.UtilityClass.MONTH_INDEX;
+import static edu.project3.utility.UtilityClass.OFFSET_HOURS_INDEX;
+import static edu.project3.utility.UtilityClass.PART_OF_STRING_WITH_DAY;
+import static edu.project3.utility.UtilityClass.SECOND_INDEX;
+import static edu.project3.utility.UtilityClass.YEAR_INDEX;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class DateFormatter {
 
-    private static final int PART_OF_STRING_WITH_DAY = 0;
-    private static final int MONTH_INDEX = 1;
-    private static final int YEAR_INDEX = 2;
-    private static final int HOUR_INDEX = 3;
-    private static final int MINUTE_INDEX = 4;
-    private static final int SECOND_INDEX = 5;
-    private static final int OFFSET_HOURS_INDEX = 6;
+
 
     static Date convertForParsingArguments(String dateString) {
         SimpleDateFormat formatter = new SimpleDateFormat(UtilityClass.YEAR_MONTH_AND_DATE);

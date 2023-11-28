@@ -1,6 +1,5 @@
 package edu.project3;
 
-import edu.project3.utility.UtilityClass;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,31 +14,44 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class FileAndPathManager {
-    public static String makeFileName() {
+    private static String fileFormat = null;
+    private static final String FOLDER_FOR_OUTPUT = "src/main/resources/";
+    private static String fileName = null;
+
+    public static void setFileFormat(String newFileFormat) {
+        fileFormat = newFileFormat;
+    }
+
+    public static void setFileName(String newFileName) {
+        fileName = newFileName;
+    }
+
+    public static String getFileFormat() {
+        return fileFormat;
+    }
+
+    public static void makeFileName() {
         //IDE предлагала заменить StringBuilder на String.
         String baseName = DateFormatter.getCurrentDateAsString() + "_LogAnalyzer_output";
-        String fileName = baseName;
+        String variantOfName = baseName;
         int count = 1;
-        while (new File(UtilityClass.getFolderForOutput()
-            + fileName
-            + UtilityClass.getFileFormat())
+        while (new File(FOLDER_FOR_OUTPUT
+            + variantOfName
+            + fileFormat)
             .exists()) {
-            fileName = baseName + "_" + count;
+            variantOfName = baseName + "_" + count;
             count++;
         }
-        return fileName;
+        fileName = variantOfName;
+
     }
 
     public static void initFileForLogOutput() {
         //Does we always need to write in the same location, even re-write files?
         //I think not
-        UtilityClass.setPathToOutputFile(
-            UtilityClass.getFolderForOutput()
-                + UtilityClass.getFileName()
-                + UtilityClass.getFileFormat()
-        );
+
         try {
-            File file = new File(UtilityClass.getPathToOutputFile());
+            File file = new File(FOLDER_FOR_OUTPUT + fileName + fileFormat);
             if (file.exists()) {
                 try (FileWriter writer = new FileWriter(file)) {
                     writer.write("");
@@ -104,7 +116,11 @@ public class FileAndPathManager {
     }
 
     static void writeToFile(Table tables) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(UtilityClass.getPathToOutputFile(), true))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(
+            FOLDER_FOR_OUTPUT
+                + fileName
+                + fileFormat,
+            true))) {
             writer.write(tables.printAsString());
         } catch (IOException e) {
             ErrorLogger.createLogError("Ошибка при записи файла: " + e.getMessage());
