@@ -1,77 +1,51 @@
 package edu.hw8;
 
-import org.eclipse.jetty.util.thread.ThreadPool;
-import org.jetbrains.annotations.NotNull;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class FixedThreadPool implements ThreadPool {
-    private final int numThreads;
-    private ExecutorService executorService;
+    private final Thread[] threads;
+    private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
 
-    public FixedThreadPool(int numThreads) {
-        this.numThreads = numThreads;
-    }
-
-
-    public void start() {
-        executorService = Executors.newFixedThreadPool(numThreads);
-    }
-
-    @Override
-    public void execute(@NotNull Runnable runnable) {
-        executorService.execute(runnable);
-    }
-
-
-    public void close() {
-        executorService.shutdown();
-    }
-
-    /*public static void main(String[] args) {
-        FixedThreadPool threadPool = (FixedThreadPool) createFixedThreadPool(4);
-        threadPool.start();
-
-        for (int i = 0; i < 10; i++) {
-            int n = i;
-            threadPool.execute(() -> {
-                long fib = calculateFibonacci(n);
-                System.out.println("Fibonacci(" + n + ") = " + fib);
+    public FixedThreadPool(int threadCount) {
+        threads = new Thread[threadCount];
+        for (int i = 0; i < threadCount; i++) {
+            threads[i] = new Thread(() -> {
+                while (!Thread.currentThread().isInterrupted()) {
+                    Runnable task;
+                    try {
+                        task = tasks.take();
+                        task.run();
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
             });
         }
-
-        threadPool.close();
-    }*/
-
-    private static ThreadPool createFixedThreadPool(int numThreads) {
-        return new FixedThreadPool(numThreads);
     }
 
-    /*private static long calculateFibonacci(int n) {
-        if (n <= 1) {
-            return n;
-        } else {
-            return calculateFibonacci(n - 1) + calculateFibonacci(n - 2);
+    @Override
+    public void start() {
+        for (Thread thread : threads) {
+            thread.start();
         }
-    }(*/
-
-    @Override
-    public void join() throws InterruptedException {
-
     }
 
     @Override
-    public int getThreads() {
-        return 0;
+    public void execute(Runnable runnable) {
+        try {
+            tasks.put(runnable);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     @Override
-    public int getIdleThreads() {
-        return 0;
-    }
-
-    @Override
-    public boolean isLowOnThreads() {
-        return false;
+    public void close() throws Exception {
+        for (Thread thread : threads) {
+            thread.interrupt();
+        }
     }
 }
+
+

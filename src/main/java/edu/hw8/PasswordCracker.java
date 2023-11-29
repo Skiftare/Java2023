@@ -28,6 +28,7 @@ public class PasswordCracker {
     public static void main(String[] args) {
         PasswordCracker passwordCracker = new PasswordCracker();
         passwordCracker.crackPasswords();
+
     }
 
     public void crackPasswords() {
@@ -46,8 +47,9 @@ public class PasswordCracker {
         }
     }
 
-    private class PasswordCrackerThread extends Thread {
+    private static class PasswordCrackerThread extends Thread {
         private final int threadId;
+        private final String PATH_TO_OUTPUT_FILE = "src/main/resources/hw8/mostFrequentPasswords.txt";
 
         public PasswordCrackerThread(int threadId) {
             this.threadId = threadId;
@@ -72,11 +74,11 @@ public class PasswordCracker {
                 MessageDigest md = MessageDigest.getInstance("MD5");
                 byte[] messageDigest = md.digest(input.getBytes());
                 BigInteger no = new BigInteger(1, messageDigest);
-                String hashText = no.toString(16);
+                StringBuilder hashText = new StringBuilder(no.toString(16));
                 while (hashText.length() < 32) {
-                    hashText = "0" + hashText;
+                    hashText.insert(0, "0");
                 }
-                return hashText;
+                return hashText.toString();
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -85,23 +87,16 @@ public class PasswordCracker {
         private String decodePassword(String hashedPassword) {
             try {
                 System.out.println(hashedPassword);
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                byte[] hashBytes = md.digest(hashedPassword.getBytes());
+                MessageDigest.getInstance("MD5");
 
                 // Compare the hash with the most frequent passwords
-                File file = new File("src/main/resources/hw8/mostFrequentPasswords.txt");
+                File file = new File(PATH_TO_OUTPUT_FILE);
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     line = line.trim();
-                    //String hashedPasswordFromFile = line.trim();
-                    if(line.equals("qwerty")){
-                        System.out.println(calculateMD5(line));
-                    }
-                    //System.out.println(hashedPasswordFromFile);
-                    //byte[] hashBytesFromFile = md.digest(hashedPasswordFromFile.getBytes());
+
                     if (Objects.equals(calculateMD5(line), hashedPassword)) {
-                        System.out.println(line);
                         return line;
                     }
                 }
@@ -114,7 +109,7 @@ public class PasswordCracker {
 
         private synchronized void writeOutputToFile(String output) {
             try {
-                FileWriter writer = new FileWriter("decodedPasswords.txt", true);
+                FileWriter writer = new FileWriter("src/main/java/edu/hw8/decodedPasswords.txt", true);
                 System.out.println(output);
                 writer.write(output + "\n");
                 writer.close();
