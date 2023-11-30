@@ -7,6 +7,10 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class PasswordCrackerTest {
 
@@ -22,7 +26,7 @@ public class PasswordCrackerTest {
         passwordsTestData.add("a.s.ivanov 482c811da5d5b4bc6d497ffa98491e38");
         passwordsTestData.add("k.p.maslov 5f4dcc3b5aa765d61d8327deb882cf99");
 
-        String outputPath = "src/main/java/edu/hw8/decodedPasswords.txt";
+        String outputPath = "src/main/java/edu/hw8/output/decodedPasswords.txt";
 
         //when: we crack it with our class
         PasswordCracker passwordCracker = new PasswordCracker();
@@ -38,10 +42,18 @@ public class PasswordCrackerTest {
         reader.close();
 
         // Assert the contents of the output file
-        Assertions.assertThat(output.toString())
-            .contains("a.v.petrov: 123456")
-            .contains("v.v.belov: password")
-            .contains("a.s.ivanov: qwerty")
-            .contains("k.p.maslov: password123");
+
+        Map<String, String> expectedValues = new HashMap<>();
+        expectedValues.put("a.v.petrov", "123456");
+        expectedValues.put("v.v.belov", "qwerty");
+        expectedValues.put("a.s.ivanov", "password123");
+        expectedValues.put("k.p.maslov", "password");
+
+        Map<String, String> actualValues = Arrays.stream(output.toString().split("\n"))
+            .map(inputLine -> inputLine.split(":"))
+            .filter(parts -> parts.length == 2)
+            .collect(Collectors.toMap(parts -> parts[0].trim(), parts -> parts[1].trim()));
+
+        Assertions.assertThat(actualValues).containsExactlyInAnyOrderEntriesOf(expectedValues);
     }
 }
