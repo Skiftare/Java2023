@@ -5,36 +5,26 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.io.*;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 
 public class PasswordCracker {
-    private static final String[] PASSWORDS = {
-        "a.v.petrov e10adc3949ba59abbe56e057f20f883e",
-        "v.v.belov d8578edf8458ce06fbc5bb76a58c5ca4",
-        "a.s.ivanov 482c811da5d5b4bc6d497ffa98491e38",
-        "k.p.maslov 5f4dcc3b5aa765d61d8327deb882cf99"
-    };
+
 
     private static final int NUM_THREADS = 4;
+    private static final String PATH_TO_RESOURCES_FILE = "src/main/resources/hw8/mostFrequentPasswords.txt";
+    private static final String PATH_TO_OUTPUT_FOLDER = "src/main/java/edu/hw8/output";
 
-    public static void main(String[] args) {
-        PasswordCracker passwordCracker = new PasswordCracker();
-        passwordCracker.crackPasswords();
 
-    }
 
-    public void crackPasswords() {
+
+    public void crackPasswords(ArrayList<String> incomeBaseWithHashedPasswords) {
+        cleanOutputFile();
         PasswordCrackerThread[] threads = new PasswordCrackerThread[NUM_THREADS];
+
         for (int i = 0; i < NUM_THREADS; i++) {
-            threads[i] = new PasswordCrackerThread(i);
+            threads[i] = new PasswordCrackerThread(i, incomeBaseWithHashedPasswords);
             threads[i].start();
         }
 
@@ -46,19 +36,31 @@ public class PasswordCracker {
             }
         }
     }
+    private static void cleanOutputFile() {
+        try(FileWriter writer = new FileWriter(PATH_TO_OUTPUT_FOLDER+"/decodedPasswords.txt");){
+            writer.write("");
+        } catch (IOException e){
+            ErrorLogger.createLogError(e.getMessage());
+        }
+
+    }
 
     private static class PasswordCrackerThread extends Thread {
         private final int threadId;
-        private final String PATH_TO_OUTPUT_FILE = "src/main/resources/hw8/mostFrequentPasswords.txt";
+        private final ArrayList<String> incomeBaseWithHashedPasswords;
 
-        public PasswordCrackerThread(int threadId) {
+
+        public PasswordCrackerThread(int threadId, ArrayList<String> incomeBaseWithHashedPasswords1
+        ) {
             this.threadId = threadId;
+
+            this.incomeBaseWithHashedPasswords = incomeBaseWithHashedPasswords1;
         }
 
         @Override
         public void run() {
-            for (int i = threadId; i < PASSWORDS.length; i += NUM_THREADS) {
-                String[] parts = PASSWORDS[i].split(" ");
+            for (int i = threadId; i < incomeBaseWithHashedPasswords.size(); i += NUM_THREADS) {
+                String[] parts = incomeBaseWithHashedPasswords.get(i).split(" ");
                 String username = parts[0];
                 String hashedPassword = parts[1];
 
@@ -86,11 +88,10 @@ public class PasswordCracker {
         }
         private String decodePassword(String hashedPassword) {
             try {
-                System.out.println(hashedPassword);
                 MessageDigest.getInstance("MD5");
 
                 // Compare the hash with the most frequent passwords
-                File file = new File(PATH_TO_OUTPUT_FILE);
+                File file = new File(PATH_TO_RESOURCES_FILE);
                 BufferedReader reader = new BufferedReader(new FileReader(file));
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -109,8 +110,7 @@ public class PasswordCracker {
 
         private synchronized void writeOutputToFile(String output) {
             try {
-                FileWriter writer = new FileWriter("src/main/java/edu/hw8/decodedPasswords.txt", true);
-                System.out.println(output);
+                FileWriter writer = new FileWriter(PATH_TO_OUTPUT_FOLDER+"/decodedPasswords.txt", true);
                 writer.write(output + "\n");
                 writer.close();
             } catch (IOException e) {
