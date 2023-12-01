@@ -57,7 +57,7 @@ public class PasswordCrackerTest {
     }
 
     @Test
-    public void testThatGetRanomNotCodedByMD5PasswordsAndReturnedWarningMessage() throws IOException {
+    public void testThatGetRandomNotCodedByMD5PasswordsAndReturnedWarningMessage() throws IOException {
         //given: base with very strange, not MD5-hash passwords
         ArrayList<String> passwordsTestData = new ArrayList<>();
         passwordsTestData.add("a.v.petrov 89593546896354689354");

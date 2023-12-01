@@ -17,10 +17,13 @@ public class PasswordCracker {
     private static final int NUM_THREADS = 4;
     private static final String PATH_TO_RESOURCES_FILE = "src/main/resources/hw8/mostFrequentPasswords.txt";
     private static final String PATH_TO_OUTPUT_FILE = "src/main/java/edu/hw8/output/decodedPasswords.txt";
+    private static final String PATH_TO_GENERATED_FILE = "src/main/resources/hw8/generatedPasswords.txt";
     private static final String EMPTY_STRING = "";
 
     public void crackPasswords(ArrayList<String> incomeBaseWithHashedPasswords) {
         cleanOutputFile();
+        PasswordGenerator passGen = new PasswordGenerator();
+        passGen.run();
         PasswordCrackerThread[] threads = new PasswordCrackerThread[NUM_THREADS];
 
         for (int i = 0; i < NUM_THREADS; i++) {
@@ -97,6 +100,22 @@ public class PasswordCracker {
             return null;
         }
 
+        private String isFoundAnyEqual(String path, String hashedPassword) throws IOException {
+            File file = new File(path);
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                line = line.trim();
+
+                if (Objects.equals(calculateMD5(line), hashedPassword)) {
+                    return line;
+                }
+            }
+            return TOO_STRONG_PASSWORD;
+
+        }
+
         private String decodePassword(String hashedPassword) {
 
             if (!Pattern.matches(PATTERN_CHECKER_FOR_MD5, hashedPassword)) {
@@ -107,23 +126,18 @@ public class PasswordCracker {
                 MessageDigest.getInstance(ALGO_NAME);
 
                 // Compare the hash with the most frequent passwords
-                File file = new File(PATH_TO_RESOURCES_FILE);
-                BufferedReader reader = new BufferedReader(new FileReader(file));
-                String line;
 
-                while ((line = reader.readLine()) != null) {
-                    line = line.trim();
-
-                    if (Objects.equals(calculateMD5(line), hashedPassword)) {
-                        return line;
-                    }
+                String res = isFoundAnyEqual(PATH_TO_RESOURCES_FILE, hashedPassword);
+                if (Objects.equals(res, TOO_STRONG_PASSWORD)) {
+                    res = isFoundAnyEqual(PATH_TO_GENERATED_FILE, hashedPassword);
                 }
-                reader.close();
+                return res;
             } catch (NoSuchAlgorithmException | IOException e) {
                 ErrorLogger.createLogError(e.getMessage());
             }
             return TOO_STRONG_PASSWORD;
         }
+
 
         private synchronized void writeOutputToFile(String output) {
             try {

@@ -20,7 +20,6 @@ public class Server {
         this.serverPort = port;
         this.quotes = new HashMap<>();
         quotes.put("личности", "Не переходи на личности там, где их нет");
-        //TODO:добавить ещё.
     }
 
     public void startServer() throws IOException {
