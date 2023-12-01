@@ -12,6 +12,7 @@ public class PasswordGenerator {
     private static final int MAX_LENGTH = 4;
     private static final String PATH_TO_OUTPUT_FILE = "src/main/resources/hw8/generatedPasswords.txt";
     private static final String EMPTY_STRING = "";
+    private static final String ENDL_STR = "\n";
 
     public static void run() {
         cleanOutputFile();
@@ -54,7 +55,7 @@ public class PasswordGenerator {
 
     public static synchronized void writePasswordToFile(String password) {
         try (FileWriter writer = new FileWriter(PATH_TO_OUTPUT_FILE, true)) {
-            writer.write(password + "\n");
+            writer.write(password + ENDL_STR);
         } catch (IOException e) {
             ErrorLogger.createLogError(e.getMessage());
         }

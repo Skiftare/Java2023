@@ -22,8 +22,7 @@ public class PasswordCracker {
 
     public void crackPasswords(ArrayList<String> incomeBaseWithHashedPasswords) {
         cleanOutputFile();
-        PasswordGenerator passGen = new PasswordGenerator();
-        passGen.run();
+        PasswordGenerator.run();
         PasswordCrackerThread[] threads = new PasswordCrackerThread[NUM_THREADS];
 
         for (int i = 0; i < NUM_THREADS; i++) {
