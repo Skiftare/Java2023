@@ -1,15 +1,22 @@
 package edu.hw8;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.Map;
+import java.util.Objects;
 
 class WorkerThread implements Runnable {
 
     private Socket clientSocket = null;
     private Map<String, String> quotes;
+    private static final String DEFAULT_PHRASE =
+        "Хм. Не хочу тебя унижать дальше, так что оставлю твою чушь без ответа";
 
-    public WorkerThread(Socket clientSocket, Map<String, String> quotes) {
+    WorkerThread(Socket clientSocket, Map<String, String> quotes) {
         this.clientSocket = clientSocket;
         this.quotes = quotes;
     }
@@ -20,11 +27,7 @@ class WorkerThread implements Runnable {
              BufferedReader reader = new BufferedReader(new InputStreamReader(input))) {
             String keyword = reader.readLine();
             String quote = quotes.get(keyword);
-            if (quote != null) {
-                output.write(quote.getBytes());
-            } else {
-                output.write("Нет цитаты для данного ключевого слова".getBytes());
-            }
+            output.write(Objects.requireNonNullElse(quote, DEFAULT_PHRASE).getBytes());
         } catch (IOException e) {
             throw new RuntimeException("Ошибка обработки запроса", e);
         }

@@ -15,7 +15,7 @@ public class ErrorLogger {
         StackTraceElement element = stackTraceElements[2];
         String logBuilder = element.getClassName() + "->"
             + element.getMethodName()
-            +"| "
+            + "| "
             + error;
         LOGGER.info(logBuilder);
 
