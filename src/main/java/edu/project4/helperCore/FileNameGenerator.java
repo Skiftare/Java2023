@@ -1,4 +1,4 @@
-package edu.project4.core;
+package edu.project4.helperCore;
 
 public class FileNameGenerator {
 }

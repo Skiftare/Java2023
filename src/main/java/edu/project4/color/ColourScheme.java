@@ -1,4 +1,4 @@
 package edu.project4.color;
 
-public class ColorScheme {
+public class ColourScheme {
 }
