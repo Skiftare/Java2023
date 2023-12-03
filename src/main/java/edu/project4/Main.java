@@ -19,7 +19,7 @@ public class Main {
         FileAndPathManager.setFileFormat(incomeArguments.getFormat().toString());
         FileAndPathManager.initFileForFlameOutput();
 
-        display = flameGen.generate();
+        display = flameGen.generate(display);
 
     }
 

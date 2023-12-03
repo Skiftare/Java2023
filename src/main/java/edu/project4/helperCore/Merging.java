@@ -1,7 +1,6 @@
 package edu.project4.helperCore;
 
 import edu.project4.color.Color;
-import edu.project4.color.Colour;
 import edu.project4.geometry.Point;
 
 public class Merging {

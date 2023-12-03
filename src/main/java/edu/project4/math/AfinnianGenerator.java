@@ -1,6 +1,6 @@
 package edu.project4.math;
 
-import edu.project4.color.Colour;
+
 import edu.project4.helperCore.ErrorLogger;
 import java.awt.Color;
 import java.security.NoSuchAlgorithmException;
@@ -17,7 +17,7 @@ public class AfinnianGenerator {
     private static final Integer CNT_OF_COEFF = 6;
 
     private double generateRandomCoefficient(){
-        double coeffAbs = abs(rand.nextDouble() * (MAX_COEF_VALUE - MIN_COEF_VALUE) + MIN_COEF_VALUE;
+        double coeffAbs = abs(rand.nextDouble()) * (MAX_COEF_VALUE - MIN_COEF_VALUE) + MIN_COEF_VALUE;
         int sign = (rand.nextBoolean()?1:-1);
         return  coeffAbs*sign;
     }

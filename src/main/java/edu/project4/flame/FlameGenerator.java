@@ -1,6 +1,6 @@
 package edu.project4.flame;
 
-import edu.hw2.Rectangle;
+import edu.project4.geometry.Rectangle;
 import edu.project4.math.AfinnianGenerator;
 import edu.project4.math.AfinnianTrasformations;
 import java.util.ArrayList;
