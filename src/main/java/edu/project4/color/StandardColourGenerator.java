@@ -5,10 +5,10 @@ public class StandardColourGenerator {
     public Colour getBlackColour(){
         return new Colour(0,0,0);
     }
-    public Colour getWhiteColour(){
+    public static Colour getWhiteColour(){
         return new Colour(1,1,1);
     }
-    public Colour getRedColour(){
+    public static Colour getRedColour(){
         return new Colour(1,0,0);
     }
 
@@ -16,19 +16,19 @@ public class StandardColourGenerator {
         return new Colour(1,0.5,0);
     }
 
-    public Colour getYellowColour(){
+    public static Colour getYellowColour(){
         return new Colour(1,1,0);
     }
 
-    public Colour getGreenColour(){
+    public static Colour getGreenColour(){
         return new Colour(0,1,0);
     }
 
-    public Colour getBlueColour(){
+    public static Colour getBlueColour(){
         return new Colour(0,0,1);
     }
 
-    public Colour getIndigoColour(){
+    public static Colour getIndigoColour(){
         return new Colour(0.29,0,0.51);
     }
 

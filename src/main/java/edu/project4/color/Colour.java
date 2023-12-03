@@ -3,9 +3,9 @@ package edu.project4.color;
 public class Colour {
     private static final int COLOR_MAX_VAL = 255;
 
-    private static final double     SRGB_C_LINEAR_THRESHOLD = 0.0031308;
-    private static final double    SRGB_PHI = 12.92;
-    private static final double    SRGB_EXPONENT = 2.4;
+    private static final double SRGB_C_LINEAR_THRESHOLD = 0.0031308;
+    private static final double SRGB_PHI = 12.92;
+    private static final double SRGB_EXPONENT = 2.4;
 
     private final double red, green, blue;
 
