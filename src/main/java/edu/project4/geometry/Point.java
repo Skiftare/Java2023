@@ -1,13 +1,14 @@
 package edu.project4.geometry;
 
-import edu.project4.color.Colour;
+import edu.project4.color.Color;
+
 public class Point {
-    private final Colour col;
+    private final Color col;
     private final int hits;
     private final int x;
     private final int y;
 
-    public Point(Colour col, double x, double y, int hits) {
+    public Point(Color col, double x, double y, int hits) {
         this.col = col;
         this.x = (int) Math.round(x);
         this.y = (int) Math.round(y);
@@ -22,7 +23,7 @@ public class Point {
     public int getY(){
         return y;
     }
-    public Colour getColour(){
+    public Color getColour(){
         return col;
     }
     public int getHits(){

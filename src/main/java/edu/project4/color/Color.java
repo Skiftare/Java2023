@@ -1,6 +1,6 @@
 package edu.project4.color;
 
-public class Colour {
+public class Color {
     private static final int COLOR_MAX_VAL = 255;
 
     private static final double SRGB_C_LINEAR_THRESHOLD = 0.0031308;
@@ -21,7 +21,7 @@ public class Colour {
         return true;
     }
 
-    public Colour(final double r, final double g, final double b) {
+    public Color(final double r, final double g, final double b) {
         if (!checkForCorrectIncomeParameters(r,g,b)) {
             throw new IllegalArgumentException(
                 "The parameters must be in [0, 1]"

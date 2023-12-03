@@ -1,5 +1,6 @@
 package edu.project4.helperCore;
 
+import edu.project4.color.Color;
 import edu.project4.color.Colour;
 import edu.project4.geometry.Point;
 
@@ -14,8 +15,8 @@ public class Merging {
         }
         return p1;
     }
-    public static Colour mergeColours(Colour c1, Colour c2){
-        Colour result = new Colour(getMedianValue(c1.getRedComponent(), c2.getRedComponent()),
+    public static Color mergeColours(Color c1, Color c2){
+        Color result = new Color(getMedianValue(c1.getRedComponent(), c2.getRedComponent()),
             getMedianValue(c1.getGreenComponent(), c2.getGreenComponent()),
             getMedianValue(c1.getBlueComponent(),c2.getBlueComponent()));
         return result;

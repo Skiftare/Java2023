@@ -9,7 +9,7 @@ public class ErrorLogger {
     private final static Logger LOGGER = LogManager.getLogger();
     private final static String SEPARATOR = " -> ";
 
-    static void createLogError(String error) {
+    public static void createLogError(String error) {
 
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 
