@@ -1,5 +1,5 @@
 Benchmark                         Mode  Cnt  Score   Error  Units
-ReflectionBenchmark.directAccess  avgt   10  0,839 ± 0,008  ns/op
-ReflectionBenchmark.metaFactory   avgt   10  4,274 ± 0,037  ns/op
-ReflectionBenchmark.methodHandle  avgt   10  4,425 ± 0,103  ns/op
-ReflectionBenchmark.reflection    avgt   10  9,089 ± 0,122  ns/op
+ReflectionBenchmark.directAccess  avgt    8  0,770 ± 0,017  ns/op
+ReflectionBenchmark.metaFactory   avgt    8  4,012 ± 0,017  ns/op
+ReflectionBenchmark.methodHandle  avgt    8  4,108 ± 0,087  ns/op
+ReflectionBenchmark.reflection    avgt    8  8,485 ± 0,249  ns/op

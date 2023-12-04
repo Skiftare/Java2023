@@ -33,12 +33,12 @@ public class ReflectionBenchmark {
             .shouldDoGC(true)
             .mode(Mode.AverageTime)
             .timeUnit(TimeUnit.NANOSECONDS)
-            .forks(5)
-            .warmupForks(5)
-            .warmupIterations(32)
-            .warmupTime(TimeValue.seconds(64))
-            .measurementIterations(32)
-            .measurementTime(TimeValue.seconds(64))
+            .forks(1)
+            .warmupForks(1)
+            .warmupIterations(1)
+            .warmupTime(TimeValue.seconds(1))
+            .measurementIterations(1)
+            .measurementTime(TimeValue.seconds(1))
             .threads(12)
             .build();
 
