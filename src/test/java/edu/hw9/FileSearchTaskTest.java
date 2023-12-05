@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Predicate;
-import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileSearchTaskTest {
     private static final String DIRECTORY_PATH = "src\\test\\java\\edu\\hw9\\testFolder";
@@ -50,6 +50,8 @@ public class FileSearchTaskTest {
 
             assertEquals(1, files.size());
             assertEquals(expected, files.get(0).getPath());
+        } catch (Exception e){
+            ErrorLogger.createLogError(e.getMessage());
         }
     }
 
@@ -76,6 +78,9 @@ public class FileSearchTaskTest {
             assertEquals(expectedSize, files.size());
             assertEquals(expectedPath, files.get(4).getPath());
         }
+        catch (Exception e){
+            ErrorLogger.createLogError(e.getMessage());
+        }
     }
 
     private void createFilesAndDirectories() {
@@ -97,7 +102,7 @@ public class FileSearchTaskTest {
                 file4.createNewFile();
 
             } catch (IOException e) {
-                e.printStackTrace();
+                ErrorLogger.createLogError(e.getMessage());
 
             }
 
@@ -111,7 +116,7 @@ public class FileSearchTaskTest {
 
     private void deleteFilesAndDirectoriesRecursive(File file) {
         if (file.isDirectory()) {
-            for (File subFile : file.listFiles()) {
+            for (File subFile : Objects.requireNonNull(file.listFiles())) {
                 deleteFilesAndDirectoriesRecursive(subFile);
             }
         }

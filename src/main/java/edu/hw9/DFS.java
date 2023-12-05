@@ -9,8 +9,8 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
 class DFS {
-    private Map<Integer, Boolean> result;
-    private ForkJoinPool forkJoinPool;
+    private final Map<Integer, Boolean> result;
+    private final ForkJoinPool forkJoinPool;
     private final Node startNode;
 
     DFS(Node[] nodes, int startNodeId) {

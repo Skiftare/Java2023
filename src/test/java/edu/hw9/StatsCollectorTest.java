@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.within;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StatsCollectorTest {
@@ -20,9 +21,7 @@ public class StatsCollectorTest {
         ExecutorService executorService = Executors.newFixedThreadPool(4);
 
         //when: we run stat count
-        executorService.submit(() -> {
-            collector.push("metric_name", new double[]{0.1, 0.05, 1.4, 5.1, 0.3});
-        });
+        executorService.submit(() -> collector.push("metric_name", new double[]{0.1, 0.05, 1.4, 5.1, 0.3}));
 
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.SECONDS);
@@ -60,7 +59,7 @@ public class StatsCollectorTest {
         executorService.awaitTermination(10, TimeUnit.SECONDS);
 
         // then: check if data is collected correctly (no de-sync)
-        assertTrue(statsCollector.stats().size() == 1); // Only one metric is collected
+        assertEquals(1, statsCollector.stats().size()); // Only one metric is collected
 
         // when: Execute push() in single threads
         long startTimeSingleThread = System.currentTimeMillis();

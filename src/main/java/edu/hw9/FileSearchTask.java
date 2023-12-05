@@ -28,14 +28,14 @@ public class FileSearchTask extends RecursiveTask<List<File>> {
             if (files != null) {
                 for (File file : files) {
                     if (file.isDirectory() && searchDirectories) {
-                        FileSearchTask subTask = new FileSearchTask(file, predicate, searchDirectories);
+                        FileSearchTask subTask = new FileSearchTask(file, predicate, true);
                         subTasks.add(subTask);
                         subTask.fork();
 
                     } else if (file.isDirectory()) {
 
                         FileSearchTask subTask =
-                            new FileSearchTask(file, predicate, searchDirectories);
+                            new FileSearchTask(file, predicate, false);
                         subTasks.add(subTask);
                         subTask.fork();
 

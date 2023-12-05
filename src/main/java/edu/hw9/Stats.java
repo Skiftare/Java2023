@@ -1,11 +1,11 @@
 package edu.hw9;
 
 public class Stats {
-    private String metricName;
-    private double sum;
-    private double average;
-    private double min;
-    private double max;
+    private final String metricName;
+    private final double sum;
+    private final double average;
+    private final double min;
+    private final double max;
 
     public Stats(String metricName, double sum, double average, double min, double max) {
         this.metricName = metricName;

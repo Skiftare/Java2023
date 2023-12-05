@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Node {
-    private int id;
+    private final int id;
     private boolean visited;
-    private List<Node> neighbors;
+    private final List<Node> neighbors;
 
     Node(int id) {
         this.id = id;
@@ -16,10 +16,6 @@ class Node {
 
     public int getId() {
         return id;
-    }
-
-    public boolean isVisited() {
-        return visited;
     }
 
     public void setVisited(boolean visited) {
