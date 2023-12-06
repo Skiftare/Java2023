@@ -1,4 +1,4 @@
-package edu.project4;
+package edu.project4.components;
 
 public record Rect(double x, double y, double width, double height) {
     public boolean contains(Point p) {

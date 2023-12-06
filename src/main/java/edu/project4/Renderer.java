@@ -1,17 +1,16 @@
 package edu.project4;
 
-import java.util.List;
-import static java.lang.Math.random;
-
 public interface Renderer {
 }
+/*
 public class OneThreadRender implements Renderer{
 
     FractalImage render(FractalImage canvas, Rect world,
         List<Transformation> variations,
         int samples,
         short iterPerSample,
-        long seed) {
+        long seed
+    ) {
 
         for (int num = 0; num < samples; ++num) {
             Point pw = random(world);
@@ -35,4 +34,8 @@ public class OneThreadRender implements Renderer{
             }
         }
     }
-}
+
+    private Point random(Rect world){
+
+    }
+}*/
