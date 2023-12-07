@@ -1,4 +1,4 @@
-package edu.hw9;
+package edu.hw9.task1;
 
 public class Stats {
     private final String metricName;

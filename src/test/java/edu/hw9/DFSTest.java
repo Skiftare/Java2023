@@ -1,6 +1,8 @@
 package edu.hw9;
 
 import java.util.Map;
+import edu.hw9.task3.DFS;
+import edu.hw9.task3.Node;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

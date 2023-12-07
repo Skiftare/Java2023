@@ -1,4 +1,4 @@
-package edu.hw9;
+package edu.hw9.task1;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-class StatsCollector {
+public class StatsCollector {
     private final Map<String, List<Double>> data;
     private final ReadWriteLock lock;
 
-    StatsCollector() {
+    public StatsCollector() {
         this.data = new HashMap<>();
         this.lock = new ReentrantReadWriteLock();
     }

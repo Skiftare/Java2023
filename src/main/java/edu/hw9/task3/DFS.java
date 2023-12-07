@@ -1,4 +1,4 @@
-package edu.hw9;
+package edu.hw9.task3;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,12 +8,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
-class DFS {
+public class DFS {
     private final Map<Integer, Boolean> result;
     private final ForkJoinPool forkJoinPool;
     private final Node startNode;
 
-    DFS(Node[] nodes, int startNodeId) {
+    public DFS(Node[] nodes, int startNodeId) {
         this.result = new ConcurrentHashMap<>();
         this.forkJoinPool = new ForkJoinPool();
         this.startNode = Arrays.stream(nodes).filter(node -> node.getId() == startNodeId).findFirst().orElse(null);
@@ -36,7 +36,7 @@ class DFS {
     }
 
     private class DFSTask extends RecursiveAction {
-        private Node currentNode;
+        private final Node currentNode;
 
         DFSTask(Node currentNode) {
             this.currentNode = currentNode;

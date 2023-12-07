@@ -1,14 +1,14 @@
-package edu.hw9;
+package edu.hw9.task3;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class Node {
+public class Node {
     private final int id;
-    private boolean visited;
     private final List<Node> neighbors;
+    private boolean visited;
 
-    Node(int id) {
+    public Node(int id) {
         this.id = id;
         this.visited = false;
         this.neighbors = new ArrayList<>();

@@ -1,4 +1,4 @@
-package edu.hw9;
+package edu.hw9.task2;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,7 +40,6 @@ public class FileSearchTask extends RecursiveTask<List<File>> {
                         subTask.fork();
 
                     }
-
 
                     if (predicate.test(file)) {
                         foundFiles.add(file);
