@@ -31,6 +31,7 @@ public class Server {
             threadPool.execute(new WorkerThread(socket, quotes));
         }
     }
+
     public void stopServer() throws IOException {
         isRunning = false;
         serverSocket.close();
