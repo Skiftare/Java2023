@@ -58,7 +58,7 @@ public class StatsCollectorTest {
             executorService.execute(() -> statsCollector.push("metric", values));
         }
         executorService.shutdown();
-        executorService.awaitTermination(10, TimeUnit.SECONDS);
+        executorService.awaitTermination(1, TimeUnit.SECONDS);
 
         // then: check if data is collected correctly (no de-sync)
         assertEquals(1, statsCollector.stats().size()); // Only one metric is collected
@@ -77,7 +77,7 @@ public class StatsCollectorTest {
             executorService.execute(() -> statsCollector.push("metric", values));
         }
         executorService.shutdown();
-        executorService.awaitTermination(10, TimeUnit.SECONDS);
+        executorService.awaitTermination(1, TimeUnit.SECONDS);
         long endTimeMultiThread = System.currentTimeMillis();
 
         //then: multi thread is faster
