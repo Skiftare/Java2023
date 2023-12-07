@@ -86,11 +86,9 @@ public class PasswordCrackerThread extends Thread {
     }
 
     private String decodePassword(String hashedPassword) {
-
         if (!Pattern.matches(PATTERN_CHECKER_FOR_MD5, hashedPassword)) {
             return NOT_A_HASH_MESSAGE;
         }
-
         try {
             MessageDigest.getInstance(ALGO_NAME);
 
