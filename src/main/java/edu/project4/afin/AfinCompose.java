@@ -26,7 +26,7 @@ public class AfinCompose {
         return result;
     }
     public AfinTransformation getRandomAfin(){
-        int randomNumber = random.nextInt(n + 1);
+        int randomNumber = random.nextInt(n);
         return afinMas.get(randomNumber);
     }
 

@@ -4,7 +4,7 @@ import edu.project4.afin.AfinCompose;
 import edu.project4.afin.AfinTransformation;
 import edu.project4.components.Pixel;
 import edu.project4.components.Point;
-import edu.project4.nonlinear.SinusoidalTransformation;
+import edu.project4.nonlinear.DiskTransformation;
 import java.awt.Color;
 import java.security.SecureRandom;
 
@@ -26,20 +26,26 @@ public class OneThreadRender implements Renderer {
         Color blendedColor = new Color(newRed, newGreen, newBlue);
         return blendedColor;
     }
+    private Point normalizePoint(Point p, int width, int height){
+        double x = (p.x() * (float) width);
+        double y = (p.y()) * (float) height;
+        return new Point(x,y);
+
+    }
 
     public FractalImage makeImage() {
         FractalImage image = FractalImage.create(1920, 1080);
         int countOfAffinityTransformations = 5;
-        int countOfPoints = (int) 1e5;
+        int countOfPoints = (int) 1e7;
         AfinCompose compositionOfAffinity = new AfinCompose(countOfAffinityTransformations);
 
-        double XMIN = -1.777;
-        double XMAX = 1.777;
+        double XMIN = -1;
+        double XMAX = 1;
         double YMIN = -1;
         double YMAX = 1;
 
         SecureRandom random = new SecureRandom();
-        SinusoidalTransformation sin = new SinusoidalTransformation();
+        Transformation sin = new DiskTransformation();
 
         double newX = XMIN + (XMAX - XMIN) * random.nextDouble();
         double newY = YMIN + (YMAX - YMIN) * random.nextDouble();
@@ -49,8 +55,12 @@ public class OneThreadRender implements Renderer {
             Point pp = sin.apply(p);
             newX = pp.x();
             newY = pp.y();
+            pp = normalizePoint(pp, image.width(),image.height());
+            newX = pp.x();
+            newY = pp.y();
 
             if (step >= 0) {
+
                 int xCoord = (int) Math.round(newX);
                 int yCoord = (int) Math.round(newY);
 
@@ -62,7 +72,7 @@ public class OneThreadRender implements Renderer {
                         );
                     } else {
                         image.setPixel(xCoord, yCoord,
-                            new Pixel(afin.getColor(), curr.hitCount()+1));
+                            new Pixel(mixColors(afin.getColor(),curr.col()), curr.hitCount()+1));
                     }
                 }
 
