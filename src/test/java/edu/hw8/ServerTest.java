@@ -1,5 +1,6 @@
 package edu.hw8;
 
+import edu.hw8.task1.Server;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
@@ -42,6 +43,7 @@ public class ServerTest {
             //then: we get phrase
             assertThat(response).isEqualTo(expected);
 
+            server.stopServer();
             out.close();
         }
 
@@ -74,6 +76,7 @@ public class ServerTest {
         //then: we get phrase
         assertThat(response).isEqualTo(expected);
 
+        server.stopServer();
         out.close();
     }
 
@@ -106,6 +109,7 @@ public class ServerTest {
         //then: we get phrase
         assertThat(response).isEqualTo(expected);
 
+        server.stopServer();
         out.close();
     }
 }

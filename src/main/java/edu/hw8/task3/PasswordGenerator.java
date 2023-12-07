@@ -1,5 +1,6 @@
-package edu.hw8;
+package edu.hw8.task3;
 
+import edu.hw8.ErrorLogger;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;

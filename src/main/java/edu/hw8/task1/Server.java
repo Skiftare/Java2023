@@ -1,4 +1,4 @@
-package edu.hw8;
+package edu.hw8.task1;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,11 +10,12 @@ import java.util.concurrent.Executors;
 
 public class Server {
 
-    private int serverPort;
-    private ServerSocket serverSocket = null;
     private static final int NUMBER_OF_THREADS = 10;
-    private ExecutorService threadPool = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    private Map<String, String> quotes;
+    private final int serverPort;
+    private ServerSocket serverSocket = null;
+    private final ExecutorService threadPool = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    private final Map<String, String> quotes;
+    private boolean isRunning = true;
 
     public Server(int port) {
         this.serverPort = port;
@@ -24,10 +25,15 @@ public class Server {
 
     public void startServer() throws IOException {
         serverSocket = new ServerSocket(serverPort);
-        while (true) {
+        isRunning = true;
+        while (isRunning) {
             Socket socket = serverSocket.accept();
             threadPool.execute(new WorkerThread(socket, quotes));
         }
+    }
+    public void stopServer() throws IOException {
+        isRunning = false;
+        serverSocket.close();
     }
 }
 

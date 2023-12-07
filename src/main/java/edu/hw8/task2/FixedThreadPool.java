@@ -1,4 +1,4 @@
-package edu.hw8;
+package edu.hw8.task2;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

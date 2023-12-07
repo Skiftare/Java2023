@@ -1,4 +1,4 @@
-package edu.hw8;
+package edu.hw8.task1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,12 +9,12 @@ import java.net.Socket;
 import java.util.Map;
 import java.util.Objects;
 
-class WorkerThread implements Runnable {
+public class WorkerThread implements Runnable {
 
-    private Socket clientSocket = null;
-    private Map<String, String> quotes;
     private static final String DEFAULT_PHRASE =
         "Хм. Не хочу тебя унижать дальше, так что оставлю твою чушь без ответа";
+    private Socket clientSocket = null;
+    private final Map<String, String> quotes;
 
     WorkerThread(Socket clientSocket, Map<String, String> quotes) {
         this.clientSocket = clientSocket;

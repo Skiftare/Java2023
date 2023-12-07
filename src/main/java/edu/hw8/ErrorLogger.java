@@ -1,7 +1,5 @@
 package edu.hw8;
 
-
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -9,7 +7,7 @@ import org.apache.logging.log4j.Logger;
 public class ErrorLogger {
     private final static Logger LOGGER = LogManager.getLogger();
 
-    static void createLogError(String error) {
+    public static void createLogError(String error) {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 
         StackTraceElement element = stackTraceElements[2];

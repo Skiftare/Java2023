@@ -1,5 +1,6 @@
 package edu.hw8;
 
+import edu.hw8.task2.FixedThreadPool;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
