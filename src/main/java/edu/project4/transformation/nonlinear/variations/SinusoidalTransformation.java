@@ -1,7 +1,7 @@
 package edu.project4.transformation.nonlinear.variations;
 
-import edu.project4.transformation.Transformation;
 import edu.project4.components.Point;
+import edu.project4.transformation.Transformation;
 
 public class SinusoidalTransformation implements Transformation {
     @Override

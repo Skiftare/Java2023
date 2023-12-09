@@ -10,6 +10,7 @@ import edu.project4.systeminteraction.ImageProperties;
 import edu.project4.systeminteraction.ImagePropertiesParser;
 import java.io.IOException;
 
+@SuppressWarnings("HideUtilityClassConstructor")
 public class Main {
 
     public static void main(String[] args) throws IOException {
@@ -26,8 +27,7 @@ public class Main {
         ErrorLogger.createLog("Image generated");
         image = norm.gammaCorrect(image);
         ErrorLogger.createLog("Image corrected");
-        manager.saveToFile(image,properties);
-
+        manager.saveToFile(image, properties);
 
     }
 }

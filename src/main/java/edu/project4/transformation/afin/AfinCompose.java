@@ -14,7 +14,7 @@ public class AfinCompose {
         this.n = n;
         AfinGenerator gen = new AfinGenerator();
         ArrayList<AfinTransformation> bufAfinArray = new ArrayList<>();
-        for(int id = 0;id<n;id++){
+        for (int id = 0; id < n; id++) {
             bufAfinArray.add(gen.generateAfin());
         }
         this.afinMas = bufAfinArray;
@@ -25,11 +25,10 @@ public class AfinCompose {
         ColoredPoint result = new ColoredPoint(res, afinMas.get(it).getColor());
         return result;
     }
-    public AfinTransformation getRandomAfin(){
+
+    public AfinTransformation getRandomAfin() {
         int randomNumber = random.nextInt(n);
         return afinMas.get(randomNumber);
     }
-
-
 
 }

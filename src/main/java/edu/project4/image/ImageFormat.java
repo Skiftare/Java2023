@@ -5,7 +5,7 @@ public enum ImageFormat {
 
     @Override
     public String toString() {
-        switch(this) {
+        switch (this) {
             case JPEG:
                 return "jpeg";
             case BMP:

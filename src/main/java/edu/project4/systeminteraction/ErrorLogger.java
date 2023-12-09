@@ -18,7 +18,8 @@ public class ErrorLogger {
         LOGGER.info(logBuilder);
 
     }
-    public static void createLog(String s){
+
+    public static void createLog(String s) {
         LOGGER.info(s);
     }
 }

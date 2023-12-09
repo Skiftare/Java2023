@@ -10,7 +10,6 @@ import edu.project4.transformation.afin.AfinTransformation;
 import edu.project4.transformation.nonlinear.NonLinearCompose;
 import java.awt.Color;
 import java.security.SecureRandom;
-
 import static edu.project4.image.ImageUtils.COUNT_OF_RANDOM_POINTS;
 import static edu.project4.image.ImageUtils.X_MAX;
 import static edu.project4.image.ImageUtils.X_MIN;
@@ -18,7 +17,6 @@ import static edu.project4.image.ImageUtils.Y_MAX;
 import static edu.project4.image.ImageUtils.Y_MIN;
 import static java.lang.Math.cos;
 import static java.lang.Math.max;
-import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 
 class RenderThread implements Runnable {
@@ -28,6 +26,22 @@ class RenderThread implements Runnable {
     private final AfinCompose compositionOfAffinity;
     private final int sym;
     private final NonLinearCompose vars;
+    private static final int START_FRACTAL_VAL = -20;
+
+    RenderThread(
+        FractalImage image,
+        SecureRandom random,
+        ImageProperties prop,
+        AfinCompose compositionOfAffinity
+    ) {
+        this.image = image;
+        this.random = random;
+        this.sym = prop.symmetry();
+        this.vars = prop.vars();
+        this.compositionOfAffinity = compositionOfAffinity;
+        this.countOfPointsPerThread = prop.countOfPoints();
+
+    }
 
     private int getMedianVal(int a, int b) {
         return (a + b) >> 1;
@@ -57,23 +71,14 @@ class RenderThread implements Runnable {
         y = image.height() - Math.ceil(((Y_MAX - y) * image.height() / (Y_MAX - Y_MIN)));
         return new Point(x, y);
     }
-    private Boolean isInside(int xCoord, int yCoord){
+
+    private Boolean isInside(int xCoord, int yCoord) {
         return xCoord >= 0 && yCoord >= 0 && xCoord < image.width() && yCoord < image.height();
     }
 
-    public RenderThread(
-        FractalImage image,
-        SecureRandom random,
-        ImageProperties prop,
-        AfinCompose compositionOfAffinity
-    ) {
-        this.image = image;
-        this.random = random;
-        this.sym = prop.symmetry();
-        this.vars = prop.vars();
-        this.compositionOfAffinity = compositionOfAffinity;
-        this.countOfPointsPerThread = prop.countOfPoints();
-
+    private Boolean isInsideForDouble(double xCoord, double yCoord) {
+        Point ok = normalizePoint(new Point(xCoord, yCoord));
+        return isInside((int) ok.x(), (int) ok.y());
     }
 
     public void run() {
@@ -84,7 +89,7 @@ class RenderThread implements Runnable {
         for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n += max(sym, 1)) {
             newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
             newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
-            for (int step = -20; step < countOfPointsPerThread; step++) {
+            for (int step = START_FRACTAL_VAL; step < countOfPointsPerThread; step++) {
 
                 Transformation trans = vars.getNonLinear();
 
@@ -94,35 +99,33 @@ class RenderThread implements Runnable {
                 newX = p.x();
                 newY = p.y();
 
-                if (step >= 0) {
+                if (step >= 0 && isInsideForDouble(newX, newY)) {
                     double theta = 0.0;
-                    if (newX >= X_MIN && newX <= X_MAX && newY <= Y_MAX && newY >= Y_MIN) {
+                    for (int s = 0; s < sym; s++) {
+                        theta += 2 * Math.PI / (float) (sym);
+                        double xFinCoord = newX * cos(theta) + newY * sin(theta);
+                        double yFinCoord = newY * cos(theta) + newX * sin(theta);
+                        Point finalPoint = new Point(xFinCoord, yFinCoord);
+                        finalPoint = normalizePoint(finalPoint);
+                        xCoord = (int) finalPoint.x();
+                        yCoord = (int) finalPoint.y();
 
-                        for (int s = 0; s < sym; s++) {
-                            theta += 2 * Math.PI / (float) (sym);
-                            double xFinCoord = newX * cos(theta) + newY * sin(theta);
-                            double yFinCoord = newY * cos(theta) + newX * sin(theta);
-                            Point finalPoint = new Point(xFinCoord, yFinCoord);
-                            finalPoint = normalizePoint(finalPoint);
-                            xCoord = (int) finalPoint.x();
-                            yCoord = (int) finalPoint.y();
-
-                            if (isInside(xCoord, yCoord)) {
-                                synchronized (image) {
-                                    Pixel curr = image.pixel(xCoord, yCoord);
-                                    if (curr.hitCount() == 0) {
-                                        image.setPixel(xCoord, yCoord,
-                                            new Pixel(afin.getColor(), 1)
-                                        );
-                                    } else {
-                                        image.setPixel(xCoord, yCoord,
-                                            new Pixel(mixColors(afin.getColor(), curr.col()), curr.hitCount() + 1)
-                                        );
-                                    }
+                        if (isInside(xCoord, yCoord)) {
+                            synchronized (image) {
+                                Pixel curr = image.pixel(xCoord, yCoord);
+                                if (curr.hitCount() == 0) {
+                                    image.setPixel(xCoord, yCoord,
+                                        new Pixel(afin.getColor(), 1)
+                                    );
+                                } else {
+                                    image.setPixel(xCoord, yCoord,
+                                        new Pixel(mixColors(afin.getColor(), curr.col()), curr.hitCount() + 1)
+                                    );
                                 }
                             }
                         }
                     }
+
                 }
 
             }

@@ -13,8 +13,6 @@ public class AfinTransformation implements Transformation {
     private final double f;
     private final Color col;
 
-
-
     public AfinTransformation(
         double a, double b, double c, double d, double e, double f, Color col
     ) {
@@ -30,13 +28,13 @@ public class AfinTransformation implements Transformation {
 
     @Override
     public Point apply(Point point) {
-        double newX = a*point.x()+b*point.y()+c;
-        double newY = d*point.x()+e*point.y()+f;
+        double newX = a * point.x() + b * point.y() + c;
+        double newY = d * point.x() + e * point.y() + f;
         return new Point(newX, newY);
     }
-    public Color getColor(){
+
+    public Color getColor() {
         return col;
     }
-
 
 }
