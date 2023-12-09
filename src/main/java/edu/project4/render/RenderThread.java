@@ -3,6 +3,7 @@ package edu.project4.render;
 import edu.project4.components.Pixel;
 import edu.project4.components.Point;
 import edu.project4.image.FractalImage;
+import edu.project4.systeminteraction.ErrorLogger;
 import edu.project4.systeminteraction.ImageProperties;
 import edu.project4.transformation.Transformation;
 import edu.project4.transformation.afin.AfinCompose;
@@ -19,6 +20,7 @@ import static edu.project4.image.ImageUtils.X_MIN;
 import static edu.project4.image.ImageUtils.Y_MAX;
 import static edu.project4.image.ImageUtils.Y_MIN;
 import static java.lang.Math.cos;
+import static java.lang.Math.max;
 import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 
@@ -54,8 +56,8 @@ class RenderThread implements Runnable {
 
         double x = p.x();
         double y = p.y();
-        x = image.width() - Math.ceil((X_MAX - x) / (X_MAX - X_MIN) * image.width());
-        y = image.height() - Math.ceil((Y_MAX - y) / (Y_MAX - Y_MIN) * image.height());
+        x = Math.ceil(((X_MAX*(1 - x))*image.width() / (X_MAX - X_MIN)));
+        y = Math.ceil(((Y_MAX - y)* image.height() / (Y_MAX - Y_MIN) ));
         return new Point(x, y);
 
     }
@@ -74,7 +76,7 @@ class RenderThread implements Runnable {
         double newY;
         int xCoord;
         int yCoord;
-        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n++) {
+        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n+=max(sym,1)) {
             newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
             newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
             for (int step = -20; step < COUNT_OF_FRACTAL_POINTS; step++) {
@@ -115,9 +117,6 @@ class RenderThread implements Runnable {
                                 }
                             }
                         }
-                    } else {
-                        newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
-                        newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
                     }
                 }
 

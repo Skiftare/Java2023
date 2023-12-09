@@ -28,6 +28,7 @@ public class MultiThreadRender implements Renderer {
         AfinCompose afin =  new AfinCompose(COUNT_OF_AFIN);
 
         for (int i = 0; i < countOfThreads; i++) {
+            ErrorLogger.createLog("Thread "+i+" has been started");
             randoms[i] = new SecureRandom();
             threads[i] = new Thread(new RenderThread(image, randoms[i], prop, afin));
             threads[i].start();

@@ -1,26 +1,58 @@
 package edu.project4.transformation.afin;
 
 import java.awt.Color;
+import java.awt.geom.AffineTransform;
 import java.security.SecureRandom;
 
 class AfinGenerator {
-    private boolean checkForCorrectParametres(double a, double b, double c, double d, double e, double f) {
-        boolean param1 = Math.pow(a, 2) + Math.pow(d, 2) < 1;
-        boolean param2 = Math.pow(b, 2) + Math.pow(e, 2) < 1;
-        boolean param3 = Math.pow(a, 2) +
-            Math.pow(b, 2) +
-            Math.pow(d, 2) +
-            Math.pow(e, 2) < 1 + (Math.pow(a * e - b * d, 2));
-        return param1 && param2 && param3;
-    }
+    private SecureRandom secureRandom = new SecureRandom();
+    AfinTransformation generateWithGoodCoeff(Color col){
+        double a,b,c,d,e,f;
+        do
+        {
+            do
+            {
+                a = secureRandom.nextDouble();
+                d = secureRandom.nextDouble(a * a, 1);
+                if (secureRandom.nextBoolean()) {
+                    d = -d;
+                }
+            }
+            while ((a * a + d * d) > 1);
+            do
+            {
+                b = secureRandom.nextDouble();
+                e = secureRandom.nextDouble(b * b, 1);
+                if (secureRandom.nextBoolean()) {
+                    e = -e;
+                }
+            }
+            while ((b * b + e * e) > 1);
+        }
+        while ((a * a + b * b + d * d + e * e) >
+            (1 + (a * e - d * b) * (a * e - d * b)));
 
+        c = secureRandom.nextDouble(-2,2);
+        f = secureRandom.nextDouble(-2,2);
+        return new AfinTransformation(a,b,c,d,e,f,col);
+    }
+    AfinTransformation generateWithReallyRandomCoeff(Color col){
+        double a,b,c,d,e,f;
+        a = secureRandom.nextDouble(-1.5,1.5);
+        b = secureRandom.nextDouble(-1.5,1.5);
+        c = secureRandom.nextDouble(-1.5,1.5);
+        d = secureRandom.nextDouble(-1.5,1.5);
+        e = secureRandom.nextDouble(-1.5,1.5);
+        f = secureRandom.nextDouble(-1.5,1.5);
+        return new AfinTransformation(a,b,c,d,e,f,col);
+    }
     AfinTransformation generateAfin() {
         /**
          * init
          **/
         double a, b, c, d, e, f;
         Color randomColor;
-        SecureRandom secureRandom = new SecureRandom();
+
         /**
          * randomColor
          */
@@ -32,14 +64,11 @@ class AfinGenerator {
         /**
          * randomCoeff
          */
-        do {
-            a = secureRandom.nextDouble();
-            b = secureRandom.nextDouble();
-            c = secureRandom.nextDouble();
-            d = secureRandom.nextDouble();
-            e = secureRandom.nextDouble();
-            f = secureRandom.nextDouble();
-        } while (!checkForCorrectParametres(a, b, c, d, e, f));
-        return new AfinTransformation(a,b,c,d,e,f,randomColor);
+        if (secureRandom.nextBoolean()) {
+            return generateWithGoodCoeff(randomColor);
+        } else{
+            return generateWithReallyRandomCoeff(randomColor);
+        }
+
     }
 }

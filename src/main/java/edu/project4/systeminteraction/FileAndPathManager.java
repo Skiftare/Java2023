@@ -23,9 +23,9 @@ public class FileAndPathManager {
         try {
             System.out.println(props.fileExtension());
             ImageIO.write(savedImage, props.fileExtension(), outputFile);
-            System.out.println("Изображение успешно записано на диск.");
+            ErrorLogger.createLog("Изображение успешно записано на диск.");
         } catch (IOException e) {
-            System.out.println("Ошибка при записи изображения на диск: " + e.getMessage());
+            ErrorLogger.createLogError(e.getMessage());
         }
     }
 
