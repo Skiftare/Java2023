@@ -9,7 +9,8 @@ public record ImageProperties (
         int width,
         int height,
         int symmetry,
-        NonLinearCompose vars
+        NonLinearCompose vars,
+        int countOfPoints
     )
 {
 

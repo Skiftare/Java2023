@@ -8,10 +8,11 @@ import edu.project4.transformation.nonlinear.NonLinearCompose;
 import java.security.SecureRandom;
 import java.util.Properties;
 import static edu.project4.image.ImageUtils.COUNT_OF_AFIN;
+import static java.lang.Math.max;
 
 public class MultiThreadRender implements Renderer {
 
-    private final int countOfThreads = Runtime.getRuntime().availableProcessors();
+    private final int countOfThreads = max(1,Runtime.getRuntime().availableProcessors() - 1);
     private final int countOfAffinityTransformations = 10;
     private final ImageProperties prop;
 

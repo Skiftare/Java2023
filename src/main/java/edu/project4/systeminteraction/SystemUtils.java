@@ -12,4 +12,5 @@ public class SystemUtils {
     public static final Boolean DEFAULT_OPTIMIZATION = true;
     public static final int LOWER_BOUND_OF_SYMMETRY = 1;
     public static final int UPPER_BOUND_OF_SYMMETRY = 13;
+    public static final int DEFAULT_COUNT_OF_POINTS = (int) 1e5;
 }

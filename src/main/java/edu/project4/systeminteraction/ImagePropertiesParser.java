@@ -14,6 +14,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Properties;
+import static edu.project4.systeminteraction.SystemUtils.DEFAULT_COUNT_OF_POINTS;
 import static edu.project4.systeminteraction.SystemUtils.DEFAULT_HEIGHT;
 import static edu.project4.systeminteraction.SystemUtils.DEFAULT_IMAGE_FORMAT;
 import static edu.project4.systeminteraction.SystemUtils.DEFAULT_OPTIMIZATION;
@@ -36,8 +37,14 @@ public class ImagePropertiesParser {
 
     private NonLinearCompose getNonLinearFromProperty(String s){
         HashSet<Transformation> transSet = new HashSet<>();
+        s = s.replace(" ","");
         String[] splitedString = s.split(",");
-        for(int i = 0;i<splitedString.length;i++){
+        if(splitedString.length == 0){
+            splitedString = new String[1];
+            splitedString[0] = "random";
+        }
+        boolean bFlagOfChoosedAnyOneRandom = false;
+        for(int i = 0;i<splitedString.length && !bFlagOfChoosedAnyOneRandom;i++){
             String transformation = splitedString[i];
             switch (transformation) {
                 case "disk":
@@ -55,6 +62,15 @@ public class ImagePropertiesParser {
                 case "sphere":
                     transSet.add(new SphericalTransformation());
                     break;
+                case "anyone":
+                    transSet.clear();
+                    transSet.add(new DiskTransformation());
+                    transSet.add(new HeartTransformation());
+                    transSet.add(new PolarTransformation());
+                    transSet.add(new SinusoidalTransformation());
+                    transSet.add(new SphericalTransformation());
+                    bFlagOfChoosedAnyOneRandom = true;
+                    break;
                 default:
                     transSet.add(new DiskTransformation());
                     transSet.add(new HeartTransformation());
@@ -65,7 +81,14 @@ public class ImagePropertiesParser {
                     break;
             }
         }
-        return new NonLinearCompose(transSet.toArray(new Transformation[transSet.size()]));
+        NonLinearCompose comp = new NonLinearCompose(transSet.toArray(new Transformation[transSet.size()]));
+        if(bFlagOfChoosedAnyOneRandom){
+            transSet.clear();
+            transSet.add(comp.getNonLinear());
+            comp = new NonLinearCompose(transSet.toArray(new Transformation[transSet.size()]));
+
+        }
+        return comp;
 
 
     }
@@ -94,8 +117,10 @@ public class ImagePropertiesParser {
         int height = Integer.parseInt(properties.getProperty("height", String.valueOf(DEFAULT_HEIGHT)));
         int sym = Integer.parseInt(properties.getProperty("symmetry", String.valueOf(symRand)));
         NonLinearCompose res = getNonLinearFromProperty(properties.getProperty("transformation","random"));
-        return new ImageProperties(fileName, outputFolder, fileExtension, width, height, sym,res);
+        int countOfPoints = (int) Double.parseDouble(properties.getProperty("points", String.valueOf(DEFAULT_COUNT_OF_POINTS)));
+        return new ImageProperties(fileName, outputFolder, fileExtension, width, height, sym,res, countOfPoints);
     }
+
     private ImageProperties generateDefaultProperties(){
         SecureRandom random = new SecureRandom();
         int sym = random.nextInt(UPPER_BOUND_OF_SYMMETRY -LOWER_BOUND_OF_SYMMETRY+1)+LOWER_BOUND_OF_SYMMETRY;
@@ -107,7 +132,8 @@ public class ImagePropertiesParser {
             DEFAULT_WIDTH,
             DEFAULT_HEIGHT,
             sym,
-            getNonLinearFromProperty("random")
+            getNonLinearFromProperty("random"),
+            DEFAULT_COUNT_OF_POINTS
         );
         return props;
     }

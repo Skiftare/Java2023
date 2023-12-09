@@ -3,17 +3,14 @@ package edu.project4.render;
 import edu.project4.components.Pixel;
 import edu.project4.components.Point;
 import edu.project4.image.FractalImage;
-import edu.project4.systeminteraction.ErrorLogger;
 import edu.project4.systeminteraction.ImageProperties;
 import edu.project4.transformation.Transformation;
 import edu.project4.transformation.afin.AfinCompose;
 import edu.project4.transformation.afin.AfinTransformation;
 import edu.project4.transformation.nonlinear.NonLinearCompose;
-import edu.project4.transformation.nonlinear.variations.SinusoidalTransformation;
 import java.awt.Color;
 import java.security.SecureRandom;
-import java.util.Properties;
-import static edu.project4.image.ImageUtils.COUNT_OF_FRACTAL_POINTS;
+
 import static edu.project4.image.ImageUtils.COUNT_OF_RANDOM_POINTS;
 import static edu.project4.image.ImageUtils.X_MAX;
 import static edu.project4.image.ImageUtils.X_MIN;
@@ -27,13 +24,13 @@ import static java.lang.Math.sin;
 class RenderThread implements Runnable {
     private final FractalImage image;
     private final SecureRandom random;
-
+    private final int countOfPointsPerThread;
     private final AfinCompose compositionOfAffinity;
     private final int sym;
     private final NonLinearCompose vars;
 
-    private int getMedianVal(int a, int b){
-        return (a+b)>>1;
+    private int getMedianVal(int a, int b) {
+        return (a + b) >> 1;
     }
 
     private Color mixColors(Color pixel1, Color pixel2) {
@@ -45,9 +42,9 @@ class RenderThread implements Runnable {
         int green2 = pixel2.getGreen();
         int blue2 = pixel2.getBlue();
 
-        int newRed = getMedianVal(red1,red2);
-        int newGreen = getMedianVal(green1,green2);
-        int newBlue = getMedianVal(blue1,blue2);
+        int newRed = getMedianVal(red1, red2);
+        int newGreen = getMedianVal(green1, green2);
+        int newBlue = getMedianVal(blue1, blue2);
 
         return new Color(newRed, newGreen, newBlue);
     }
@@ -56,18 +53,26 @@ class RenderThread implements Runnable {
 
         double x = p.x();
         double y = p.y();
-        x = Math.ceil(((X_MAX*(1 - x))*image.width() / (X_MAX - X_MIN)));
-        y = Math.ceil(((Y_MAX - y)* image.height() / (Y_MAX - Y_MIN) ));
+        x = image.width() - Math.ceil(((X_MAX * (1 - x)) * image.width() / (X_MAX - X_MIN)));
+        y = image.height() - Math.ceil(((Y_MAX - y) * image.height() / (Y_MAX - Y_MIN)));
         return new Point(x, y);
-
+    }
+    private Boolean isInside(int xCoord, int yCoord){
+        return xCoord >= 0 && yCoord >= 0 && xCoord < image.width() && yCoord < image.height();
     }
 
-    public RenderThread(FractalImage image, SecureRandom random, ImageProperties prop, AfinCompose compositionOfAffinity) {
+    public RenderThread(
+        FractalImage image,
+        SecureRandom random,
+        ImageProperties prop,
+        AfinCompose compositionOfAffinity
+    ) {
         this.image = image;
         this.random = random;
         this.sym = prop.symmetry();
         this.vars = prop.vars();
         this.compositionOfAffinity = compositionOfAffinity;
+        this.countOfPointsPerThread = prop.countOfPoints();
 
     }
 
@@ -76,10 +81,10 @@ class RenderThread implements Runnable {
         double newY;
         int xCoord;
         int yCoord;
-        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n+=max(sym,1)) {
+        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n += max(sym, 1)) {
             newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
             newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
-            for (int step = -20; step < COUNT_OF_FRACTAL_POINTS; step++) {
+            for (int step = -20; step < countOfPointsPerThread; step++) {
 
                 Transformation trans = vars.getNonLinear();
 
@@ -102,8 +107,8 @@ class RenderThread implements Runnable {
                             xCoord = (int) finalPoint.x();
                             yCoord = (int) finalPoint.y();
 
-                            synchronized (image) {
-                                if (image.contains(xCoord, yCoord)) {
+                            if (isInside(xCoord, yCoord)) {
+                                synchronized (image) {
                                     Pixel curr = image.pixel(xCoord, yCoord);
                                     if (curr.hitCount() == 0) {
                                         image.setPixel(xCoord, yCoord,
