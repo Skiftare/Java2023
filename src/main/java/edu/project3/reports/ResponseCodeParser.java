@@ -1,4 +1,4 @@
-package edu.project3.analyzer;
+package edu.project3.reports;
 
 import edu.project3.systeminteraction.ErrorLogger;
 import java.io.IOException;
@@ -20,9 +20,9 @@ import static edu.project3.utility.UtilityClass.SUCCESSFUL_MAX;
 import static edu.project3.utility.UtilityClass.SUCCESSFUL_MIN;
 
 @SuppressWarnings("HideUtilityClassConstructor")
-public class ResponseCodeParser {
+class ResponseCodeParser {
 
-    public static String analyzeStatusCode(int statusCode) {
+    static String analyzeStatusCode(int statusCode) {
         String result;
 
         if (statusCode >= INFORMATIONAL_MIN && statusCode < INFORMATIONAL_MAX) {
@@ -48,7 +48,7 @@ public class ResponseCodeParser {
         return columns.size() >= NEEDED_CELL_SIZE && columns.getFirst().text().equals(responseCode);
     }
 
-    public static String getResponseCodeName(String responseCode) {
+    static String getResponseCodeName(String responseCode) {
         try { //Тут падает checkstyle, если пустую строчку оставить
             Document doc = Jsoup.connect(HTTP_URL).get();
             String chooseAllTrInTbodyAtElementTableWithClassStandartTable = "table.standard-table tbody tr";

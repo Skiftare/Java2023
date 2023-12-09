@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import static edu.project3.utility.UtilityTableClass.DEFAULT_TABLE_NAME;
 
 public class Table {
     private final List<String> headers = new ArrayList<>();
     private final List<List<String>> data = new ArrayList<>();
-    private String nameOfTable = "";
+    private String nameOfTable = DEFAULT_TABLE_NAME;
 
     public Table(String... headers) {
         this.headers.addAll(Arrays.asList(headers));

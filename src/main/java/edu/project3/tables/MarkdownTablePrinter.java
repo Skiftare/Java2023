@@ -6,7 +6,7 @@ import static edu.project3.utility.UtilityTableClass.ENDL_CHAR;
 import static edu.project3.utility.UtilityTableClass.HEADER_AND_BODY_SEPARATOR_FOR_MARKDOWN;
 import static edu.project3.utility.UtilityTableClass.TABLE_NAME_DETERMINANT_FOR_MARKDOWN;
 
-public class MarkdownTablePrinter extends TablePrinter {
+class MarkdownTablePrinter extends TablePrinter {
     @Override
     protected void printTableHeader() {
         sb.append(TABLE_NAME_DETERMINANT_FOR_MARKDOWN).append(nameOfTable).append(ENDL_CHAR);

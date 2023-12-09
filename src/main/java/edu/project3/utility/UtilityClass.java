@@ -5,6 +5,7 @@ public class UtilityClass {
     public final static String YEAR_MONTH_AND_DATE = "yyyy-MM-dd";
     public final static String HOURS_MINUTES_AND_SECONDS = "HH:mm:ss";
     public final static String HTTP_STRING = "http";
+    public final static String TAB_STRING = "\t";
     public final static int BYTES_IN_KILOBYTE = 1024;
     public final static int VARIATIONS_OF_RESPONSE_CODES = 6;
     public final static int MULTIPLIER_FOR_CODES = 100;

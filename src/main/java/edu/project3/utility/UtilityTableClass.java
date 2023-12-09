@@ -7,4 +7,6 @@ public class UtilityTableClass {
     public static final Character CELL_SEPARATOR = '|';
     public static final String TABLE_NAME_DETERMINANT_FOR_MARKDOWN = "# ";
     public static final String HEADER_AND_BODY_SEPARATOR_FOR_MARKDOWN = "|---";
+    public static final String WORDS_SEPARATOR = " ";
+    public static final String DEFAULT_TABLE_NAME = "Таблица";
 }

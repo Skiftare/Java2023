@@ -3,13 +3,13 @@ package edu.project3.tables;
 import java.util.List;
 import static edu.project3.utility.UtilityTableClass.ENDL_CHAR;
 
-public abstract class TablePrinter {
+abstract class TablePrinter {
     protected StringBuilder sb = new StringBuilder();
     protected String nameOfTable;
     protected List<String> headers;
     protected List<List<String>> data;
 
-    public void printTable(String nameOfTable, List<String> headers, List<List<String>> data) {
+    void printTable(String nameOfTable, List<String> headers, List<List<String>> data) {
         this.nameOfTable = nameOfTable;
         this.headers = headers;
         this.data = data;
@@ -27,7 +27,7 @@ public abstract class TablePrinter {
 
     protected abstract void printTableRow(List<String> row);
 
-    public String printAsString() {
+    String printAsString() {
         return sb.toString();
     }
 }

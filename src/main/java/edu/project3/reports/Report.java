@@ -12,11 +12,11 @@ public class Report {
         tables = new ArrayList<>();
     }
 
-    public void addTable(Table newIncomeTable) {
+    void addTable(Table newIncomeTable) {
         tables.add(newIncomeTable);
     }
 
-    public List<Table> getTablesInReport() {
+    List<Table> getTablesInReport() {
         return tables;
     }
 }

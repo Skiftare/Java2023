@@ -39,7 +39,7 @@ public class LogParser {
         return parts;
     }
 
-    public static LogEntry parse(String logLine) {
+    static LogEntry parse(String logLine) {
 
         LogEntry entry = new LogEntry();
 

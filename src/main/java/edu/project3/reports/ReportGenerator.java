@@ -1,16 +1,21 @@
 package edu.project3.reports;
 
-import edu.project3.analyzer.ResponseCodeParser;
-import edu.project3.tables.Table;
 import edu.project3.systeminteraction.ArgumentsData;
 import edu.project3.systeminteraction.DataClass;
+import edu.project3.tables.Table;
 import edu.project3.utility.UtilityClass;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import static edu.project3.systeminteraction.DateFormatter.formatDateForLogs;
 import static edu.project3.utility.UtilityClass.COUNT_OF_USER_AGENT_ROWS;
+import static edu.project3.utility.UtilityClass.TAB_STRING;
 
 public class ReportGenerator {
+    private String formatNullableDate(Date date) {
+        return (date != null) ? formatDateForLogs(date) : "-";
+    }
+
     public Report generateReport(ReportDataFunction... dataFunctions) {
         Report report = new Report();
         for (ReportDataFunction dataFunction : dataFunctions) {
@@ -25,11 +30,11 @@ public class ReportGenerator {
             table.nameTable("Первая доп. метрика");
             table.addRow(
                 "С какого момента стали поступать логи:",
-                DataClass.getMinDate() == null ? "-" : formatDateForLogs(DataClass.getMinDate())
+                formatNullableDate(DataClass.getMinDate())
             );
             table.addRow(
                 "До какого момента поступали логи: ",
-                DataClass.getMaxDate() == null ? "-" : formatDateForLogs(DataClass.getMaxDate())
+                formatNullableDate(DataClass.getMaxDate())
             );
             report.addTable(table);
         };
@@ -92,8 +97,8 @@ public class ReportGenerator {
             } else {
                 table.addRow("Файл(ы)", parseArrayAsOneString(DataClass.getReadedLogs()));
             }
-            table.addRow("Начальная дата", (ArgumentsData.getFrom() != null ? ArgumentsData.getFromStr() : "-"));
-            table.addRow("Конечная дата", (ArgumentsData.getTo() != null ? ArgumentsData.getToStr() : "-"));
+            table.addRow("Начальная дата", formatNullableDate(ArgumentsData.getFrom()));
+            table.addRow("Конечная дата", formatNullableDate(ArgumentsData.getTo()));
             table.addRow("Количество запросов", Integer.toString(DataClass.getTotalRequests()));
             table.addRow(
                 "Средний размер ответа (в КБ)",
@@ -134,7 +139,7 @@ public class ReportGenerator {
     private String parseArrayAsOneString(ArrayList<String> incomeArray) {
         StringBuilder sb = new StringBuilder();
         for (String element : incomeArray) {
-            sb.append(element).append('\t');
+            sb.append(element).append(TAB_STRING);
         }
         return sb.toString();
     }
