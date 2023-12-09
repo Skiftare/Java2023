@@ -3,6 +3,7 @@ package edu.project4.render;
 import edu.project4.components.Pixel;
 import edu.project4.components.Point;
 import edu.project4.image.FractalImage;
+import edu.project4.systeminteraction.ImageProperties;
 import edu.project4.transformation.Transformation;
 import edu.project4.transformation.afin.AfinCompose;
 import edu.project4.transformation.afin.AfinTransformation;
@@ -10,6 +11,7 @@ import edu.project4.transformation.nonlinear.NonLinearCompose;
 import edu.project4.transformation.nonlinear.variations.SinusoidalTransformation;
 import java.awt.Color;
 import java.security.SecureRandom;
+import java.util.Properties;
 import static edu.project4.image.ImageUtils.COUNT_OF_FRACTAL_POINTS;
 import static edu.project4.image.ImageUtils.COUNT_OF_RANDOM_POINTS;
 import static edu.project4.image.ImageUtils.X_MAX;
@@ -17,6 +19,7 @@ import static edu.project4.image.ImageUtils.X_MIN;
 import static edu.project4.image.ImageUtils.Y_MAX;
 import static edu.project4.image.ImageUtils.Y_MIN;
 import static java.lang.Math.cos;
+import static java.lang.Math.pow;
 import static java.lang.Math.sin;
 
 class RenderThread implements Runnable {
@@ -25,6 +28,8 @@ class RenderThread implements Runnable {
 
     private final AfinCompose compositionOfAffinity;
     private final int sym;
+    private final NonLinearCompose vars;
+
     private int getMedianVal(int a, int b){
         return (a+b)>>1;
     }
@@ -55,11 +60,11 @@ class RenderThread implements Runnable {
 
     }
 
-    public RenderThread(FractalImage image, SecureRandom random, int symmetry, AfinCompose compositionOfAffinity) {
+    public RenderThread(FractalImage image, SecureRandom random, ImageProperties prop, AfinCompose compositionOfAffinity) {
         this.image = image;
         this.random = random;
-        this.sym = symmetry;
-
+        this.sym = prop.symmetry();
+        this.vars = prop.vars();
         this.compositionOfAffinity = compositionOfAffinity;
 
     }
@@ -69,14 +74,13 @@ class RenderThread implements Runnable {
         double newY;
         int xCoord;
         int yCoord;
-        NonLinearCompose vars = new NonLinearCompose();
         for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n++) {
             newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
             newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
             for (int step = -20; step < COUNT_OF_FRACTAL_POINTS; step++) {
 
-                //Transformation trans = vars.getRangomNonLinear();
-                Transformation trans = new SinusoidalTransformation();
+                Transformation trans = vars.getNonLinear();
+
                 AfinTransformation afin = compositionOfAffinity.getRandomAfin();
 
                 Point p = trans.apply(afin.apply(new Point(newX, newY)));

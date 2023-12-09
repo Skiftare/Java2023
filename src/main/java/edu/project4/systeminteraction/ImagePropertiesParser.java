@@ -1,9 +1,18 @@
 package edu.project4.systeminteraction;
 
+import edu.project4.transformation.Transformation;
+import edu.project4.transformation.nonlinear.NonLinearCompose;
+import edu.project4.transformation.nonlinear.variations.DiskTransformation;
+import edu.project4.transformation.nonlinear.variations.HeartTransformation;
+import edu.project4.transformation.nonlinear.variations.PolarTransformation;
+import edu.project4.transformation.nonlinear.variations.SinusoidalTransformation;
+import edu.project4.transformation.nonlinear.variations.SphericalTransformation;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Properties;
 import static edu.project4.systeminteraction.SystemUtils.DEFAULT_HEIGHT;
 import static edu.project4.systeminteraction.SystemUtils.DEFAULT_IMAGE_FORMAT;
@@ -20,9 +29,47 @@ public class ImagePropertiesParser {
     private FileAndPathManager manager = new FileAndPathManager();
 
     private Boolean isCorrectPath(String path) {
-        File folder = new File(path+PROPERTIES_FILENAME);
+        File folder = new File(path);
         return (folder.exists() && folder.isDirectory());
     }
+
+
+    private NonLinearCompose getNonLinearFromProperty(String s){
+        HashSet<Transformation> transSet = new HashSet<>();
+        String[] splitedString = s.split(",");
+        for(int i = 0;i<splitedString.length;i++){
+            String transformation = splitedString[i];
+            switch (transformation) {
+                case "disk":
+                    transSet.add(new DiskTransformation());
+                    break;
+                case "heart":
+                    transSet.add(new HeartTransformation());
+                    break;
+                case "polar":
+                    transSet.add(new PolarTransformation());
+                    break;
+                case "sinus":
+                    transSet.add(new SinusoidalTransformation());
+                    break;
+                case "sphere":
+                    transSet.add(new SphericalTransformation());
+                    break;
+                default:
+                    transSet.add(new DiskTransformation());
+                    transSet.add(new HeartTransformation());
+                    transSet.add(new PolarTransformation());
+                    transSet.add(new SinusoidalTransformation());
+                    transSet.add(new SphericalTransformation());
+
+                    break;
+            }
+        }
+        return new NonLinearCompose(transSet.toArray(new Transformation[transSet.size()]));
+
+
+    }
+
 
     private Boolean isPropertiesExist(){
         File file = new File(propertiesPath);
@@ -39,16 +86,15 @@ public class ImagePropertiesParser {
 
         Properties properties = new Properties();
         properties.load(fileInputStream);
-
+        ArrayList<Transformation> vars = new ArrayList<>();
         String fileName = properties.getProperty("fileName", manager.createFileName());
         String outputFolder = properties.getProperty("outputFolder", DEFAULT_OUTPUT_FOLDER);
         String fileExtension = properties.getProperty("fileExtension", DEFAULT_IMAGE_FORMAT.toString());
         int width = Integer.parseInt(properties.getProperty("width", String.valueOf(DEFAULT_WIDTH)));
         int height = Integer.parseInt(properties.getProperty("height", String.valueOf(DEFAULT_HEIGHT)));
         int sym = Integer.parseInt(properties.getProperty("symmetry", String.valueOf(symRand)));
-        boolean optimize = Boolean.parseBoolean(properties.getProperty("optimize", String.valueOf(DEFAULT_OPTIMIZATION)));
-
-        return new ImageProperties(fileName, outputFolder, fileExtension, width, height, optimize, sym);
+        NonLinearCompose res = getNonLinearFromProperty(properties.getProperty("transformation","random"));
+        return new ImageProperties(fileName, outputFolder, fileExtension, width, height, sym,res);
     }
     private ImageProperties generateDefaultProperties(){
         SecureRandom random = new SecureRandom();
@@ -60,8 +106,8 @@ public class ImagePropertiesParser {
             DEFAULT_IMAGE_FORMAT.toString(),
             DEFAULT_WIDTH,
             DEFAULT_HEIGHT,
-            DEFAULT_OPTIMIZATION,
-            sym
+            sym,
+            getNonLinearFromProperty("random")
         );
         return props;
     }

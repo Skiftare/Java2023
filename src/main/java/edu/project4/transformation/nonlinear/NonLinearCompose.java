@@ -9,23 +9,19 @@ import edu.project4.transformation.nonlinear.variations.SphericalTransformation;
 import java.security.SecureRandom;
 
 public class NonLinearCompose {
-    private final Transformation [] variantsOfNonLinear = {
-        new SinusoidalTransformation(),
-        new SphericalTransformation(),
-        new DiskTransformation(),
-        new PolarTransformation(),
-        new HeartTransformation()
-    };
-
+    private Transformation [] variantsOfNonLinear;
     public Transformation getNonLinearTransformationById(int id){
         if(id >= variantsOfNonLinear.length || id < 0){
             throw new RuntimeException("wrong id for geting NonLinearTransformationById");
         }
         return variantsOfNonLinear[id];
     }
-    public Transformation getRangomNonLinear(){
+    public Transformation getNonLinear(){
         SecureRandom rand = new SecureRandom();
         int r = rand.nextInt(variantsOfNonLinear.length);
         return variantsOfNonLinear[r];
+    }
+    public NonLinearCompose(Transformation[] vars){
+        variantsOfNonLinear = vars;
     }
 }

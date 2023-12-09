@@ -6,38 +6,30 @@ import edu.project4.systeminteraction.ImageProperties;
 import edu.project4.transformation.afin.AfinCompose;
 import edu.project4.transformation.nonlinear.NonLinearCompose;
 import java.security.SecureRandom;
+import java.util.Properties;
+import static edu.project4.image.ImageUtils.COUNT_OF_AFIN;
 
 public class MultiThreadRender implements Renderer {
-    private final int sym;
 
-
-    private final int imageWidth;
-    private final int imageHeight;
     private final int countOfThreads = Runtime.getRuntime().availableProcessors();
     private final int countOfAffinityTransformations = 10;
+    private final ImageProperties prop;
 
-    private final AfinCompose compositionOfAffinity;
-    private final NonLinearCompose vars;
+
 
     public MultiThreadRender(ImageProperties properties) {
-        compositionOfAffinity = new AfinCompose(countOfAffinityTransformations);
-        imageHeight = properties.height();
-        imageWidth = properties.width();
-        vars = new NonLinearCompose();
-        sym = properties.symmetry();
+        prop = properties;
     }
 
-
-
     public FractalImage makeImage() {
-        FractalImage image = FractalImage.create(imageWidth, imageHeight);
+        FractalImage image = FractalImage.create(prop.width(), prop.height());
         Thread[] threads = new Thread[countOfThreads];
         SecureRandom[] randoms = new SecureRandom[countOfThreads];
-        AfinCompose afin =  new AfinCompose(10);
+        AfinCompose afin =  new AfinCompose(COUNT_OF_AFIN);
 
         for (int i = 0; i < countOfThreads; i++) {
             randoms[i] = new SecureRandom();
-            threads[i] = new Thread(new RenderThread(image, randoms[i], sym, afin));
+            threads[i] = new Thread(new RenderThread(image, randoms[i], prop, afin));
             threads[i].start();
         }
 

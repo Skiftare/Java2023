@@ -56,7 +56,8 @@ public class OneThreadRender implements Renderer {
 
 
         SecureRandom random = new SecureRandom();
-        NonLinearCompose vars = new NonLinearCompose();
+        //NonLinearCompose vars = new NonLinearCompose([new HeartTransformation]);
+
 
         double newX = XMIN + (XMAX - XMIN) * random.nextDouble();
         double newY = YMIN + (YMAX - YMIN) * random.nextDouble();
