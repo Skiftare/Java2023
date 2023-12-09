@@ -11,7 +11,6 @@ import static java.lang.Math.max;
 public class MultiThreadRender implements Renderer {
 
     private final int countOfThreads = max(1, Runtime.getRuntime().availableProcessors() - 1);
-    private final int countOfAffinityTransformations = 10;
     private final ImageProperties prop;
 
     public MultiThreadRender(ImageProperties properties) {

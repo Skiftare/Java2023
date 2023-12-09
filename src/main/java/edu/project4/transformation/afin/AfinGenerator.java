@@ -62,28 +62,13 @@ class AfinGenerator {
     }
 
     AfinTransformation generateAfin() {
-        /**
-         * init
-         **/
-        double a;
-        double b;
-        double c;
-        double d;
-        double e;
-        double f;
         Color randomColor;
 
-        /**
-         * randomColor
-         */
         int red = secureRandom.nextInt(UPPER_BOUND_FOR_COLOR);
         int green = secureRandom.nextInt(UPPER_BOUND_FOR_COLOR);
         int blue = secureRandom.nextInt(UPPER_BOUND_FOR_COLOR);
         randomColor = new Color(red, green, blue);
 
-        /**
-         * randomCoeff
-         */
         if (secureRandom.nextBoolean()) {
             return generateWithGoodCoeff(randomColor);
         } else {

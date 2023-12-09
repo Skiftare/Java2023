@@ -5,15 +5,10 @@ public enum ImageFormat {
 
     @Override
     public String toString() {
-        switch (this) {
-            case JPEG:
-                return "jpeg";
-            case BMP:
-                return "bmp";
-            case PNG:
-                return "png";
-            default:
-                throw new IllegalArgumentException("Unknown image format: " + this);
-        }
+        return switch (this) {
+            case JPEG -> "jpeg";
+            case BMP -> "bmp";
+            case PNG -> "png";
+        };
     }
 }
