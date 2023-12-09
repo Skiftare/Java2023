@@ -1,6 +1,6 @@
-package edu.project3.generators.reports;
+package edu.project3.reports;
 
-import edu.project3.generators.tables.Table;
+import edu.project3.tables.Table;
 import java.util.ArrayList;
 import java.util.List;
 

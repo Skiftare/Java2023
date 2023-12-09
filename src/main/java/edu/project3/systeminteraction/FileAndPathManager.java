@@ -1,6 +1,6 @@
 package edu.project3.systeminteraction;
 
-import edu.project3.generators.tables.Table;
+import edu.project3.tables.Table;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;

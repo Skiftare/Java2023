@@ -1,4 +1,4 @@
-package edu.project3.generators.reports;
+package edu.project3.reports;
 
 import java.util.Map;
 

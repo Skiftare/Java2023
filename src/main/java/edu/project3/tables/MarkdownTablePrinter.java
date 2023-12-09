@@ -1,4 +1,4 @@
-package edu.project3.generators.tables;
+package edu.project3.tables;
 
 import java.util.List;
 import static edu.project3.utility.UtilityTableClass.CELL_SEPARATOR;

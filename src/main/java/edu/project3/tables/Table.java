@@ -1,4 +1,4 @@
-package edu.project3.generators.tables;
+package edu.project3.tables;
 
 import edu.project3.systeminteraction.FileAndPathManager;
 import java.util.ArrayList;

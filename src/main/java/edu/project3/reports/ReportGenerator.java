@@ -1,7 +1,7 @@
-package edu.project3.generators.reports;
+package edu.project3.reports;
 
 import edu.project3.analyzer.ResponseCodeParser;
-import edu.project3.generators.tables.Table;
+import edu.project3.tables.Table;
 import edu.project3.systeminteraction.ArgumentsData;
 import edu.project3.systeminteraction.DataClass;
 import edu.project3.utility.UtilityClass;
