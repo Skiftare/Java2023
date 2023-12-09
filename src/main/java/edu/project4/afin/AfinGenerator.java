@@ -3,7 +3,7 @@ package edu.project4.afin;
 import java.awt.Color;
 import java.security.SecureRandom;
 
-public class AfinGenerator {
+class AfinGenerator {
     private boolean checkForCorrectParametres(double a, double b, double c, double d, double e, double f) {
         boolean param1 = Math.pow(a, 2) + Math.pow(d, 2) < 1;
         boolean param2 = Math.pow(b, 2) + Math.pow(e, 2) < 1;
@@ -14,7 +14,7 @@ public class AfinGenerator {
         return param1 && param2 && param3;
     }
 
-    public AfinTransformation generateAfin() {
+    AfinTransformation generateAfin() {
         /**
          * init
          **/

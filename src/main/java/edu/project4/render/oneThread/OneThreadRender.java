@@ -1,10 +1,14 @@
-package edu.project4;
+package edu.project4.render.oneThread;
 
+import edu.project4.FractalImage;
+import edu.project4.Transformation;
 import edu.project4.afin.AfinCompose;
 import edu.project4.afin.AfinTransformation;
 import edu.project4.components.Pixel;
 import edu.project4.components.Point;
+import edu.project4.nonlinear.HeartTransformation;
 import edu.project4.nonlinear.NonLinearCompose;
+import edu.project4.render.Renderer;
 import java.awt.Color;
 import java.security.SecureRandom;
 import static java.lang.Math.cos;
@@ -14,7 +18,7 @@ public class OneThreadRender implements Renderer {
     double XMIN = -1.7777;
     double XMAX = 1.7777;
     double YMIN = -1.8;
-    int sym = 4;
+    int sym = 1;
     double YMAX = 1.8;
     private Color mixColors(Color pixel1, Color pixel2) {
         int red1 = pixel1.getRed();
@@ -45,7 +49,7 @@ public class OneThreadRender implements Renderer {
     public FractalImage makeImage() {
         FractalImage image = FractalImage.create(2160, 1440);
         int countOfAffinityTransformations = 10;
-        int countOfPoints = (int) 1e6;
+        int countOfPoints = (int) 1e7;
         AfinCompose compositionOfAffinity = new AfinCompose(countOfAffinityTransformations);
 
 
@@ -58,9 +62,11 @@ public class OneThreadRender implements Renderer {
         double newY = YMIN + (YMAX - YMIN) * random.nextDouble();
 
         for (int step = -20; step < countOfPoints; step++) {
+            newX = XMIN + (XMAX - XMIN) * random.nextDouble();
+            newY = YMIN + (YMAX - YMIN) * random.nextDouble();
             AfinTransformation afin = compositionOfAffinity.getRandomAfin();
-            Transformation sin = vars.getRangomNonLinear();
-
+            //Transformation sin = vars.getRangomNonLinear();
+            Transformation sin = new HeartTransformation();
             Point p = afin.apply(new Point(newX, newY));
             Point pp = sin.apply(p);
             newX = pp.x();

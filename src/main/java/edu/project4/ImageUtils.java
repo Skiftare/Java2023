@@ -1,12 +1,10 @@
 package edu.project4;
 
-import java.nio.file.Path;
-
 public final class ImageUtils {
-    private ImageUtils() {}
+    public static final double X_MAX =  0.98722222222;
+    public static final double X_MIN =  -0.98722222222;
+    public static final double Y_MAX =  0.6;
+    public static final double Y_MIN =  -0.6;
 
-    void save(FractalImage image, Path filename, ImageFormat format) {
-
-    }
 
 }
