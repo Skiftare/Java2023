@@ -1,4 +1,4 @@
-package edu.project3;
+package edu.project3.systeminteraction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,36 +17,36 @@ public class ArgumentsData {
         return path;
     }
 
-    public static Date getFrom() {
-        return from;
-    }
-
-    public static Date getTo() {
-        return to;
-    }
-
-    public static String getFromStr() {
-        return fromStr;
-    }
-
-    public static String getToStr() {
-        return toStr;
-    }
-
     public static void setPath(String path) {
         ArgumentsData.path = path;
+    }
+
+    public static Date getFrom() {
+        return from;
     }
 
     public static void setFrom(Date from) {
         ArgumentsData.from = from;
     }
 
+    public static Date getTo() {
+        return to;
+    }
+
     public static void setTo(Date to) {
         ArgumentsData.to = to;
     }
 
+    public static String getFromStr() {
+        return fromStr;
+    }
+
     public static void setFromStr(String fromStr) {
         ArgumentsData.fromStr = fromStr;
+    }
+
+    public static String getToStr() {
+        return toStr;
     }
 
     public static void setToStr(String toStr) {

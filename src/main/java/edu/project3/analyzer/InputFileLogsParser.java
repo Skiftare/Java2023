@@ -1,5 +1,7 @@
-package edu.project3;
+package edu.project3.analyzer;
 
+import edu.project3.systeminteraction.ArgumentsData;
+import edu.project3.systeminteraction.ErrorLogger;
 import edu.project3.utility.UtilityClass;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,10 +11,10 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.List;
-import static edu.project3.DataClass.addReadedLog;
-import static edu.project3.DataClass.putParsedLogToDataClass;
-import static edu.project3.FileAndPathManager.createReaderForLogParser;
-import static edu.project3.FileAndPathManager.findLogFiles;
+import static edu.project3.systeminteraction.DataClass.addReadedLog;
+import static edu.project3.systeminteraction.DataClass.putParsedLogToDataClass;
+import static edu.project3.systeminteraction.FileAndPathManager.createReaderForLogParser;
+import static edu.project3.systeminteraction.FileAndPathManager.findLogFiles;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class InputFileLogsParser {

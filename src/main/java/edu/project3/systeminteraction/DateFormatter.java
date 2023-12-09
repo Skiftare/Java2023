@@ -1,4 +1,4 @@
-package edu.project3;
+package edu.project3.systeminteraction;
 
 import edu.project3.utility.UtilityClass;
 import java.text.ParseException;
@@ -7,7 +7,7 @@ import java.time.Month;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
-import static edu.project3.LogParser.stupidParse;
+import static edu.project3.analyzer.LogParser.stupidParse;
 import static edu.project3.utility.UtilityClass.HOUR_INDEX;
 import static edu.project3.utility.UtilityClass.MINUTE_INDEX;
 import static edu.project3.utility.UtilityClass.MONTH_INDEX;
@@ -19,9 +19,7 @@ import static edu.project3.utility.UtilityClass.YEAR_INDEX;
 @SuppressWarnings("HideUtilityClassConstructor")
 public class DateFormatter {
 
-
-
-    static Date convertForParsingArguments(String dateString) {
+    public static Date convertForParsingArguments(String dateString) {
         SimpleDateFormat formatter = new SimpleDateFormat(UtilityClass.YEAR_MONTH_AND_DATE);
         try {
             return formatter.parse(dateString);
@@ -31,12 +29,12 @@ public class DateFormatter {
         }
     }
 
-    static String  getCurrentDateAsString() {
+    public static String getCurrentDateAsString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HH_mm");
         return dateFormat.format(new Date());
     }
 
-    static Month convertMonthForOneLogParsing(String monthString) {
+    public static Month convertMonthForOneLogParsing(String monthString) {
         return switch (monthString) {
             case "Jan" -> Month.JANUARY;
             case "Feb" -> Month.FEBRUARY;
@@ -54,14 +52,14 @@ public class DateFormatter {
         };
     }
 
-    static String formatDateForLogs(Date date) {
+    public static String formatDateForLogs(Date date) {
         SimpleDateFormat dateFormatForOutput = new SimpleDateFormat(
             UtilityClass.getYearMonthAndDate() + "'  '" + UtilityClass.getHoursMinutesAndSeconds()
         );
         return dateFormatForOutput.format(date);
     }
 
-    static Date convertTimeInLogToDate(String dateString) {
+    public static Date convertTimeInLogToDate(String dateString) {
         String[] parts = stupidParse(dateString);
 
         int day = Integer.parseInt(parts[PART_OF_STRING_WITH_DAY]);

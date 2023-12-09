@@ -2,17 +2,17 @@
 |===
 | Метрика | Значение 
 
-|Файл(ы)
-|C:\Users\bkiri\OneDrive\Документы\GitHub\Java2023\src\test\java\edu\project3\resources\log1.txt	
+|URL
+|https://raw.githubusercontent.com/elastic/examples/master/Common%20Data%20Formats/nginx_logs/nginx_logs	
 
 |Начальная дата
-|2003-08-31
+|-
 
 |Конечная дата
-|2023-09-24
+|-
 
 |Количество запросов
-|51466
+|51462
 
 |Средний размер ответа (в КБ)
 |643KB
@@ -41,7 +41,7 @@
 |1
 
 |-
-|51453
+|51449
 
 |http://www.logstash.net/
 |1
@@ -53,7 +53,7 @@
 
 |304
 |Not Modified
-|13334
+|13330
 
 |416
 |Requested Range Not Satisfiable
@@ -80,35 +80,35 @@
 |===
 | HTTP_USER_AGENT_MAP | Кол-во обращений 
 
-|Debian APT-HTTP/1.3 (1.0.1ubuntu2)
-|11830
+|Twitterbot/1.0
+|1
 
-|Debian APT-HTTP/1.3 (0.9.7.9)
-|11365
+|Chef Client/11.8.2 (ruby-1.9.3-p484; ohai-6.22.0; x86_64-linux; +http://opscode.com)
+|1
 
-|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.21)
-|6723
+|Chef Client/12.0.1 (ruby-2.1.5-p273; ohai-8.0.1; x86_64-linux-gnu; +http://opscode.com)
+|1
 
-|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.16)
-|5740
+|Java/1.7.0_51
+|1
 
-|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.22)
-|3855
+|Java/1.6.0_31
+|1
 
-|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.17)
-|1827
+|Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36
+|1
 
-|Debian APT-HTTP/1.3 (0.8.16~exp12ubuntu10.7)
-|1255
+|Chef Client/11.12.8 (ruby-2.1.3-p242; ohai-7.0.4; x86_64-linux-gnu; +http://opscode.com)
+|1
 
-|urlgrabber/3.9.1 yum/3.2.29
-|792
+|Chef Client/10.34.4 (ruby-1.9.3-p547; ohai-6.24.2; x86_64-linux; +http://opscode.com)
+|1
 
-|Debian APT-HTTP/1.3 (0.9.7.8)
-|750
+|Chef Client/11.4.0 (ruby-1.9.3-p0; ohai-6.16.0; x86_64-linux; +http://opscode.com)
+|1
 
-|urlgrabber/3.9.1 yum/3.4.3
-|708
+|Chef Client/11.16.4 (ruby-1.9.3-p547; ohai-7.4.0; i686-linux; +http://opscode.com)
+|1
 
 |===
 Первая доп. метрика
@@ -133,29 +133,12 @@
 |186
 
 |Перенаправление
-|13334
+|13330
 
 |Клиентская ошибка
 |33918
 
 |Серверная ошибка
 |0
-
-|===
-REMOTE_USER stats
-|===
-| REMOTE_USER | Кол-во запросов 
-
-|User2
-|2
-
-|User1
-|1
-
-|User4
-|1
-
-|-
-|51462
 
 |===

@@ -1,5 +1,6 @@
-package edu.project3;
+package edu.project3.analyzer;
 
+import edu.project3.systeminteraction.ErrorLogger;
 import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,7 +45,7 @@ public class ResponseCodeParser {
     private static boolean checkerFowParser(Element row, String responseCode) {
         Elements columns = row.select("td");
 
-        return columns.size() >= NEEDED_CELL_SIZE && columns.get(0).text().equals(responseCode);
+        return columns.size() >= NEEDED_CELL_SIZE && columns.getFirst().text().equals(responseCode);
     }
 
     public static String getResponseCodeName(String responseCode) {

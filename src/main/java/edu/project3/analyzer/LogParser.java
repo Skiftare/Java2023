@@ -1,8 +1,8 @@
-package edu.project3;
+package edu.project3.analyzer;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static edu.project3.DateFormatter.convertTimeInLogToDate;
+import static edu.project3.systeminteraction.DateFormatter.convertTimeInLogToDate;
 import static edu.project3.utility.UtilityClass.BODY_BYTES_SENT_INDEX;
 import static edu.project3.utility.UtilityClass.HTTP_REFERER_INDEX;
 import static edu.project3.utility.UtilityClass.HTTP_USER_AGENT_INDEX;
@@ -16,7 +16,7 @@ import static edu.project3.utility.UtilityClass.TIME_LOCAL_INDEX;
 @SuppressWarnings("HideUtilityClassConstructor")
 public class LogParser {
 
-    static String[] stupidParse(String incomeString) {
+    public static String[] stupidParse(String incomeString) {
         String separators = "/: ";
         char plusChar = '+';
         String[] parts = new String[LOG_PARTS_COUNT];
@@ -38,8 +38,6 @@ public class LogParser {
         parts[p] = buf.toString();
         return parts;
     }
-
-
 
     public static LogEntry parse(String logLine) {
 

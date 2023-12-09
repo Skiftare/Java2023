@@ -1,5 +1,6 @@
 package edu.project3;
 
+import edu.project3.systeminteraction.DataClass;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -45,7 +46,7 @@ public class TestForLogAnalyzer {
         assertEquals(expectedSize, actualSize);
     }
     static void thenAssertThatElementInHttpUserAgentMapExistExpectedTimes(String element, int expected){
-        assertEquals(expected,DataClass.getHttpUserAgentMap().get(element));
+        assertEquals(expected, DataClass.getHttpUserAgentMap().get(element));
     }
 
     static void thenAssertThatElementInHttpRefererMapExistExpectedTimes(String element, int expected){

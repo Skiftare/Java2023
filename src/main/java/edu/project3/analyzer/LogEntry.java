@@ -1,4 +1,4 @@
-package edu.project3;
+package edu.project3.analyzer;
 
 import java.util.Date;
 
@@ -63,20 +63,20 @@ public class LogEntry {
         this.bodyBytesSent = bodyBytesSent;
     }
 
-    public void setHttpReferer(String group) {
-        this.httpReferer = group;
-    }
-
     public String getHttpReferer() {
         return this.httpReferer;
     }
 
-    public void setHttpUserAgent(String group) {
-        this.httpUserAgent = group;
+    public void setHttpReferer(String group) {
+        this.httpReferer = group;
     }
 
     public String getHttpUserAgent() {
         return this.httpUserAgent;
+    }
+
+    public void setHttpUserAgent(String group) {
+        this.httpUserAgent = group;
     }
 
 }

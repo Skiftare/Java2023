@@ -1,5 +1,6 @@
-package edu.project3;
+package edu.project3.systeminteraction;
 
+import edu.project3.analyzer.LogEntry;
 import edu.project3.utility.UtilityClass;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,13 +23,12 @@ public class DataClass {
     private static Integer totalRequests = 0;
     private static Integer totalResponseSizeByKB = 0;
 
-
     public static Date getMinDate() {
-        return  minDate;
+        return minDate;
     }
 
     public static Date getMaxDate() {
-        return  maxDate;
+        return maxDate;
     }
 
     public static Integer getTotalRequests() {
@@ -74,7 +74,6 @@ public class DataClass {
     public static ArrayList<String> getReadedLogs() {
         return READED_LOGS;
     }
-
 
     public static void addReadedLog(String s) {
         READED_LOGS.add(s);

@@ -1,5 +1,6 @@
-package edu.project3;
+package edu.project3.systeminteraction;
 
+import edu.project3.generators.tables.Table;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -15,13 +16,9 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("HideUtilityClassConstructor")
 public class FileAndPathManager {
-    private static String fileFormat = null;
     private static final String FOLDER_FOR_OUTPUT = "src/main/resources/";
+    private static String fileFormat = null;
     private static String fileName = null;
-
-    public static void setFileFormat(String newFileFormat) {
-        fileFormat = newFileFormat;
-    }
 
     public static void setFileName(String newFileName) {
         fileName = newFileName;
@@ -29,6 +26,10 @@ public class FileAndPathManager {
 
     public static String getFileFormat() {
         return fileFormat;
+    }
+
+    public static void setFileFormat(String newFileFormat) {
+        fileFormat = newFileFormat;
     }
 
     public static void makeFileName() {
@@ -87,7 +88,6 @@ public class FileAndPathManager {
         return logFiles;
     }
 
-
     private static List<Path> findFilesRecursively(String logPath) {
         List<Path> logFiles = new ArrayList<>();
         StringBuilder sb = new StringBuilder();
@@ -122,21 +122,21 @@ public class FileAndPathManager {
         return logFiles;
     }
 
-    static BufferedReader createReaderForLogParser(Path logPath) throws IOException {
+    public static BufferedReader createReaderForLogParser(Path logPath) throws IOException {
         return Files.newBufferedReader(logPath);
     }
 
-    static void writeToFile(Table tables) {
+    public static void writeToFile(Table tables) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(
             FOLDER_FOR_OUTPUT
                 + fileName
                 + fileFormat,
-            true))) {
+            true
+        ))) {
             writer.write(tables.printAsString());
         } catch (IOException e) {
             ErrorLogger.createLogError("Ошибка при записи файла: " + e.getMessage());
         }
     }
-
 
 }
