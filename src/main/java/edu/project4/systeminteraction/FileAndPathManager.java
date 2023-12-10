@@ -1,5 +1,6 @@
 package edu.project4.systeminteraction;
 
+import edu.project4.components.ImageProperties;
 import edu.project4.image.FractalImage;
 import edu.project4.image.ImageFormat;
 import java.awt.image.BufferedImage;

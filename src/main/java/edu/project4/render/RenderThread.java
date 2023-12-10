@@ -3,7 +3,7 @@ package edu.project4.render;
 import edu.project4.components.Pixel;
 import edu.project4.components.Point;
 import edu.project4.image.FractalImage;
-import edu.project4.systeminteraction.ImageProperties;
+import edu.project4.components.ImageProperties;
 import edu.project4.transformation.Transformation;
 import edu.project4.transformation.afin.AfinCompose;
 import edu.project4.transformation.afin.AfinTransformation;
@@ -27,6 +27,7 @@ class RenderThread implements Runnable {
     private final int sym;
     private final NonLinearCompose vars;
     private static final int START_FRACTAL_VAL = -20;
+    private final int countOfCores;
 
     RenderThread(
         FractalImage image,
@@ -40,6 +41,7 @@ class RenderThread implements Runnable {
         this.vars = prop.vars();
         this.compositionOfAffinity = compositionOfAffinity;
         this.countOfPointsPerThread = prop.countOfPoints();
+        this.countOfCores = prop.cores();
 
     }
 
@@ -76,20 +78,17 @@ class RenderThread implements Runnable {
         return xCoord >= 0 && yCoord >= 0 && xCoord < image.width() && yCoord < image.height();
     }
 
-    private Boolean isInsideForDouble(double xCoord, double yCoord) {
-        Point ok = normalizePoint(new Point(xCoord, yCoord));
-        return isInside((int) ok.x(), (int) ok.y());
-    }
-
     public void run() {
         double newX;
         double newY;
         int xCoord;
         int yCoord;
-        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n += max(sym, 1)) {
+        FractalImage im = FractalImage.create(image.width(), image.height());
+        int delta = countOfCores+max(sym, 1);
+        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n++) {
             newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
             newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
-            for (int step = START_FRACTAL_VAL; step < countOfPointsPerThread; step++) {
+            for (int step = START_FRACTAL_VAL; step < countOfPointsPerThread; step+=delta) {
 
                 Transformation trans = vars.getNonLinear();
 
@@ -99,7 +98,7 @@ class RenderThread implements Runnable {
                 newX = p.x();
                 newY = p.y();
 
-                if (step >= 0 && isInsideForDouble(newX, newY)) {
+                if (step >= 0) {
                     double theta = 0.0;
                     for (int s = 0; s < sym; s++) {
                         theta += 2 * Math.PI / (float) (sym);
@@ -111,23 +110,37 @@ class RenderThread implements Runnable {
                         yCoord = (int) finalPoint.y();
 
                         if (isInside(xCoord, yCoord)) {
-                            synchronized (image) {
-                                Pixel curr = image.pixel(xCoord, yCoord);
+
+                                Pixel curr = im.pixel(xCoord, yCoord);
                                 if (curr.hitCount() == 0) {
-                                    image.setPixel(xCoord, yCoord,
+                                    im.setPixel(xCoord, yCoord,
                                         new Pixel(afin.getColor(), 1)
                                     );
                                 } else {
-                                    image.setPixel(xCoord, yCoord,
+                                    im.setPixel(xCoord, yCoord,
                                         new Pixel(mixColors(afin.getColor(), curr.col()), curr.hitCount() + 1)
                                     );
                                 }
-                            }
+
                         }
                     }
 
                 }
 
+            }
+            synchronized (image){
+                for(int i = 0;i<im.width();i++){
+                    for(int j = 0;j<im.height();j++){
+                        Pixel curr = im.pixel(i, j);
+                        Pixel origin = image.pixel(i,j);
+                        if(origin.hitCount() == 0){
+                            image.setPixel(i,j,curr);
+                        }
+                        else{
+                            image.setPixel(i,j,new Pixel(mixColors(origin.col(),curr.col()), curr.hitCount()+origin.hitCount()));
+                        }
+                    }
+                }
             }
         }
     }
