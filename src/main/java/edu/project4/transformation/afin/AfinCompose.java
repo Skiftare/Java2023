@@ -4,9 +4,9 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 
 public class AfinCompose {
+    final SecureRandom random = new SecureRandom();
     private final ArrayList<AfinTransformation> afinMas;
     private final int n;
-    SecureRandom random = new SecureRandom();
 
     public AfinCompose(int n) {
         this.n = n;

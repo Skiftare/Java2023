@@ -1,4 +1,4 @@
-package edu.project4.systeminteraction;
+package edu.project4.components;
 
 import edu.project4.transformation.nonlinear.NonLinearCompose;
 
@@ -10,7 +10,8 @@ public record ImageProperties(
     int height,
     int symmetry,
     NonLinearCompose vars,
-    int countOfPoints
+    int countOfPoints,
+    int cores
 ) {
 
 }

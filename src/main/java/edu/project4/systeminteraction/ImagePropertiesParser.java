@@ -1,5 +1,6 @@
 package edu.project4.systeminteraction;
 
+import edu.project4.components.ImageProperties;
 import edu.project4.transformation.Transformation;
 import edu.project4.transformation.nonlinear.NonLinearCompose;
 import edu.project4.transformation.nonlinear.variations.DiskTransformation;
@@ -25,6 +26,7 @@ import static edu.project4.systeminteraction.SystemUtils.PROPERTIES_FILENAME;
 import static edu.project4.systeminteraction.SystemUtils.UPPER_BOUND_OF_SYMMETRY;
 
 public class ImagePropertiesParser {
+    private final static int AVAILABLE_CORES = Runtime.getRuntime().availableProcessors();
     private static String propertiesPath = null;
     private final FileAndPathManager manager = new FileAndPathManager();
 
@@ -88,7 +90,6 @@ public class ImagePropertiesParser {
                     transSet.add(new PolarTransformation());
                     transSet.add(new SinusoidalTransformation());
                     transSet.add(new SphericalTransformation());
-
                     break;
             }
         }
@@ -128,7 +129,18 @@ public class ImagePropertiesParser {
         NonLinearCompose res = getNonLinearFromProperty(properties.getProperty("transformation", DEFAULT_NONLINEAR));
         int countOfPoints =
             (int) Double.parseDouble(properties.getProperty("points", String.valueOf(DEFAULT_COUNT_OF_POINTS)));
-        return new ImageProperties(fileName, outputFolder, fileExtension, width, height, sym, res, countOfPoints);
+        int countOfCores = Integer.parseInt(properties.getProperty("cores", String.valueOf(AVAILABLE_CORES)));
+        return new ImageProperties(
+            fileName,
+            outputFolder,
+            fileExtension,
+            width,
+            height,
+            sym,
+            res,
+            countOfPoints,
+            countOfCores
+        );
     }
 
     private ImageProperties generateDefaultProperties() {
@@ -143,7 +155,8 @@ public class ImagePropertiesParser {
             DEFAULT_HEIGHT,
             sym,
             getNonLinearFromProperty(DEFAULT_NONLINEAR),
-            DEFAULT_COUNT_OF_POINTS
+            DEFAULT_COUNT_OF_POINTS,
+            AVAILABLE_CORES
         );
     }
 

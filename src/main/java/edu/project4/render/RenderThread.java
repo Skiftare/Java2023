@@ -1,15 +1,15 @@
 package edu.project4.render;
 
+import edu.project4.components.ImageProperties;
 import edu.project4.components.Pixel;
 import edu.project4.components.Point;
 import edu.project4.image.FractalImage;
-import edu.project4.systeminteraction.ImageProperties;
 import edu.project4.transformation.Transformation;
 import edu.project4.transformation.afin.AfinCompose;
 import edu.project4.transformation.afin.AfinTransformation;
 import edu.project4.transformation.nonlinear.NonLinearCompose;
 import java.awt.Color;
-import java.security.SecureRandom;
+import java.util.concurrent.ThreadLocalRandom;
 import static edu.project4.image.ImageUtils.COUNT_OF_RANDOM_POINTS;
 import static edu.project4.image.ImageUtils.X_MAX;
 import static edu.project4.image.ImageUtils.X_MIN;
@@ -20,27 +20,32 @@ import static java.lang.Math.max;
 import static java.lang.Math.sin;
 
 class RenderThread implements Runnable {
+    private static final int START_FRACTAL_VAL = -20;
     private final FractalImage image;
-    private final SecureRandom random;
+    private final ThreadLocalRandom random;
     private final int countOfPointsPerThread;
     private final AfinCompose compositionOfAffinity;
     private final int sym;
     private final NonLinearCompose vars;
-    private static final int START_FRACTAL_VAL = -20;
+    private final int countOfCores;
 
     RenderThread(
         FractalImage image,
-        SecureRandom random,
         ImageProperties prop,
         AfinCompose compositionOfAffinity
     ) {
         this.image = image;
-        this.random = random;
+        this.random = ThreadLocalRandom.current();
         this.sym = prop.symmetry();
         this.vars = prop.vars();
         this.compositionOfAffinity = compositionOfAffinity;
         this.countOfPointsPerThread = prop.countOfPoints();
+        this.countOfCores = prop.cores();
 
+    }
+
+    private FractalImage getImage() {
+        return image;
     }
 
     private int getMedianVal(int a, int b) {
@@ -76,20 +81,16 @@ class RenderThread implements Runnable {
         return xCoord >= 0 && yCoord >= 0 && xCoord < image.width() && yCoord < image.height();
     }
 
-    private Boolean isInsideForDouble(double xCoord, double yCoord) {
-        Point ok = normalizePoint(new Point(xCoord, yCoord));
-        return isInside((int) ok.x(), (int) ok.y());
-    }
-
     public void run() {
         double newX;
         double newY;
         int xCoord;
         int yCoord;
-        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n += max(sym, 1)) {
+        int delta = countOfCores + max(sym, 1);
+        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n += delta) {
             newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
             newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
-            for (int step = START_FRACTAL_VAL; step < countOfPointsPerThread; step++) {
+            for (int step = START_FRACTAL_VAL; step < countOfPointsPerThread; step += delta) {
 
                 Transformation trans = vars.getNonLinear();
 
@@ -99,7 +100,7 @@ class RenderThread implements Runnable {
                 newX = p.x();
                 newY = p.y();
 
-                if (step >= 0 && isInsideForDouble(newX, newY)) {
+                if (step >= 0) {
                     double theta = 0.0;
                     for (int s = 0; s < sym; s++) {
                         theta += 2 * Math.PI / (float) (sym);
@@ -111,13 +112,14 @@ class RenderThread implements Runnable {
                         yCoord = (int) finalPoint.y();
 
                         if (isInside(xCoord, yCoord)) {
-                            synchronized (image) {
+                            synchronized (image.pixel(xCoord, yCoord)) {
                                 Pixel curr = image.pixel(xCoord, yCoord);
                                 if (curr.hitCount() == 0) {
                                     image.setPixel(xCoord, yCoord,
                                         new Pixel(afin.getColor(), 1)
                                     );
                                 } else {
+
                                     image.setPixel(xCoord, yCoord,
                                         new Pixel(mixColors(afin.getColor(), curr.col()), curr.hitCount() + 1)
                                     );
@@ -130,5 +132,8 @@ class RenderThread implements Runnable {
 
             }
         }
+
     }
 }
+
+

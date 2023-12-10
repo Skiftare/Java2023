@@ -1,5 +1,6 @@
 package edu.project4.systeminteraction;
 
+import edu.project4.components.ImageProperties;
 import edu.project4.image.FractalImage;
 import edu.project4.image.ImageFormat;
 import java.awt.image.BufferedImage;
@@ -14,7 +15,9 @@ import static edu.project4.systeminteraction.SystemUtils.DEFAULT_OUTPUT_FOLDER;
 public class FileAndPathManager {
     public void saveToFile(FractalImage image, ImageProperties props) {
         BufferedImage savedImage = new BufferedImage(image.width(), image.height(), BufferedImage.TYPE_INT_RGB);
+
         File outputFile = new File(props.outputFolder() + '/' + props.fileName() + '.' + props.fileExtension());
+
         for (int x = 0; x < image.width(); x++) {
             for (int y = 0; y < image.height(); y++) {
                 savedImage.setRGB(x, y, image.pixel(x, y).col().getRGB());
@@ -22,6 +25,7 @@ public class FileAndPathManager {
         }
         try {
             ImageIO.write(savedImage, props.fileExtension(), outputFile);
+            ErrorLogger.createLog(props.fileName());
             ErrorLogger.createLog("Изображение успешно записано на диск.");
         } catch (IOException e) {
             ErrorLogger.createLogError(e.getMessage());
