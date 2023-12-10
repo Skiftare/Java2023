@@ -26,9 +26,9 @@ import static edu.project4.systeminteraction.SystemUtils.PROPERTIES_FILENAME;
 import static edu.project4.systeminteraction.SystemUtils.UPPER_BOUND_OF_SYMMETRY;
 
 public class ImagePropertiesParser {
+    private final static int AVAILABLE_CORES = Runtime.getRuntime().availableProcessors();
     private static String propertiesPath = null;
     private final FileAndPathManager manager = new FileAndPathManager();
-    private final static int AVAILABLE_CORES = Runtime.getRuntime().availableProcessors();
 
     public ImagePropertiesParser(String[] args) {
         StringBuilder pathPropertiesBuilder = new StringBuilder();
@@ -77,14 +77,19 @@ public class ImagePropertiesParser {
                     break;
                 case "anyone":
                     transSet.clear();
+                    transSet.add(new DiskTransformation());
+                    transSet.add(new HeartTransformation());
+                    transSet.add(new PolarTransformation());
+                    transSet.add(new SinusoidalTransformation());
+                    transSet.add(new SphericalTransformation());
                     bFlagOfChoosedAnyOneRandom = true;
+                    break;
                 default:
                     transSet.add(new DiskTransformation());
                     transSet.add(new HeartTransformation());
                     transSet.add(new PolarTransformation());
                     transSet.add(new SinusoidalTransformation());
                     transSet.add(new SphericalTransformation());
-
                     break;
             }
         }
@@ -125,7 +130,17 @@ public class ImagePropertiesParser {
         int countOfPoints =
             (int) Double.parseDouble(properties.getProperty("points", String.valueOf(DEFAULT_COUNT_OF_POINTS)));
         int countOfCores = Integer.parseInt(properties.getProperty("cores", String.valueOf(AVAILABLE_CORES)));
-        return new ImageProperties(fileName, outputFolder, fileExtension, width, height, sym, res, countOfPoints, countOfCores);
+        return new ImageProperties(
+            fileName,
+            outputFolder,
+            fileExtension,
+            width,
+            height,
+            sym,
+            res,
+            countOfPoints,
+            countOfCores
+        );
     }
 
     private ImageProperties generateDefaultProperties() {

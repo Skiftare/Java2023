@@ -20,18 +20,14 @@ import static java.lang.Math.max;
 import static java.lang.Math.sin;
 
 class RenderThread implements Runnable {
+    private static final int START_FRACTAL_VAL = -20;
     private final FractalImage image;
     private final ThreadLocalRandom random;
     private final int countOfPointsPerThread;
     private final AfinCompose compositionOfAffinity;
     private final int sym;
     private final NonLinearCompose vars;
-    private static final int START_FRACTAL_VAL = -20;
     private final int countOfCores;
-
-    private FractalImage getImage() {
-        return image;
-    }
 
     RenderThread(
         FractalImage image,
@@ -46,6 +42,10 @@ class RenderThread implements Runnable {
         this.countOfPointsPerThread = prop.countOfPoints();
         this.countOfCores = prop.cores();
 
+    }
+
+    private FractalImage getImage() {
+        return image;
     }
 
     private int getMedianVal(int a, int b) {
@@ -133,7 +133,7 @@ class RenderThread implements Runnable {
             }
         }
 
-        }
     }
+}
 
 

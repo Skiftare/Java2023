@@ -6,8 +6,8 @@ import java.awt.Color;
 public class FractalImage {
     private static final String EXCEPTION_COORDINATES = "Invalid coordinates";
     private final Pixel[] data;
-    private final int width ;
-    private final int height ;
+    private final int width;
+    private final int height;
 
     public FractalImage(int width, int height) {
         this.width = width;

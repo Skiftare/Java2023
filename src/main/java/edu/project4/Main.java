@@ -1,12 +1,12 @@
 package edu.project4;
 
+import edu.project4.components.ImageProperties;
 import edu.project4.image.FractalImage;
 import edu.project4.image.ImageNormalizer;
 import edu.project4.render.MultiThreadRender;
 import edu.project4.render.Renderer;
 import edu.project4.systeminteraction.ErrorLogger;
 import edu.project4.systeminteraction.FileAndPathManager;
-import edu.project4.components.ImageProperties;
 import edu.project4.systeminteraction.ImagePropertiesParser;
 import java.io.IOException;
 

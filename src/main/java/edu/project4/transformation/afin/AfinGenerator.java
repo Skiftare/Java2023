@@ -4,12 +4,12 @@ import java.awt.Color;
 import java.security.SecureRandom;
 
 class AfinGenerator {
-    private final SecureRandom secureRandom = new SecureRandom();
     private final static int UPPER_BOUND_FOR_COLOR = 255;
     private final static double UPPER_BOUND_FOR_RAND_COEFF = 1.5;
     private final static double LOWER_BOUND_FOR_RAND_COEFF = -1.5;
     private final static double UPPER_BOUND_FOR_FREE_COEFF = 2;
     private final static double LOWER_BOUND_FOR_FREE_COEFF = -2;
+    private final SecureRandom secureRandom = new SecureRandom();
 
     AfinTransformation generateWithGoodCoeff(Color col) {
         double a;
