@@ -10,6 +10,7 @@ import edu.project4.transformation.afin.AfinTransformation;
 import edu.project4.transformation.nonlinear.NonLinearCompose;
 import java.awt.Color;
 import java.security.SecureRandom;
+import java.util.concurrent.ThreadLocalRandom;
 import static edu.project4.image.ImageUtils.COUNT_OF_RANDOM_POINTS;
 import static edu.project4.image.ImageUtils.X_MAX;
 import static edu.project4.image.ImageUtils.X_MIN;
@@ -21,7 +22,7 @@ import static java.lang.Math.sin;
 
 class RenderThread implements Runnable {
     private final FractalImage image;
-    private final SecureRandom random;
+    private final ThreadLocalRandom random;
     private final int countOfPointsPerThread;
     private final AfinCompose compositionOfAffinity;
     private final int sym;
@@ -31,12 +32,11 @@ class RenderThread implements Runnable {
 
     RenderThread(
         FractalImage image,
-        SecureRandom random,
         ImageProperties prop,
         AfinCompose compositionOfAffinity
     ) {
         this.image = image;
-        this.random = random;
+        this.random =  ThreadLocalRandom.current();
         this.sym = prop.symmetry();
         this.vars = prop.vars();
         this.compositionOfAffinity = compositionOfAffinity;
@@ -85,7 +85,7 @@ class RenderThread implements Runnable {
         int yCoord;
         FractalImage im = FractalImage.create(image.width(), image.height());
         int delta = countOfCores+max(sym, 1);
-        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n++) {
+        for (int n = 0; n < COUNT_OF_RANDOM_POINTS; n+=delta) {
             newX = X_MIN + (X_MAX - X_MIN) * random.nextDouble();
             newY = Y_MIN + (Y_MAX - Y_MIN) * random.nextDouble();
             for (int step = START_FRACTAL_VAL; step < countOfPointsPerThread; step+=delta) {
@@ -127,20 +127,6 @@ class RenderThread implements Runnable {
 
                 }
 
-            }
-            synchronized (image){
-                for(int i = 0;i<im.width();i++){
-                    for(int j = 0;j<im.height();j++){
-                        Pixel curr = im.pixel(i, j);
-                        Pixel origin = image.pixel(i,j);
-                        if(origin.hitCount() == 0){
-                            image.setPixel(i,j,curr);
-                        }
-                        else{
-                            image.setPixel(i,j,new Pixel(mixColors(origin.col(),curr.col()), curr.hitCount()+origin.hitCount()));
-                        }
-                    }
-                }
             }
         }
     }
