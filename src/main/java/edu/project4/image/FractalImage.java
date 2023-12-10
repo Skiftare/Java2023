@@ -3,15 +3,20 @@ package edu.project4.image;
 import edu.project4.components.Pixel;
 import java.awt.Color;
 
-public record FractalImage(Pixel[] data, int width, int height) {
+public class FractalImage {
     private static final String EXCEPTION_COORDINATES = "Invalid coordinates";
+    private final Pixel[] data;
+    private final int width ;
+    private final int height ;
 
-    public static FractalImage create(int width, int height) {
-        Pixel[] data = new Pixel[width * height];
+    public FractalImage(int width, int height) {
+        this.width = width;
+        this.height = height;
+        this.data = new Pixel[width * height];
         for (int i = 0; i < width * height; i++) {
             data[i] = new Pixel(Color.BLACK, 0);
         }
-        return new FractalImage(data, width, height);
+
     }
 
     public boolean contains(int x, int y) {
@@ -33,5 +38,13 @@ public record FractalImage(Pixel[] data, int width, int height) {
             return data[index];
         }
         throw new IllegalArgumentException(EXCEPTION_COORDINATES);
+    }
+
+    public int width() {
+        return width;
+    }
+
+    public int height() {
+        return height;
     }
 }

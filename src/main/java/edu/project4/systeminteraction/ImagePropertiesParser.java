@@ -77,13 +77,7 @@ public class ImagePropertiesParser {
                     break;
                 case "anyone":
                     transSet.clear();
-                    transSet.add(new DiskTransformation());
-                    transSet.add(new HeartTransformation());
-                    transSet.add(new PolarTransformation());
-                    transSet.add(new SinusoidalTransformation());
-                    transSet.add(new SphericalTransformation());
                     bFlagOfChoosedAnyOneRandom = true;
-                    break;
                 default:
                     transSet.add(new DiskTransformation());
                     transSet.add(new HeartTransformation());

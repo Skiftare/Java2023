@@ -34,33 +34,17 @@ public class MultiThreadRender implements Renderer {
 
         return new Color(newRed, newGreen, newBlue);
     }
-    private FractalImage mergeImages(FractalImage image, FractalImage im){
-        for(int i = 0;i<im.width();i++) {
-            for (int j = 0; j < im.height(); j++) {
-                Pixel curr = im.pixel(i, j);
-                Pixel origin = image.pixel(i, j);
-                if (origin.hitCount() == 0) {
-                    image.setPixel(i, j, curr);
-                } else {
-                    image.setPixel(i,
-                        j,
-                        new Pixel(mixColors(origin.col(), curr.col()), curr.hitCount() + origin.hitCount()));
-                }
-            }
-        }
-        return image;
-    }
+
 
     public FractalImage makeImage(){
-        FractalImage image = FractalImage.create(prop.width(), prop.height());
+        FractalImage image = new FractalImage(prop.width(), prop.height());
         Thread[] threads = new Thread[customCountOfThreads];
         AfinCompose afin = new AfinCompose(COUNT_OF_AFIN);
         FractalImage[] threadImages = new FractalImage[customCountOfThreads];
 
         for (int i = 0; i < customCountOfThreads; i++) {
-            threadImages[i] = FractalImage.create(image.width(), image.height());
             ErrorLogger.createLog("Thread " + i + " has been started");
-            threads[i] = new Thread(new RenderThread(threadImages[i], prop, afin));
+            threads[i] = new Thread(new RenderThread(image, prop, afin));
             threads[i].start();
 
         }
@@ -72,10 +56,8 @@ public class MultiThreadRender implements Renderer {
                 ErrorLogger.createLogError(e.getMessage());
             }
         }
-        for(int i = 1;i<customCountOfThreads;i++){
-            threadImages[0] = mergeImages(threadImages[0],threadImages[1]);
-        }
-        return threadImages[0];
 
+
+        return image;
     }
 }
