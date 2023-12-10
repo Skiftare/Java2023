@@ -32,8 +32,8 @@ public class NonLinearTransformationTest {
 
     private List<Point> fillByTransformation(Transformation trans) {
         List<Point> realPoint = new ArrayList<>();
-        for (int i = 0; i < points.size(); i++) {
-            Point transformedPoint = trans.apply(points.get(i));
+        for (Point point : points) {
+            Point transformedPoint = trans.apply(point);
             realPoint.add(transformedPoint);
         }
         return realPoint;
