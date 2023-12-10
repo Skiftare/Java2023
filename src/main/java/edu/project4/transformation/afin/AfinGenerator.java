@@ -6,8 +6,8 @@ import java.security.SecureRandom;
 class AfinGenerator {
     private final SecureRandom secureRandom = new SecureRandom();
     private final static int UPPER_BOUND_FOR_COLOR = 255;
-    private final static double UPPER_BOUND_FOR_RAND_KOEFF = 1.5;
-    private final static double LOWER_BOUND_FOR_RAND_KOEFF = -1.5;
+    private final static double UPPER_BOUND_FOR_RAND_COEFF = 1.5;
+    private final static double LOWER_BOUND_FOR_RAND_COEFF = -1.5;
     private final static double UPPER_BOUND_FOR_FREE_COEFF = 2;
     private final static double LOWER_BOUND_FOR_FREE_COEFF = -2;
 
@@ -51,11 +51,11 @@ class AfinGenerator {
         double e;
         double f;
 
-        a = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_KOEFF, UPPER_BOUND_FOR_RAND_KOEFF);
-        b = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_KOEFF, UPPER_BOUND_FOR_RAND_KOEFF);
+        a = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_COEFF, UPPER_BOUND_FOR_RAND_COEFF);
+        b = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_COEFF, UPPER_BOUND_FOR_RAND_COEFF);
         c = secureRandom.nextDouble(LOWER_BOUND_FOR_FREE_COEFF, UPPER_BOUND_FOR_FREE_COEFF);
-        d = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_KOEFF, UPPER_BOUND_FOR_RAND_KOEFF);
-        e = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_KOEFF, UPPER_BOUND_FOR_RAND_KOEFF);
+        d = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_COEFF, UPPER_BOUND_FOR_RAND_COEFF);
+        e = secureRandom.nextDouble(LOWER_BOUND_FOR_RAND_COEFF, UPPER_BOUND_FOR_RAND_COEFF);
         f = secureRandom.nextDouble(LOWER_BOUND_FOR_FREE_COEFF, UPPER_BOUND_FOR_FREE_COEFF);
 
         return new AfinTransformation(a, b, c, d, e, f, col);

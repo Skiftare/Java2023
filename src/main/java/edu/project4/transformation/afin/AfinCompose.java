@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class AfinCompose {
     private final ArrayList<AfinTransformation> afinMas;
     private final int n;
-    SecureRandom random = new SecureRandom();
+    final SecureRandom random = new SecureRandom();
 
     public AfinCompose(int n) {
         this.n = n;

@@ -1,12 +1,11 @@
 package edu.project4.render;
 
 import edu.project4.components.ImageProperties;
-import edu.project4.components.Pixel;
 import edu.project4.image.FractalImage;
 import edu.project4.systeminteraction.ErrorLogger;
 import edu.project4.transformation.afin.AfinCompose;
 import java.awt.Color;
-import java.security.SecureRandom;
+
 import static edu.project4.image.ImageUtils.COUNT_OF_AFIN;
 
 public class MultiThreadRender implements Renderer {
@@ -40,7 +39,6 @@ public class MultiThreadRender implements Renderer {
         FractalImage image = new FractalImage(prop.width(), prop.height());
         Thread[] threads = new Thread[customCountOfThreads];
         AfinCompose afin = new AfinCompose(COUNT_OF_AFIN);
-        FractalImage[] threadImages = new FractalImage[customCountOfThreads];
 
         for (int i = 0; i < customCountOfThreads; i++) {
             ErrorLogger.createLog("Thread " + i + " has been started");
