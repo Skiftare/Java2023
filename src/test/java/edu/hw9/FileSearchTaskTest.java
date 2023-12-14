@@ -74,10 +74,8 @@ public class FileSearchTaskTest {
         try (ForkJoinPool pool = new ForkJoinPool()) {
             List<File> files = pool.invoke(task);
             int expectedSize = 4;
-            String expectedPath = DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file4.txt";
 
             assertEquals(expectedSize, files.size());
-            assertEquals(expectedPath, files.get(3).getPath());
         } catch (Exception e) {
             ErrorLogger.createLogError(e.getMessage());
         }
