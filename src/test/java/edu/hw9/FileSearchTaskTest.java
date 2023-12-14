@@ -1,12 +1,12 @@
 package edu.hw9;
 
+import edu.hw9.task2.FileSearchTask;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Predicate;
-import edu.hw9.task2.FileSearchTask;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FileSearchTaskTest {
     private static final String DIRECTORY_PATH = "src\\test\\java\\edu\\hw9\\testFolder";
-
 
     @BeforeEach
     public void setUp() {
@@ -36,7 +35,8 @@ public class FileSearchTaskTest {
         int minNumberOfFiles = 2;
 
         //when: we make search in the directories with predicate help
-        Predicate<File> predicate = file -> file.isDirectory() && Objects.requireNonNull(file.listFiles()).length > minNumberOfFiles;
+        Predicate<File> predicate =
+            file -> file.isDirectory() && Objects.requireNonNull(file.listFiles()).length > minNumberOfFiles;
         FileSearchTask directorySearchTask = new FileSearchTask(
             new File(DIRECTORY_PATH),
             predicate,
@@ -50,7 +50,7 @@ public class FileSearchTaskTest {
 
             assertEquals(1, files.size());
             assertEquals(expected, files.get(0).getPath());
-        } catch (Exception e){
+        } catch (Exception e) {
             ErrorLogger.createLogError(e.getMessage());
         }
     }
@@ -67,44 +67,44 @@ public class FileSearchTaskTest {
         FileSearchTask task = new FileSearchTask(
             directory,
             predicate,
-            false);
+            false
+        );
 
         //then: we get number of files.
         try (ForkJoinPool pool = new ForkJoinPool()) {
             List<File> files = pool.invoke(task);
             int expectedSize = 4;
-            String expectedPath = DIRECTORY_PATH + File.separator + "file4.txt";
+            String expectedPath = DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file4.txt";
 
             assertEquals(expectedSize, files.size());
-            assertEquals(expectedPath, files.get(4).getPath());
-        }
-        catch (Exception e){
+            assertEquals(expectedPath, files.get(3).getPath());
+        } catch (Exception e) {
             ErrorLogger.createLogError(e.getMessage());
         }
     }
 
     private void createFilesAndDirectories() {
 
-            new File(DIRECTORY_PATH).mkdir();
+        new File(DIRECTORY_PATH).mkdir();
 
-            try {
-                File file1 = new File(DIRECTORY_PATH + File.separator + "file1.txt");
-                file1.createNewFile();
+        try {
+            File file1 = new File(DIRECTORY_PATH + File.separator + "file1.txt");
+            file1.createNewFile();
 
-                File file2 = new File(DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file2.txt");
-                file2.getParentFile().mkdirs();
-                file2.createNewFile();
+            File file2 = new File(DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file2.txt");
+            file2.getParentFile().mkdirs();
+            file2.createNewFile();
 
-                File file3 = new File(DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file3.txt");
-                file3.createNewFile();
+            File file3 = new File(DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file3.txt");
+            file3.createNewFile();
 
-                File file4 = new File(DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file4.txt");
-                file4.createNewFile();
+            File file4 = new File(DIRECTORY_PATH + File.separator + "dir1" + File.separator + "file4.txt");
+            file4.createNewFile();
 
-            } catch (IOException e) {
-                ErrorLogger.createLogError(e.getMessage());
+        } catch (IOException e) {
+            ErrorLogger.createLogError(e.getMessage());
 
-            }
+        }
 
     }
 

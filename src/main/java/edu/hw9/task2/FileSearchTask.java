@@ -27,31 +27,35 @@ public class FileSearchTask extends RecursiveTask<List<File>> {
 
             if (files != null) {
                 for (File file : files) {
-                    if (file.isDirectory() && searchDirectories) {
-                        FileSearchTask subTask = new FileSearchTask(file, predicate, true);
-                        subTasks.add(subTask);
-                        subTask.fork();
-
-                    } else if (file.isDirectory()) {
-
-                        FileSearchTask subTask =
-                            new FileSearchTask(file, predicate, false);
-                        subTasks.add(subTask);
-                        subTask.fork();
-
+                    if (file.isDirectory()) {
+                        handleDirectoryFile(file, subTasks);
                     }
+                    handleNonDirectoryFile(file, foundFiles);
 
-                    if (predicate.test(file)) {
-                        foundFiles.add(file);
-                    }
                 }
             }
 
-            for (FileSearchTask subTask : subTasks) {
-                foundFiles.addAll(subTask.join());
-            }
+            joinSubTasks(subTasks, foundFiles);
         }
 
         return foundFiles;
+    }
+
+    private void handleDirectoryFile(File file, List<FileSearchTask> subTasks) {
+        FileSearchTask subTask = new FileSearchTask(file, predicate, searchDirectories);
+        subTasks.add(subTask);
+        subTask.fork();
+    }
+
+    private void handleNonDirectoryFile(File file, List<File> foundFiles) {
+        if (predicate.test(file)) {
+            foundFiles.add(file);
+        }
+    }
+
+    private void joinSubTasks(List<FileSearchTask> subTasks, List<File> foundFiles) {
+        for (FileSearchTask subTask : subTasks) {
+            foundFiles.addAll(subTask.join());
+        }
     }
 }
