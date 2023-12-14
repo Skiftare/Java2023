@@ -91,7 +91,7 @@ public class StatsCollectorTest {
         throws InterruptedException {
 
         //given: data and threads
-        int numThreads = 8;
+        int numThreads = Runtime.getRuntime().availableProcessors();
 
         //when: run single & multi-thread realization
         long executionTimeSingleThread = measureTimeOfExecutionForSingleThread(numThreads);
