@@ -49,7 +49,7 @@ public class FileSearchTaskTest {
             String expected = DIRECTORY_PATH + File.separator + "dir1";
 
             assertEquals(1, files.size());
-            assertEquals(expected, files.get(0).getPath());
+            assertEquals(expected, files.getFirst().getPath());
         } catch (Exception e) {
             ErrorLogger.createLogError(e.getMessage());
         }
