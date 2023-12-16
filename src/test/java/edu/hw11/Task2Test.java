@@ -5,10 +5,10 @@ import edu.hw11.utils.SumInterceptor;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.matcher.ElementMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.assertEquals;
 
-public class Task2 {
+public class Task2Test {
 
     @Test
     public void testThatBla() throws Exception {
@@ -26,7 +26,7 @@ public class Task2 {
 
         // then: injection works and "+" is replaced by "*";
         int result = modifiedUtils.sum(2, 3);
-        assertEquals(result,6);
+        Assertions.assertEquals(result, 6);
 
     }
 

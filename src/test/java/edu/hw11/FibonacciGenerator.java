@@ -43,9 +43,6 @@ public class FibonacciGenerator {
         // Цикл для вычисления чисел Фибоначчи
         Label l2 = new Label();
         mv.visitLabel(l2);
-        //mv.visitVarInsn(Opcodes.ILOAD, 0);
-        //mv.visitInsn(Opcodes.ICONST_2);
-        //mv.visitJumpInsn(Opcodes.IF_ICMPGT, l2);
         Label l3 = new Label();
         mv.visitLabel(l3);
 

@@ -3,8 +3,8 @@ package edu.hw11;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.matcher.ElementMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import static org.junit.Assert.assertEquals;
 
 public class Task1Test {
     @Test
@@ -21,7 +21,7 @@ public class Task1Test {
 
         Object instance = dynamicType.getDeclaredConstructor().newInstance();
 
-        assertEquals(expectedResult, instance.toString());
+        Assertions.assertEquals(expectedResult, instance.toString());
 
         } catch (Exception e) {
            ErrorLogger.createLogError(e.getMessage());
