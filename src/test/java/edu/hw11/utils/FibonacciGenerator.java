@@ -1,4 +1,4 @@
-package edu.hw11;
+package edu.hw11.utils;
 
 import java.io.FileOutputStream;
 import net.bytebuddy.jar.asm.ClassWriter;
