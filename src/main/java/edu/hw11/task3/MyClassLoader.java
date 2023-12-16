@@ -1,15 +1,11 @@
-package edu.hw11;
+package edu.hw11.task3;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class MyClassLoader extends ClassLoader {
-    private final Path classFilePath = Path.of("src/test/java/edu/hw11/utils/Fibonacci.class"); // Путь к файлу с байт-кодом класса
-
-    public MyClassLoader() {
-
-    }
+    private final Path classFilePath = Path.of("src/test/java/edu/hw11/utils/Fibonacci.class");
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {

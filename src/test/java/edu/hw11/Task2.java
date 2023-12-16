@@ -1,6 +1,7 @@
 package edu.hw11;
 
-import edu.hw11.utils.ArithmeticUtils;
+import edu.hw11.task2.ArithmeticUtils;
+import edu.hw11.utils.SumInterceptor;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.matcher.ElementMatchers;
@@ -11,29 +12,22 @@ public class Task2 {
 
     @Test
     public void testThatBla() throws Exception {
-        // Используем библиотеку ByteBuddy для изменения поведения метода sum
+        //given: Origin class (a+b) & class with method to inject (a*b)
         Class<?> dynamicType = new ByteBuddy()
-            .subclass(ArithmeticUtils.class) // определяем подкласс от класса ArithmeticUtils
-            .method(ElementMatchers.named("sum")) // указываем метод, который хотим изменить
-            .intercept(Advice.to(SumInterceptor.class)) // применяем интерцептор SumInterceptor
-            .make() // создаем новый класс
-            .load(ArithmeticUtils.class.getClassLoader()) // загружаем класс в ClassLoader
-            .getLoaded(); // получаем загруженный класс
+            .subclass(ArithmeticUtils.class) // подкласс
+            .method(ElementMatchers.named("sum")) // метод
+            .intercept(Advice.to(SumInterceptor.class))
+            .make() // новый класс
+            .load(ArithmeticUtils.class.getClassLoader()) // загружаем
+            .getLoaded();
 
-        // создаем экземпляр измененного класса
+        //when: we create class with "+" operation
         ArithmeticUtils modifiedUtils = (ArithmeticUtils) dynamicType.getDeclaredConstructor().newInstance();
 
-        // проверяем результат измененного метода sum
+        // then: injection works and "+" is replaced by "*";
         int result = modifiedUtils.sum(2, 3);
         assertEquals(result,6);
 
     }
-    static class SumInterceptor {
 
-
-        @Advice.OnMethodExit
-        static void exit(@Advice.Return(readOnly = false) int result, @Advice.Argument(0) int a, @Advice.Argument(1) int b) {
-            result = a * b; // заменяем результат сложения на умножение
-        }
-    }
 }

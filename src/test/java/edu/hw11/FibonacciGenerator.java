@@ -7,36 +7,16 @@ import net.bytebuddy.jar.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
 public class FibonacciGenerator {
+    private static final String PATH_TO_CLASS = "src/test/java/edu/hw11/utils/Fibonacci.class";
+    public static byte[] generateFibonacciClass() {
 
-
-    public static byte[] generateFibonacciClass(int i) {
+        //Старался много не комментировать, но тогда сам начинаю путаться
         ClassWriter cw = new ClassWriter(ClassWriter.COMPUTE_FRAMES);
         MethodVisitor mv;
 
         // Создание класса
         cw.visit(Opcodes.V11, Opcodes.ACC_PUBLIC, "Fibonacci", null, "java/lang/Object", null);
 
-        // Создание метода main
-       // mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "main", "([Ljava/lang/String;)V", null, null);
-       // mv.visitCode();
-
-        // Загрузка значения i в стек
-        //mv.visitIntInsn(Opcodes.BIPUSH, i);
-
-        // Вызов функции fibonacci
-       // mv.visitMethodInsn(Opcodes.INVOKESTATIC, "Fibonacci", "fibonacci", "(I)I", false);
-
-        // Вывод результата
-        //mv.visitVarInsn(Opcodes.ISTORE, 1);
-        //mv.visitFieldInsn(Opcodes.GETSTATIC, "java/lang/System", "out", "Ljava/io/PrintStream;");
-      //  mv.visitVarInsn(Opcodes.ILOAD, 1);
-      //  mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/io/PrintStream", "println", "(I)V", false);
-
-       //mv.visitInsn(Opcodes.RETURN);
-       // mv.visitMaxs(0, 0); // Указание максимального размера стека и количества локальных переменных
-       // mv.visitEnd();
-
-        // Создание метода fibonacci
         mv = cw.visitMethod(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC, "fibonacci", "(I)I", null, null);
         mv.visitCode();
 
@@ -84,10 +64,6 @@ public class FibonacciGenerator {
         mv.visitVarInsn(Opcodes.ISTORE, 2);
 
         // Уменьшение счетчика цикла
-        /*mv.visitInsn(Opcodes.ICONST_1);
-        mv.visitVarInsn(Opcodes.ILOAD, 0);
-        mv.visitInsn(Opcodes.ISUB);
-        mv.visitVarInsn(Opcodes.ISTORE, 0);*/
         mv.visitIincInsn( 0, -1);
 
         mv.visitVarInsn(Opcodes.ILOAD, 0);
@@ -98,7 +74,7 @@ public class FibonacciGenerator {
         mv.visitVarInsn(Opcodes.ILOAD, 3);
         mv.visitInsn(Opcodes.IRETURN);
 
-        mv.visitMaxs(0, 0); // Указание максимального размера стека и количества локальных переменных
+        mv.visitMaxs(0, 0);
         mv.visitEnd();
 
         cw.visitEnd();
@@ -107,9 +83,9 @@ public class FibonacciGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        byte[] bytecode = generateFibonacciClass(8);
-        // Запись байткода в файл Fibonacci.class
-        FileOutputStream fos = new FileOutputStream("src/test/java/edu/hw11/utils/Fibonacci.class");
+        byte[] bytecode = generateFibonacciClass();
+
+        FileOutputStream fos = new FileOutputStream(PATH_TO_CLASS);
         fos.write(bytecode);
         fos.close();
     }

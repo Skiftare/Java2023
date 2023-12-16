@@ -8,9 +8,10 @@ import static org.junit.Assert.assertEquals;
 
 public class Task1Test {
     @Test
-    void helloWorld() {
-        try{
-        Class<?> dynamicType = new ByteBuddy()
+    void testThatCreateClassWithByteBuddyAndReturnedHelloMessage() {
+        String expectedResult = "Hello, ByteBuddy!";
+        try
+        { Class<?> dynamicType = new ByteBuddy()
             .subclass(Object.class)
             .method(ElementMatchers.named("toString"))
             .intercept(FixedValue.value("Hello, ByteBuddy!"))
@@ -18,13 +19,12 @@ public class Task1Test {
             .load(Task1Test.class.getClassLoader())
             .getLoaded();
 
-        Object instance = dynamicType.newInstance();
-        System.out.println(instance);
-        assertEquals(instance.toString(), "Hello, ByteBuddy!");
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
+        Object instance = dynamicType.getDeclaredConstructor().newInstance();
+
+        assertEquals(expectedResult, instance.toString());
+
+        } catch (Exception e) {
+           ErrorLogger.createLogError(e.getMessage());
         }
     }
 }
