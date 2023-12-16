@@ -1,91 +1,69 @@
 package edu.hw10.task2;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+public abstract class CacheProxy {
+    private static Map<Object, Object> cache;
 
-public class CacheProxy implements InvocationHandler {
-    private final Object target;
-    private final Map<Method, CacheEntry> cache;
-
-    private CacheProxy(Object target) {
-        this.target = target;
-        this.cache = new ConcurrentHashMap<>();
+    public CacheProxy() {
+        cache = new HashMap<>();
     }
 
-    public static <T> T create(T target, Class<?> targetClass) {
-        Class<?>[] interfaces = {targetClass};
-        CacheProxy handler = new CacheProxy(target);
-        return (T) Proxy.newProxyInstance(targetClass.getClassLoader(), interfaces, handler);
-    }
+    protected abstract Object loadFromCache(Object key);
 
-    @SuppressWarnings("unchecked")
-    @Override
+    protected abstract void saveToCache(Object key, Object value);
+
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        if (method.isAnnotationPresent(Cache.class)) {
-            CacheEntry entry = cache.get(method);
+        // Генерируем уникальный ключ для метода и его аргументов
+        Object key = generateKey(method, args);
 
-            if (entry == null) {
-                entry = new CacheEntry(method, args);
-                cache.put(method, entry);
-            } else if (entry.isValid(args)) {
-                return entry.getValue();
+        // Проверяем, есть ли значение в кэше
+        Object value = cache.get(key);
+
+        if (value == null) {
+            // Значение отсутствует в кэше, вызываем реальный метод и сохраняем его результат в кэш
+            value = method.invoke(this, args);
+            cache.put(key, value);
+        }
+
+        return value;
+    }
+
+    private Object generateKey(Method method, Object[] args) {
+        // Генерируем уникальный ключ, основываясь на имени метода и его аргументах
+        // В этом примере используется простой массив аргументов в качестве ключа, но вы можете выбрать любой другой способ
+        return Arrays.hashCode(args)+method.hashCode();
+    }
+
+    public static <T> T create(T target, Class<?> targetType) {
+        Object proxy = Proxy.newProxyInstance(targetType.getClassLoader(), targetType.getInterfaces(), (proxyObj, method, args) -> {
+            Method targetMethod = targetType.getMethod(method.getName(), method.getParameterTypes());
+            Cache cacheAnnotation = targetMethod.getAnnotation(Cache.class);
+
+            if (cacheAnnotation != null) {
+                CacheProxy cacheProxy = new CacheProxy() {
+                    @Override
+                    protected Object loadFromCache(Object key) {
+                        // Загрузка значения из кэша по ключу
+                        return cache.get(key);
+                    }
+
+                    @Override
+                    protected void saveToCache(Object key, Object value) {
+                        // Сохранение значения в кэш по ключу
+                        cache.put(key, value);
+                    }
+                };
+
+                return cacheProxy.invoke(target, targetMethod, args);
             }
 
-            Object result = method.invoke(target, args);
-            entry.setValue(result);
-
-            if (method.getAnnotation(Cache.class).persist()) {
-                persistCacheEntry(entry);
-            }
-
-            return result;
-        } else {
             return method.invoke(target, args);
-        }
-    }
+        });
 
-    private void persistCacheEntry(CacheEntry entry) {
-        String cacheDir = System.getProperty("java.io.tmpdir");
-        String cacheFile = cacheDir + entry.getMethod().getName()+".cache";
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(cacheFile))) {
-            out.writeObject(entry.getValue());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static class CacheEntry {
-        private final Method method;
-        private final List<Object> arguments;
-        private Object value;
-
-        public CacheEntry(Method method, Object[] args) {
-            this.method = method;
-            this.arguments = Arrays.asList(args);
-        }
-
-        public Method getMethod() {
-            return method;
-        }
-
-        public boolean isValid(Object[] args) {
-            return arguments.equals(Arrays.asList(args));
-        }
-
-        public Object getValue() {
-            return value;
-        }
-
-        public void setValue(Object value) {
-            this.value = value;
-        }
+        return (T) proxy;
     }
 }

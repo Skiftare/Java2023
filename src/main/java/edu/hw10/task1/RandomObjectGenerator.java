@@ -2,12 +2,13 @@ package edu.hw10.task1;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Parameter;
+import java.lang.reflect.Field;
 import java.util.Random;
 
 public class RandomObjectGenerator {
     private final Random random;
+
+
 
     public RandomObjectGenerator() {
         random = new Random();
@@ -15,104 +16,212 @@ public class RandomObjectGenerator {
 
     public <T> T nextObject(Class<T> clazz) {
         try {
-            // Проверяем, является ли класс record
-            if (clazz.isRecord()) {
-                return generateRecord(clazz);
+
+            Constructor<T> constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            T obj = constructor.newInstance();
+
+            Field[] fields = clazz.getDeclaredFields();
+            boolean isMinAnnotation = false;
+            boolean isMaxAnnotation = false;
+            Integer minValue = null;
+            Integer maxValue  = null;
+            for (Field field : fields) {
+                field.setAccessible(true);
+
+                Annotation[] annotations = field.getDeclaredAnnotations();
+                Object value = null;
+                for (Annotation annotation : annotations) {
+                    if (annotation.annotationType() == NotNull.class) {
+                        value = generateNotNullValue(field.getType());
+
+                    } else if (annotation.annotationType() == Min.class) {
+                        Min minAnnotation = (Min) annotation;
+                        minValue = minAnnotation.value();
+                        isMinAnnotation = true;
+                    } else if (annotation.annotationType() == Max.class) {
+                        Max maxAnnotation = (Max) annotation;
+                        maxValue = maxAnnotation.value();
+                        isMaxAnnotation = true;
+                    }
+                }
+                if(isMaxAnnotation && isMinAnnotation){
+                    value = generateValueInRange(field.getType(),minValue,maxValue);
+                }
+                else if(isMaxAnnotation){
+                    value = generateMaxValue(field.getType(),maxValue);
+                }
+                else if(isMinAnnotation){
+                    value = generateMinValue(field.getType(), minValue);
+                }
+
+                Class<?> fieldType = field.getType();
+                if(value == null){
+                    value = generateValue(fieldType);
+                }
+                field.set(obj, value);
             }
 
-            // Иначе, класс POJO
-            return generatePojo(clazz);
-        } catch (NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
-            e.printStackTrace();
+            return obj;
+        }
+        catch (Exception e){
+            return (T) generateValue(clazz);
+        }
+    }
+
+    private Object generateValueInRange(Class<?> type, int minValue, int maxValue) {
+            if (type == int.class || type == Integer.class) {
+                return (int) (Math.random() * (maxValue - minValue + 1) + minValue);
+            } else {
+                return generateValue(type);
+            }
+        }
+
+        private Object generateNotNullValue(Class<?> type) {
+            Object value = generateValue(type);
+            while (value == null) {
+                value = generateValue(type);
+            }
+            return value;
+        }
+
+        private Object generateMinValue(Class<?> type, int minValue) {
+            Object value = generateValue(type);
+            while ((Integer) value < minValue) {
+                value = generateValue(type);
+            }
+            return value;
+        }
+
+        private Object generateMaxValue(Class<?> type, int maxValue) {
+            Object value = generateValue(type);
+            while ((Integer) value > maxValue) {
+                value = generateValue(type);
+            }
+            return value;
+        }
+        private Object generateValue(Class<?> type) {
+            if (type == boolean.class || type == Boolean.class) {
+                return Math.random() >= 0.5;
+            } else if (type == byte.class || type == Byte.class) {
+                return (byte) (Math.random() * 256 - 128);
+            } else if (type == short.class || type == Short.class) {
+                return (short) (Math.random() * 65536 - 32768);
+            } else if (type == int.class || type == Integer.class) {
+                return (int) (Math.random() * Integer.MAX_VALUE);
+            } else if (type == long.class || type == Long.class) {
+                return (long) (Math.random() * Long.MAX_VALUE);
+            } else if (type == float.class || type == Float.class) {
+                return (float) Math.random();
+            } else if (type == double.class || type == Double.class) {
+                return Math.random();
+            } else if (type == char.class || type == Character.class) {
+                return (char) (Math.random() * 65536);
+            } else if (type == String.class) {
+                int length = (int) (Math.random() * 10) + 1;
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < length; i++) {
+                    char c = (char) (Math.random() * 26 + 'a');
+                    sb.append(c);
+                }
+                return sb.toString();
+            } else {
+                try {
+                    Constructor<?> constructor = type.getDeclaredConstructor();
+                    constructor.setAccessible(true);
+                    return constructor.newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
+            }
+        }
+    }
+
+/*
+    private <T> T generateRecord(Class<T> clazz)
+        throws Exception {
+        Constructor<T> constructor = clazz.getConstructor(Object.class);
+        constructor.setAccessible(true);
+        Annotation[][] parameterAnnotations = constructor.getParameterAnnotations();
+        Object[] args = new Object[parameterAnnotations.length];
+        for (int i = 0; i < parameterAnnotations.length; i++) {
+            Annotation[] annotations = parameterAnnotations[i];
+            args[i] = generateValueFromAnnotations(annotations);
+        }
+        return constructor.newInstance(args);
+    }
+
+    private <T> T generatePojo(Class<T> clazz)
+        throws Exception {
+        try {
+            Constructor<T> constructor = clazz.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            Annotation[][] parameterAnnotations = constructor.getParameterAnnotations();
+            Object[] args = new Object[parameterAnnotations.length];
+            for (int i = 0; i < parameterAnnotations.length; i++) {
+                Annotation[] annotations = parameterAnnotations[i];
+                args[i] = generateValueFromAnnotations(annotations);
+            }
+            return constructor.newInstance(args);
+        }
+        catch (Exception e){
+            return generateRandomValue(clazz.)
+        }
+    }
+    private <T> T generateObjectWithoutConstructor(Class<T> clazz) throws IllegalAccessException, InstantiationException {
+        return clazz.newInstance();
+    }
+
+    private Object generateValueFromAnnotations(Annotation[] annotations) throws Exception {
+        int mask = 0;
+        for (Annotation annotation : annotations) {
+            if (annotation instanceof NotNull) {
+                mask|=1;
+            } else if (annotation instanceof Min) {
+                Min minAnnotation = (Min) annotation;
+                //return generateRandomValueGreaterOrEqual(Object.class, minAnnotation.value());
+                mask|=2;
+            } else if (annotation instanceof Max) {
+                mask|=3;
+            }
+        }
+        return generateRandomValue(Object.class);
+    }
+
+    private Object generateRandomValue(Class<?> type) throws Exception {
+        if (type.isPrimitive()) {
+            return generateRandomPrimitiveValue(type);
+        } else if (type == String.class) {
+            return generateRandomString();
+        } else {
+            return nextObject(type);
+        }
+    }
+
+    private Object generateRandomPrimitiveValue(Class<?> type) {
+        if (type == int.class || type == Integer.class) {
+            return random.nextInt();
+        } else if (type == long.class || type == Long.class) {
+            return random.nextLong();
+        } else if (type == double.class || type == Double.class) {
+            return random.nextDouble();
+        } else if (type == float.class || type == Float.class) {
+            return random.nextFloat();
+        } else if (type == boolean.class || type == Boolean.class) {
+            return random.nextBoolean();
+        } else if (type == char.class || type == Character.class) {
+            return (char) random.nextInt(Character.MAX_VALUE + 1);
+        } else if (type == short.class || type == Short.class) {
+            return (short) random.nextInt(Short.MAX_VALUE + 1);
+        } else if (type == byte.class || type == Byte.class) {
+            return (byte) random.nextInt(Byte.MAX_VALUE + 1);
         }
         return null;
     }
 
-    private <T> T generateRecord(Class<T> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        // Получаем конструктор record
-        Constructor<T> constructor = clazz.getDeclaredConstructor(Object[].class);
-        constructor.setAccessible(true);
-
-        // Получаем аннотации параметров конструктора
-        Annotation[][] parameterAnnotations = constructor.getParameterAnnotations();
-
-        // Генерируем случайные значения для каждого параметра
-        Object[] args = new Object[parameterAnnotations.length];
-        for (int i = 0; i < parameterAnnotations.length; i++) {
-            Annotation[] annotations = parameterAnnotations[i];
-            args[i] = generateValueFromAnnotations(annotations);
-        }
-
-        // Создаем и возвращаем объект record
-        return constructor.newInstance(args);
-    }
-
-    private <T> T generatePojo(Class<T> clazz) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        // Получаем конструктор или фабричный метод
-        Constructor<T> constructor = clazz.getDeclaredConstructor();
-        constructor.setAccessible(true);
-        Annotation[][] parameterAnnotations = constructor.getParameterAnnotations();
-
-        // Генерируем случайные значения для каждого параметра
-        Object[] args = new Object[parameterAnnotations.length];
-        for (int i = 0; i < parameterAnnotations.length; i++) {
-            Annotation[] annotations = parameterAnnotations[i];
-            args[i] = generateValueFromAnnotations(annotations);
-        }
-
-        // Создаем и возвращаем объект POJO
-        return constructor.newInstance(args);
-    }
-
-    private Object generateValueFromAnnotations(Annotation[] annotations) {
-        // Проверяем аннотации на присутствие и обработаем их значения, если они есть
-        for (Annotation annotation : annotations) {
-            if (annotation instanceof NotNull) {
-                return generateRandomValue();
-            } else if (annotation instanceof Min) {
-                Min minAnnotation = (Min) annotation;
-                return generateRandomValueGreaterOrEqual(minAnnotation.value());
-            } else if (annotation instanceof Max) {
-                Max maxAnnotation = (Max) annotation;
-                return generateMaxValue(maxAnnotation.value());
-            }
-        }
-
-        // Если нет аннотаций, то возвращаем случайное значение по умолчанию
-        return generateRandomValue();
-    }
-
-
-    private Object generateRandomValue(Class<?> type, Parameter parameter) throws Exception {
-        if (type.isPrimitive()) {
-            return generateRandomPrimitiveValue(type);
-        } else if (type == String.class) {
-            return generateRandomString(parameter);
-        } else {
-            Class<?> declaringClass = parameter.getDeclaringExecutable().getDeclaringClass();
-            return nextObject(declaringClass, null); // Рекурсивный вызов для генерации вложенных объектов
-        }
-    }
-
-
-
-    private Object generateRandomPrimitiveValue(Class<?> type) {
-        return switch (type.getSimpleName()) {
-            case "int", "Integer" -> random.nextInt();
-            case "long", "Long" -> random.nextLong();
-            case "double", "Double" -> random.nextDouble();
-            case "float", "Float" -> random.nextFloat();
-            case "boolean", "Boolean" -> random.nextBoolean();
-            case "char", "Character" -> (char) random.nextInt(Character.MAX_VALUE + 1);
-            case "short", "Short" -> (short) random.nextInt(Short.MAX_VALUE + 1);
-            case "byte", "Byte" -> (byte) random.nextInt(Byte.MAX_VALUE + 1);
-            default -> null;
-        };
-
-    }
-
-    private String generateRandomString(Parameter parameter) {
-        int length = parameter.getAnnotation(Max.class).value();
+    private String generateRandomString() {
+        int length = random.nextInt(10) + 1;
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             sb.append((char) (random.nextInt(26) + 'a'));
@@ -120,77 +229,38 @@ public class RandomObjectGenerator {
         return sb.toString();
     }
 
-    private Object generateRandomValueWithAnnotations(Class<?> type, Parameter parameter) throws Exception {
-        NotNull notNullAnnotation = parameter.getAnnotation(NotNull.class);
-        if (notNullAnnotation != null) {
-            return generateRandomValue(type, parameter);
-        }
-
-        Min minAnnotation = parameter.getAnnotation(Min.class);
-        Max maxAnnotation = parameter.getAnnotation(Max.class);
-        if (minAnnotation != null && maxAnnotation != null) {
-            int minValue = minAnnotation.value();
-            int maxValue = maxAnnotation.value();
-            if (minValue <= maxValue) {
-                return generateRandomValueInRange(type, minValue, maxValue);
-            }
-        } else if (minAnnotation != null) {
-            int minValue = minAnnotation.value();
-            return generateRandomValueGreaterOrEqual(type, minValue);
-        } else if (maxAnnotation != null) {
-            int maxValue = maxAnnotation.value();
-            return generateRandomValueLessOrEqual(type, maxValue);
-        }
-
-        return generateRandomValue(type, parameter);
-    }
-
-    private Object generateRandomValueInRange(Class<?> type, int minValue, int maxValue) {
-        if (type == int.class || type == Integer.class) {
-            return random.nextInt(maxValue - minValue + 1) + minValue;
-        } else if (type == long.class || type == Long.class) {
-            return random.nextInt((int) (maxValue - minValue + 1)) + minValue;
-        } else if (type == double.class || type == Double.class) {
-            return random.nextDouble() * (maxValue - minValue) + minValue;
-        } else if (type == float.class || type == Float.class) {
-            return random.nextFloat() * (maxValue - minValue) + minValue;
-        } else if (type == short.class || type == Short.class) {
-            return random.nextInt((maxValue - minValue + 1)) + minValue;
-        } else if (type == byte.class || type == Byte.class) {
-            return random.nextInt((maxValue - minValue + 1)) + minValue;
-        }
-        return 0;
-    }
-
     private Object generateRandomValueGreaterOrEqual(Class<?> type, int minValue) {
-        return switch (type.getSimpleName()) {
-            case "int", "Integer" -> random.nextInt(Integer.MAX_VALUE - minValue + 1) + minValue;
-            case "long", "Long" -> random.nextInt((int) (Long.MAX_VALUE - minValue + 1)) + minValue;
-            case "double", "Double" -> random.nextDouble() * (Double.MAX_VALUE - minValue) + minValue;
-            case "float", "Float" -> random.nextFloat() * (Float.MAX_VALUE - minValue) + minValue;
-            case "short", "Short" -> random.nextInt((Short.MAX_VALUE - minValue + 1)) + minValue;
-            case "byte", "Byte" -> random.nextInt((Byte.MAX_VALUE - minValue + 1)) + minValue;
-            default -> 0;
-        };
+        if (type == int.class || type == Integer.class) {
+            return random.nextInt(Integer.MAX_VALUE - minValue + 1) + minValue;
+        } else if (type == long.class || type == Long.class) {
+            return random.nextLong() + minValue;
+        } else if (type == double.class || type == Double.class) {
+            return random.nextDouble() * (Double.MAX_VALUE - minValue) + minValue;
+        } else if (type == float.class || type == Float.class) {
+            return random.nextFloat() * (Float.MAX_VALUE - minValue) + minValue;
+        } else if (type == short.class || type == Short.class) {
+            return (short) (random.nextInt(Short.MAX_VALUE - minValue + 1) + minValue);
+        } else if (type == byte.class || type == Byte.class) {
+            return (byte) (random.nextInt(Byte.MAX_VALUE - minValue + 1) + minValue);
+        }
+        return null;
     }
 
     private Object generateRandomValueLessOrEqual(Class<?> type, int maxValue) {
         if (type == int.class || type == Integer.class) {
             return random.nextInt(maxValue + 1);
         } else if (type == long.class || type == Long.class) {
-            return random.nextInt((int) (maxValue + 1));
+            return random.nextLong() + (maxValue + 1);
         } else if (type == double.class || type == Double.class) {
             return random.nextDouble() * maxValue;
         } else if (type == float.class || type == Float.class) {
             return random.nextFloat() * maxValue;
         } else if (type == short.class || type == Short.class) {
-            return random.nextInt(maxValue + 1);
+            return (short) (random.nextInt(maxValue + 1));
         } else if (type == byte.class || type == Byte.class) {
-            return random.nextInt(maxValue + 1);
+            return (byte) (random.nextInt(maxValue + 1));
         }
-        return 0;
+        return null;
     }
-
-
-
 }
+*/

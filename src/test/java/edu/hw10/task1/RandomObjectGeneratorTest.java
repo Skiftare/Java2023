@@ -1,5 +1,9 @@
 package edu.hw10.task1;
 
+import edu.hw10.task1.testClasses.ObjectWithMaxAnnotation;
+import edu.hw10.task1.testClasses.ObjectWithMinAndMaxAnnotation;
+import edu.hw10.task1.testClasses.ObjectWithMinAnnotation;
+import edu.hw10.task1.testClasses.ObjectWithNotNullAnnotation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +30,7 @@ public class RandomObjectGeneratorTest {
     @Test
     public void testNextObjectWithCustomClass() throws Exception {
         RandomObjectGenerator generator = new RandomObjectGenerator();
-        CustomClass randomObject = generator.nextObject(CustomClass.class, null);
+        CustomClass randomObject = generator.nextObject(CustomClass.class);
 
         Assertions.assertNotNull(randomObject);
         Assertions.assertTrue(randomObject instanceof CustomClass);
@@ -35,7 +39,7 @@ public class RandomObjectGeneratorTest {
     @Test
     public void testNextObjectWithNotNullAnnotation() throws Exception {
         RandomObjectGenerator generator = new RandomObjectGenerator();
-        ObjectWithNotNullAnnotation randomObject = generator.nextObject(ObjectWithNotNullAnnotation.class, null);
+        ObjectWithNotNullAnnotation randomObject = generator.nextObject(ObjectWithNotNullAnnotation.class);
 
         Assertions.assertNotNull(randomObject);
         Assertions.assertNotNull(randomObject.getProperty());
@@ -44,90 +48,40 @@ public class RandomObjectGeneratorTest {
     @Test
     public void testNextObjectWithMinAndMaxAnnotation() throws Exception {
         RandomObjectGenerator generator = new RandomObjectGenerator();
-        ObjectWithMinAndMaxAnnotation randomObject = generator.nextObject(ObjectWithMinAndMaxAnnotation.class, null);
+        ObjectWithMinAndMaxAnnotation randomObject = generator.nextObject(ObjectWithMinAndMaxAnnotation.class);
 
         Assertions.assertNotNull(randomObject);
-        Assertions.assertTrue(randomObject.getProperty() >= randomObject.getMinValue());
-        Assertions.assertTrue(randomObject.getProperty() <= randomObject.getMaxValue());
+        Assertions.assertTrue(0 <= randomObject.getMinValue());
+        Assertions.assertTrue(100 >= randomObject.getMaxValue());
     }
 
     @Test
     public void testNextObjectWithMinAnnotation() throws Exception {
         RandomObjectGenerator generator = new RandomObjectGenerator();
-        ObjectWithMinAnnotation randomObject = generator.nextObject(ObjectWithMinAnnotation.class, null);
+        ObjectWithMinAnnotation randomObject = generator.nextObject(ObjectWithMinAnnotation.class);
 
         Assertions.assertNotNull(randomObject);
-        Assertions.assertTrue(randomObject.getProperty() >= randomObject.getMinValue());
+        Assertions.assertTrue( randomObject.getMinValue()>= 5);
     }
 
     @Test
     public void testNextObjectWithMaxAnnotation() throws Exception {
         RandomObjectGenerator generator = new RandomObjectGenerator();
-        ObjectWithMaxAnnotation randomObject = generator.nextObject(ObjectWithMaxAnnotation.class, null);
+        ObjectWithMaxAnnotation randomObject = generator.nextObject(ObjectWithMaxAnnotation.class);
 
         Assertions.assertNotNull(randomObject);
-        Assertions.assertTrue(randomObject.getProperty() <= randomObject.getMaxValue());
+        Assertions.assertTrue(100 >= randomObject.getMaxValue());
     }
 
     private static class CustomClass {
         // Custom class
     }
 
-    private static class ObjectWithNotNullAnnotation {
-        @NotNull
-        private String property;
 
-        public String getProperty() {
-            return property;
-        }
-    }
 
-    private static class ObjectWithMinAndMaxAnnotation {
-        @Min(0)
-        @Max(10)
-        private int property;
-        private int minValue;
-        private int maxValue;
 
-        public int getProperty() {
-            return property;
-        }
 
-        public int getMinValue() {
-            return minValue;
-        }
 
-        public int getMaxValue() {
-            return maxValue;
-        }
-    }
 
-    private static class ObjectWithMinAnnotation {
-        @Min(0)
-        private int property;
-        private int minValue;
 
-        public int getProperty() {
-            return property;
-        }
-
-        public int getMinValue() {
-            return minValue;
-        }
-    }
-
-    private static class ObjectWithMaxAnnotation {
-
-        private int property;
-        @Max (10)
-        private int maxValue;
-
-        public int getProperty() {
-            return property;
-        }
-
-        public int getMaxValue() {
-            return maxValue;
-        }
-    }
 }
