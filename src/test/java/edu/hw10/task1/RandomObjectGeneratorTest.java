@@ -14,75 +14,100 @@ import static org.junit.Assert.assertTrue;
 public class RandomObjectGeneratorTest {
 
     @Test
-    public void testNextObjectWithString() {
+    public void testThatGetGeneratorAndReturnedGeneratedString() {
+        //given: class & generator
         RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        //when: we generate object
         String randomString = generator.nextObject(String.class);
 
+        //then: we get expected class
         Assertions.assertNotNull(randomString);
         Assertions.assertTrue(randomString instanceof String);
     }
 
     @Test
-    public void testNextObjectWithInteger() {
+    public void testThatGetGeneratorAndReturnedGeneratedInteger() {
+        //given: class & generator
         RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        //when: we generate object
         Integer randomInteger = generator.nextObject(Integer.class);
+
+        //then: we get expected class
         Assertions.assertNotNull(randomInteger);
         Assertions.assertTrue(randomInteger instanceof Integer);
     }
 
 
     @Test
-    public void testNextObjectWithNotNullAnnotation() {
+    public void testThatGetGeneratorAndReturnedGeneratedObjectWithNotNullAnnotation() {
+        //given: class & generator
         RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        //when: we generate object
         ObjectWithNotNullAnnotation randomObject = generator.nextObject(ObjectWithNotNullAnnotation.class);
 
+        //then: we get expected class
         Assertions.assertNotNull(randomObject);
         Assertions.assertNotNull(randomObject.getProperty());
     }
 
     @Test
-    public void testNextObjectWithMinAndMaxAnnotation() {
-
+    public void testThatGetGeneratorAndReturnedGeneratedObjectWithMinAndMaxAnnotation() {
+        //given: class & generator
         RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        //when: we generate object
         Exception exception = assertThrows(
             RuntimeException.class,()-> {
                 generator.nextObject(ObjectWithMinAndMaxAnnotation.class);
             });
-
+        //then: we get exception: min = 100, max  = 8
         Assertions.assertEquals(exception.getMessage(), "Unsupported type");
     }
 
     @Test
-    public void testNextObjectWithMinAnnotation() throws Exception {
+    public void testThatGetGeneratorAndReturnedGeneratedObjectWithMinAnnotation() {
+        //given: class & generator
         RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        //when: we generate object
         ObjectWithMinAnnotation randomObject = generator.nextObject(ObjectWithMinAnnotation.class);
 
+        //then: we get expected class
         Assertions.assertNotNull(randomObject);
         Assertions.assertTrue( randomObject.getMinValue() >= 5);
     }
 
     @Test
-    public void testNextObjectWithMaxAnnotation() throws Exception {
+    public void testThatGetGeneratorAndReturnedGeneratedObjectWithMaxAnnotation() {
+        //given: class & generator
         RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        //when: we generate object
         ObjectWithMaxAnnotation randomObject = generator.nextObject(ObjectWithMaxAnnotation.class);
 
+        //then: we get expected class
         Assertions.assertNotNull(randomObject);
         Assertions.assertTrue(100 >= randomObject.getMaxValueShort());
     }
     @Test
-    public void testRecordNextObjectWithMaxAnnotation() throws Exception {
+    public void testThatGetGeneratorAndReturnedGeneratedRecordClass() throws Exception {
+        //given: class & generator
         RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        //when: we generate object
         RecordClassForTest randomObject = generator.nextObject(RecordClassForTest.class);
 
+        //then: we get expected class
         Assertions.assertNotNull(randomObject);
-        //@Max(10) @Min(0) @NotNull Long maxMinRecordLong
-        System.out.println(randomObject.maxMinRecordLong());
         Assertions.assertTrue(10 >= randomObject.maxMinRecordLong());
         Assertions.assertTrue(0 <= randomObject.maxMinRecordLong());
     }
 
     @Test
-    public void testThatGetObjectWithMethodAndReturnedGeneratedObjectByTisMethod() {
+    public void testThatGetGeneratorAndReturnedGeneratedObjectWithMethodAndReturnedGeneratedObjectByTisMethod() {
         // given: class & methodName
         Class<ObjectWithMethod> clazz = ObjectWithMethod.class;
         String methodName = "create";
