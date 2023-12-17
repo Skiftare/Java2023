@@ -1,6 +1,7 @@
 package edu.hw10.task1;
 
 import edu.hw10.task1.testClasses.ObjectWithMaxAnnotation;
+import edu.hw10.task1.testClasses.ObjectWithMethod;
 import edu.hw10.task1.testClasses.ObjectWithMinAndMaxAnnotation;
 import edu.hw10.task1.testClasses.ObjectWithMinAnnotation;
 import edu.hw10.task1.testClasses.ObjectWithNotNullAnnotation;
@@ -8,6 +9,7 @@ import edu.hw10.task1.testClasses.RecordClassForTest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
 public class RandomObjectGeneratorTest {
 
@@ -79,6 +81,23 @@ public class RandomObjectGeneratorTest {
         Assertions.assertTrue(0 <= randomObject.maxMinRecordLong());
     }
 
+    @Test
+    public void testThatGetObjectWithMethodAndReturnedGeneratedObjectByTisMethod() {
+        // given: class & methodName
+        Class<ObjectWithMethod> clazz = ObjectWithMethod.class;
+        String methodName = "create";
+        RandomObjectGenerator generator = new RandomObjectGenerator();
+
+        // When we generate class
+        ObjectWithMethod result = generator.nextObject(clazz, methodName);
+
+        // Then String is not null (is generated value)
+        assertTrue(result.getJustN() != null);
+    }
+
 
 }
+
+
+
 

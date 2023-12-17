@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 public class RandomObjectGenerator {
     private static final String ERROR_CONFLICT_BORDERS = "Conflict of minimal & maximal borders";
@@ -13,6 +14,7 @@ public class RandomObjectGenerator {
     private static boolean isNullAnnotation = false;
     private static Integer minValue = null;
     private static Integer maxValue = null;
+    private static final Integer MAX_LENGTH_FOR_STRING = (int) 1e4;
 
     private static Boolean randomizeFiftyPercent() {
         return Math.ceil(Math.random()) == 0;
@@ -90,13 +92,10 @@ public class RandomObjectGenerator {
                     } else {
                         value = generateValueInRange(field.getType(), minValue, maxValue);
                     }
-
                     field.set(obj, value);
                 }
                 return obj;
-
             }
-
         } catch (Exception e) {
             ErrorLogger.createLogError(e.getMessage());
             return (T) generateValueInRange(clazz, null, null);
@@ -120,7 +119,11 @@ public class RandomObjectGenerator {
                     }
 
                     method.setAccessible(true);
-                    method.invoke(obj, args);
+                    if (Modifier.isStatic(method.getModifiers())) {
+                        obj = (T) method.invoke(null, args);
+                    } else {
+                        obj = (T) method.invoke(obj, args);
+                    }
                 }
             }
 
@@ -214,8 +217,8 @@ public class RandomObjectGenerator {
     }
 
     private String generateString(Integer minValue, Integer maxValue) {
-        int min = minValue != null ? minValue : 0;
-        int max = maxValue != null ? maxValue : Integer.MAX_VALUE;
+        int min = minValue != null ? minValue : 1;
+        int max = maxValue != null ? maxValue : MAX_LENGTH_FOR_STRING;
         int length = (int) (Math.random() * (max - min + 1) + min);
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
