@@ -1,13 +1,8 @@
 package edu.hw10.task2;
 
-public class FibonacciCalculator implements FibCalculator {
+public class FibCalculatorImpl implements FibCalculator {
     @Override
     public long fib(int number) {
-        return calculateFibonacci(number);
-    }
-
-
-    private long calculateFibonacci(int number) {
         if (number <= 1) {
             return number;
         } else {

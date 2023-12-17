@@ -7,17 +7,16 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class RandomObjectGenerator {
+    private static final String ERROR_CONFLICT_BORDERS = "Conflict of minimal & maximal borders";
     private static boolean isMinAnnotation = false;
     private static boolean isMaxAnnotation = false;
     private static boolean isNullAnnotation = false;
     private static Integer minValue = null;
     private static Integer maxValue = null;
-    private static final String ERROR_CONFLICT_BORDERS = "Conflict of minimal & maximal borders";
 
     private static Boolean randomizeFiftyPercent() {
         return Math.ceil(Math.random()) == 0;
     }
-
 
     private static void parseAnnotations(Annotation[] annotations) {
         for (Annotation annotation : annotations) {

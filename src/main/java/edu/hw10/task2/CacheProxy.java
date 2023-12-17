@@ -1,72 +1,97 @@
 package edu.hw10.task2;
 
+import edu.hw10.ErrorLogger;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CacheProxy {
-    private static Map<Object, Object> cache;
+public class CacheProxy implements InvocationHandler {
+    private final Object target;
+    private final Map<String, Object> cache;
+    private final File cacheDirectory;
 
-    public CacheProxy() {
-        cache = new HashMap<>();
+    private CacheProxy(Object target) {
+        this.target = target;
+        this.cache = new HashMap<>();
+        this.cacheDirectory = new File(System.getProperty("java.io.tmpdir"), "cache");
+        this.cacheDirectory.mkdirs();
     }
 
-    public static <T> T create(T target, Class<?> targetType) {
-        Object proxy = Proxy.newProxyInstance(targetType.getClassLoader(),
-            targetType.getInterfaces(),
-            (proxyObj, method, args) -> {
-                Method targetMethod = targetType.getMethod(method.getName(), method.getParameterTypes());
-                Cache cacheAnnotation = targetMethod.getAnnotation(Cache.class);
-
-                if (cacheAnnotation != null) {
-                    CacheProxy cacheProxy = new CacheProxy() {
-                        @Override
-                        protected Object loadFromCache(Object key) {
-                            // Загрузка значения из кэша по ключу
-                            return cache.get(key);
-                        }
-
-                        @Override
-                        protected void saveToCache(Object key, Object value) {
-                            // Сохранение значения в кэш по ключу
-                            cache.put(key, value);
-                        }
-                    };
-
-                    return cacheProxy.invoke(target, targetMethod, args);
-                }
-
-                return method.invoke(target, args);
-            }
+    public static <T> T create(T target, Class<?> targetClass) {
+        return (T) Proxy.newProxyInstance(
+            targetClass.getClassLoader(),
+            targetClass.getInterfaces(),
+            new CacheProxy(target)
         );
-
-        return (T) proxy;
     }
 
-    protected abstract Object loadFromCache(Object key);
+    private String generateFileName(Method method, Object[] args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(cacheDirectory.getAbsolutePath())
+            .append("/")
+            .append(method.getName())
+            .append("-")
+            .append(Arrays.hashCode(args))
+            .append(".ser");
+        return sb.toString();
+    }
 
-    protected abstract void saveToCache(Object key, Object value);
+    private Boolean isFileExist(Method method, Object[] args) {
+        String fileName = generateFileName(method, args);
+        File file = new File(fileName);
+        return file.exists();
+    }
 
+    @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        // Генерируем уникальный ключ для метода и его аргументов
-        Object key = generateKey(method, args);
+        Cache cacheAnnotation = method.getAnnotation(Cache.class);
 
-        // Проверяем, есть ли значение в кэше
-        Object value = cache.get(key);
-
-        if (value == null) {
-            // Значение отсутствует в кэше, вызываем реальный метод и сохраняем его результат в кэш
-            value = method.invoke(this, args);
-            cache.put(key, value);
+        Object result;
+        if (cacheAnnotation.persist() && isFileExist(method, args)) {
+            result = restoreCacheEntry(method, args);
+            return result;
+        } else if (cacheAnnotation.persist()) {
+            result = method.invoke(target, args);
+            persistCacheEntry(method, args, method.invoke(target, args));
+        } else if (cache.containsKey(args)) {
+            result = cache.get(generateFileName(method, args));
+        } else {
+            result = method.invoke(target, args);
+            cache.put(generateFileName(method, args), result);
         }
 
-        return value;
+        return result;
+
     }
 
-    private Object generateKey(Method method, Object[] args) {
-        // TODO: это пиздец
-        return Arrays.hashCode(args) + method.hashCode();
+    private Object restoreCacheEntry(Method method, Object[] args) {
+        String fileName = generateFileName(method, args);
+        File file = new File(fileName);
+        if (file.exists()) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+                return ois.readObject();
+            } catch (Exception e) {
+                ErrorLogger.createLogError(e.getMessage());
+            }
+        }
+        ErrorLogger.createLogError("file does not exist, null has been returned");
+        return null;
+    }
+
+    private void persistCacheEntry(Method method, Object[] args, Object result) {
+        String fileName = generateFileName(method, args);
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(result);
+        } catch (Exception e) {
+            ErrorLogger.createLogError(e.getMessage());
+        }
     }
 }
