@@ -36,6 +36,7 @@ public class RandomObjectGenerator {
         }
     }
 
+
     public <T> T nextObject(Class<T> clazz) {
         try {
 
