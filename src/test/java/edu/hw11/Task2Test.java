@@ -6,12 +6,14 @@ import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.asm.Advice;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class Task2Test {
 
     @Test
-    public void testThatBla() throws Exception {
+    @DisplayName("Перехватывание и изменение функции через ByteBuddy")
+    public void testThatGetSumClassAndReturnedMultiplyingClass() throws Exception {
         //given: Origin class (a+b) & class with method to inject (a*b)
         Class<?> dynamicType = new ByteBuddy()
             .subclass(ArithmeticUtils.class) // подкласс
@@ -25,8 +27,8 @@ public class Task2Test {
         ArithmeticUtils modifiedUtils = (ArithmeticUtils) dynamicType.getDeclaredConstructor().newInstance();
 
         // then: injection works and "+" is replaced by "*";
-        int result = modifiedUtils.sum(2, 3);
-        Assertions.assertEquals(result, 6);
+        int result = modifiedUtils.sum(20, 3);
+        Assertions.assertEquals(result, 20*3);
 
     }
 

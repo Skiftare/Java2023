@@ -3,10 +3,12 @@ package edu.hw11;
 import java.lang.reflect.Method;
 import edu.hw11.task3.MyClassLoader;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class Task3Test {
     @Test
+    @DisplayName("Выполнение класса в байт-коде")
     public void testThatGetByteCodeAndReturnedResultOfExecutionByteCode() {
         try {
             //given: pos for fib number
